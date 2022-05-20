@@ -1,5 +1,5 @@
 view: mat_dashboard {
-  sql_table_name: `cost_control_multicloud.mat_dashboard`
+  sql_table_name: `dev-noovle-spa-consumption.cost_control_multicloud.mat_dashboard`
     ;;
 
   dimension: billing_account_id {
@@ -12,6 +12,11 @@ view: mat_dashboard {
     sql: ${TABLE}.billing_account_name ;;
   }
 
+  dimension: billing_entity {
+    type: string
+    sql: ${TABLE}.billing_entity ;;
+  }
+
   dimension: cost {
     type: number
     sql: ${TABLE}.cost ;;
@@ -20,11 +25,6 @@ view: mat_dashboard {
   dimension: cost_type {
     type: string
     sql: ${TABLE}.cost_type ;;
-  }
-
-  dimension: credit {
-    type: number
-    sql: ${TABLE}.credits ;;
   }
 
   dimension: invoice_month {
@@ -39,6 +39,7 @@ view: mat_dashboard {
       date,
       week,
       month,
+      month_name,
       quarter,
       year
     ]
@@ -47,9 +48,24 @@ view: mat_dashboard {
     sql: ${TABLE}.invoice_month_date ;;
   }
 
+  dimension: other_credit {
+    type: number
+    sql: ${TABLE}.other_credits ;;
+  }
+
+  dimension: credit {
+    type: number
+    sql: ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
+  }
+
   dimension: project_name {
     type: string
     sql: ${TABLE}.project_name ;;
+  }
+
+  dimension: promotions {
+    type: number
+    sql: ${TABLE}.promotions ;;
   }
 
   dimension: provider {
@@ -100,8 +116,7 @@ view: mat_dashboard {
       week,
       month,
       quarter,
-      year,
-      month_name
+      year
     ]
     sql: ${TABLE}.usage_start_time ;;
   }
@@ -113,21 +128,29 @@ view: mat_dashboard {
 
   measure: total_cost_credits {
     type: sum
-    sql: ${TABLE}.cost+${TABLE}.credits;;
-  }
-
-  measure: total_reseller {
-    type: sum
-    sql: ${TABLE}.reseller_margin;;
+    sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
   }
 
   measure: credits {
     type: sum
-    sql: ${TABLE}.credits;;
+    sql: ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
   }
 
-  measure: total_usage {
+  measure: promotion_credits {
     type: sum
-    sql: ${TABLE}.usage_amount ;;
+    sql: ${TABLE}.promotions ;;
   }
+
+  measure: reseller_credits {
+    type: sum
+    sql: ${TABLE}.reseller_margin ;;
+  }
+
+  measure: other_credits {
+    type: sum
+    sql: ${TABLE}.other_credits ;;
+  }
+
+
+
 }
