@@ -12,6 +12,11 @@ view: mat_dashboard {
     sql: ${TABLE}.billing_account_name ;;
   }
 
+  dimension: client_name {
+    type: string
+    sql: ${TABLE}.client_name ;;
+  }
+
   dimension: billing_entity {
     type: string
     sql: ${TABLE}.billing_entity ;;
@@ -78,6 +83,11 @@ view: mat_dashboard {
     sql: ${TABLE}.reseller_margin ;;
   }
 
+  dimension: cost_of_client {
+    type: number
+    sql: ${TABLE}.cost_of_client ;;
+  }
+
   dimension: service_description {
     type: string
     sql: ${TABLE}.service_description ;;
@@ -96,29 +106,25 @@ view: mat_dashboard {
   dimension_group: usage_end {
     type: time
     timeframes: [
-      raw,
-      time,
       date,
       week,
       month,
       quarter,
       year
     ]
-    sql: ${TABLE}.usage_end_time ;;
+    sql: ${TABLE}.usage_end_date ;;
   }
 
   dimension_group: usage_start {
     type: time
     timeframes: [
-      raw,
-      time,
       date,
       week,
       month,
       quarter,
       year
     ]
-    sql: ${TABLE}.usage_start_time ;;
+    sql: ${TABLE}.usage_start_date ;;
   }
 
   measure: count {
@@ -149,6 +155,11 @@ view: mat_dashboard {
   measure: other_credits {
     type: sum
     sql: ${TABLE}.other_credits ;;
+  }
+
+  measure: cost_client {
+    type: sum
+    sql: ${TABLE}.cost_of_client ;;
   }
 
 

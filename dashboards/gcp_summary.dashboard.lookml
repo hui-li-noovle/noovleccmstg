@@ -27,7 +27,7 @@
       options: []
     model: dev_cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: []
+    listens_to_filters: [provider_filter]
     field: mat_dashboard.invoice_month_month
   - name: Billing Account ID
     title: Billing Account ID
@@ -41,7 +41,7 @@
       options: []
     model: dev_cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: []
+    listens_to_filters: [provider_filter]
     field: mat_dashboard.billing_account_id
   - name: Project Name
     title: Project Name
@@ -55,8 +55,39 @@
       options: []
     model: dev_cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: []
+    listens_to_filters: [provider_filter]
     field: mat_dashboard.project_name
+
+  - name: Service Description
+    title: Service Description
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+      options: []
+    model: dev_cost_control_multicloud
+    explore: mat_dashboard
+    listens_to_filters: [provider_filter]
+    field: mat_dashboard.service_description
+
+  - name: SKU Description
+    title: SKU Description
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+      options: []
+    model: dev_cost_control_multicloud
+    explore: mat_dashboard
+    listens_to_filters: [provider_filter]
+    field: mat_dashboard.sku_description
+
   elements:
   - title: YTD Costs
     name: YTD Costs
@@ -126,6 +157,8 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
     row: 2
     col: 0
     width: 4
@@ -198,6 +231,8 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
     row: 8
     col: 0
     width: 4
@@ -270,6 +305,8 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
     row: 6
     col: 0
     width: 4
@@ -342,6 +379,8 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
     row: 4
     col: 0
     width: 4
@@ -625,6 +664,8 @@
         Invoice Month Filter: mat_dashboard.invoice_month_month
         Billing Account ID: mat_dashboard.billing_account_id
         Project Name: mat_dashboard.project_name
+        Service Description: mat_dashboard.service_description
+        SKU Description: mat_dashboard.sku_description
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
       query_timezone: America/Los_Angeles
@@ -644,6 +685,8 @@
         Invoice Month Filter: mat_dashboard.invoice_month_month
         Billing Account ID: mat_dashboard.billing_account_id
         Project Name: mat_dashboard.project_name
+        Service Description: mat_dashboard.service_description
+        SKU Description: mat_dashboard.sku_description
 
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
@@ -827,6 +870,8 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
     row: 15
     col: 0
     width: 7
@@ -886,10 +931,11 @@
     series_types: {}
     hidden_fields: [mat_dashboard.total_cost_credits]
     listen:
-      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
     row: 25
     col: 0
     width: 24
@@ -912,10 +958,9 @@
     explore: mat_dashboard
     type: looker_line
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.invoice_month_month]
-    #pivots: [mat_dashboard.usage_start_year]
+    #pivots: [mat_dashboard.invoice_month_year]
     fill_fields: [mat_dashboard.invoice_month_month]
     filters:
-      mat_dashboard.usage_start_year: 3 years ago for 3 years,1 years
       mat_dashboard.total_cost_credits: NOT NULL
     sorts: [mat_dashboard.invoice_month_month asc]
 
@@ -968,6 +1013,8 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
     row: 2
     col: 4
     width: 20
@@ -979,10 +1026,11 @@
     body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/2?Provider=AWS%2CGCP&Invoice+Month=202201%2C202202%2C202203%2C202204&Usage+Start+Date=this+year+to+second&Usage+End+Date=this+year+to+second\"\
       \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
       \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::aws_summary?provider_filter=GCP\"\
-      \ >\nAWS Summary\n</a>\n\n</p>\n"
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+      \ >\nAZURE Summary\n</a>\n</p>\n"
     row: -2
     col: 16
-    width: 8
+    width: 12
     height: 2
 
   - name: "<b>BIGQUERY COST INSIGHTS</b>"
@@ -1054,6 +1102,7 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      SKU Description: mat_dashboard.sku_description
     row: 34
     col: 0
     width: 12
@@ -1118,6 +1167,7 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      SKU Description: mat_dashboard.sku_description
     row: 34
     col: 12
     width: 12
@@ -1193,6 +1243,7 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      SKU Description: mat_dashboard.sku_description
     row: 36
     col: 0
     width: 12
@@ -1257,6 +1308,7 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      SKU Description: mat_dashboard.sku_description
     row: 36
     col: 12
     width: 12
@@ -1331,6 +1383,7 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      SKU Description: mat_dashboard.sku_description
     row: 38
     col: 0
     width: 12
@@ -1395,6 +1448,7 @@
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
+      SKU Description: mat_dashboard.sku_description
     row: 38
     col: 12
     width: 12

@@ -1,5 +1,5 @@
-- dashboard: aws_summary
-  title: AWS Summary
+- dashboard: azure_summary
+  title: AZURE Summary
   layout: newspaper
   preferred_viewer: dashboards-next
 
@@ -10,11 +10,9 @@
     type: string_filter
     explore: mat_dashboard
     #field: mat_dashboard.provider
-    default_value: "AWS"
+    default_value: "AZURE"
     allow_multiple_values:  false
 
-    #listens_to_filters: []
-    #field: mat_dashboard.provider
   - name: Invoice Month Filter
     title: Invoice Month Filter
     type: field_filter
@@ -29,8 +27,8 @@
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.invoice_month_month
-  - name: Billing Account ID
-    title: Billing Account ID
+  - name: Client Name
+    title: Client Name
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -42,21 +40,7 @@
     model: dev_cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
-    field: mat_dashboard.billing_account_id
-  - name: Project Name
-    title: Project Name
-    type: field_filter
-    default_value: ''
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: tag_list
-      display: popover
-      options: []
-    model: dev_cost_control_multicloud
-    explore: mat_dashboard
-    listens_to_filters: [provider_filter]
-    field: mat_dashboard.project_name
+    field: mat_dashboard.client_name
   - name: Service Description
     title: Service Description
     type: field_filter
@@ -87,6 +71,7 @@
     listens_to_filters: [provider_filter]
     field: mat_dashboard.sku_description
 
+
   elements:
   - title: YTD Costs
     name: YTD Costs
@@ -97,7 +82,7 @@
     filters:
       mat_dashboard.period: Year
       mat_dashboard.period_selected: "-NULL"
-      mat_dashboard.provider: "AWS"
+      mat_dashboard.provider: "AZURE"
     sorts: [mat_dashboard.period_selected desc]
     limit: 500
     dynamic_fields: [{_kind_hint: measure, table_calculation: change, _type_hint: number,
@@ -121,7 +106,7 @@
     value_format: '[>=1000000]$0.00,,"M";$0.00,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
-        font_color: "#F9AB00", color_application: {collection_id: google, palette_id: google-diverging-0},
+        font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -153,11 +138,12 @@
     defaults_version: 1
     series_types: {}
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 2
     col: 0
     width: 4
@@ -171,7 +157,7 @@
     filters:
       mat_dashboard.period: Week
       mat_dashboard.period_selected: "-NULL"
-      mat_dashboard.provider: "AWS"
+      mat_dashboard.provider: "AZURE"
     sorts: [mat_dashboard.period_selected desc]
     limit: 500
     dynamic_fields: [{_kind_hint: measure, table_calculation: change, _type_hint: number,
@@ -195,7 +181,7 @@
     value_format: '[>=1000000]$0.00,,"M";$0.00,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
-        font_color: "#F9AB00", color_application: {collection_id: google, palette_id: google-diverging-0},
+        font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -227,11 +213,12 @@
     defaults_version: 1
     series_types: {}
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 8
     col: 0
     width: 4
@@ -245,7 +232,7 @@
     filters:
       mat_dashboard.period: Month
       mat_dashboard.period_selected: "-NULL"
-      mat_dashboard.provider: "AWS"
+      mat_dashboard.provider: "AZURE"
     sorts: [mat_dashboard.period_selected desc]
     limit: 500
     dynamic_fields: [{_kind_hint: measure, table_calculation: change, _type_hint: number,
@@ -269,7 +256,7 @@
     value_format: '[>=1000000]$0.00,,"M";$0.00,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
-        font_color: "#F9AB00", color_application: {collection_id: google, palette_id: google-diverging-0},
+        font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -301,11 +288,13 @@
     defaults_version: 1
     series_types: {}
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
+
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 6
     col: 0
     width: 4
@@ -319,7 +308,7 @@
     filters:
       mat_dashboard.period: Quarter
       mat_dashboard.period_selected: "-NULL"
-      mat_dashboard.provider: "AWS"
+      mat_dashboard.provider: "AZURE"
     sorts: [mat_dashboard.period_selected desc]
     limit: 500
     dynamic_fields: [{_kind_hint: measure, table_calculation: change, _type_hint: number,
@@ -343,7 +332,7 @@
     value_format: '[>=1000000]$0.00,,"M";$0.00,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
-        font_color: "#F9AB00", color_application: {collection_id: google, palette_id: google-diverging-0},
+        font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -375,11 +364,13 @@
     defaults_version: 1
     series_types: {}
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
+
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 4
     col: 0
     width: 4
@@ -403,7 +394,7 @@
       fill_fields: [mat_dashboard.invoice_month_month]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
-        mat_dashboard.provider: "AWS"
+        mat_dashboard.provider: "AZURE"
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
       query_timezone: America/Los_Angeles
@@ -415,7 +406,7 @@
       fill_fields: [mat_dashboard.invoice_month_month]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
-        mat_dashboard.provider: "AWS"
+        mat_dashboard.provider: "AZURE"
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
       x_axis_gridlines: false
@@ -488,7 +479,7 @@
     point_style: circle_outline
     series_colors:
       net_cost: "#4285F4"
-      credits: "#F9AB00"
+      credits: "#12B5CB"
       total_cost_credits: "#E8EAED"
       4_week_average: "#5F6368"
     series_labels:
@@ -541,7 +532,7 @@
       fields: [merge, mat_dashboard.credits]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
-        mat_dashboard.provider: "AWS"
+        mat_dashboard.provider: "AZURE"
       limit: 500
       dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
           category: dimension, expression: '1', label: MERGE, value_format: !!null '',
@@ -554,7 +545,7 @@
       fields: [merge, mat_dashboard.total_cost_credits]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
-        mat_dashboard.provider: "AWS"
+        mat_dashboard.provider: "AZURE"
       limit: 500
       dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
           category: dimension, expression: '1', label: MERGE, value_format: !!null '',
@@ -661,13 +652,15 @@
       fill_fields: [mat_dashboard.invoice_month_month]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
-        mat_dashboard.provider: "AWS"
+        mat_dashboard.provider: "AZURE"
       listen:
+        #provider_filter: mat_dashboard.provider
         Invoice Month Filter: mat_dashboard.invoice_month_month
-        Billing Account ID: mat_dashboard.billing_account_id
-        Project Name: mat_dashboard.project_name
+        Client Name: mat_dashboard.client_name
+
         Service Description: mat_dashboard.service_description
         SKU Description: mat_dashboard.sku_description
+
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
       query_timezone: America/Los_Angeles
@@ -680,14 +673,16 @@
       fill_fields: [mat_dashboard.invoice_month_month]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
-        mat_dashboard.provider: "AWS"
+        mat_dashboard.provider: "AZURE"
 
       listen:
+        #provider_filter: mat_dashboard.provider
         Invoice Month Filter: mat_dashboard.invoice_month_month
-        Billing Account ID: mat_dashboard.billing_account_id
-        Project Name: mat_dashboard.project_name
+        Client Name: mat_dashboard.client_name
+
         Service Description: mat_dashboard.service_description
         SKU Description: mat_dashboard.sku_description
+
 
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
@@ -815,7 +810,7 @@
     fields: [mat_dashboard.billing_account_id, mat_dashboard.reseller_credits]
     filters:
       #mat_dashboard.invoice_month_month: 52 weeks
-      mat_dashboard.provider: "AWS"
+      mat_dashboard.provider: "AZURE"
     sorts: [mat_dashboard.reseller_credits]
     limit: 10
     dynamic_fields: [{_kind_hint: measure, table_calculation: running_total, _type_hint: number,
@@ -847,7 +842,7 @@
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
-    totals_color: "#F9AB00"
+    totals_color: "#12B5CB"
     color_application:
       collection_id: google
       palette_id: google-categorical-0
@@ -860,38 +855,40 @@
     label_value_format: '[<=1000000]-€0.0,"K";-€0.0,,"M"'
     series_types: {}
     series_colors:
-      mat_dashboard.reseller_credits: "#F9AB00"
+      mat_dashboard.reseller_credits: "#12B5CB"
     show_null_points: true
     defaults_version: 1
     interpolation: linear
     hidden_fields:
 
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
+
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 15
     col: 0
     width: 7
     height: 7
 
-  - title: TOP BILLED ACCOUNT ID
-    name: TOP BILLED ACCOUNT ID
+  - title: TOP BILLED CLIENT NAME
+    name: TOP BILLED CLIENT NAME
     model: dev_cost_control_multicloud
     explore: mat_dashboard
     type: looker_waterfall
-    fields: [mat_dashboard.billing_account_id, mat_dashboard.total_cost_credits]
+    fields: [mat_dashboard.client_name, mat_dashboard.total_cost_credits]
     sorts: [mat_dashboard.total_cost_credits desc]
     filters:
-      mat_dashboard.provider: "AWS"
+      mat_dashboard.provider: "AZURE"
     limit: 10
     dynamic_fields: [{_kind_hint: measure, table_calculation: total_cost_credits, _type_hint: number,
         category: table_calculation, expression: "${mat_dashboard.total_cost_credits}+0", label: Total
           Cost, value_format: '[>=1000000]$0.0,,"M";$0.0,"K"', value_format_name: !!null ''}]
     query_timezone: America/Los_Angeles
-    up_color: "#F9AB00"
+    up_color: "#12B5CB"
     down_color: false
     total_color: "#9AA0A6"
     show_value_labels: true
@@ -931,11 +928,13 @@
     series_types: {}
     hidden_fields: [mat_dashboard.total_cost_credits]
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
+
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 25
     col: 0
     width: 24
@@ -948,7 +947,7 @@
     type: looker_pie
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.billing_entity]
     filters:
-      mat_dashboard.provider: AWS
+      mat_dashboard.provider: "AZURE"
     sorts: [mat_dashboard.billing_entity, mat_dashboard.total_cost_credits desc]
     limit: 6
     column_limit: 50
@@ -961,9 +960,9 @@
       palette_id: b8e44ce6-d0e6-4bd4-b72c-ab0f595726a6
       options:
         steps: 5
-    series_colors:
-      AWS: "#F9AB00"
-      AWS Marketplace: "#EA4335"
+    #series_colors:
+      #AWS: "#12B5CB"
+      #AWS Marketplace: "#EA4335"
     defaults_version: 1
     x_axis_gridlines: false
     y_axis_gridlines: false
@@ -1019,11 +1018,13 @@
     down_color: false
     total_color: false
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
+
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 33
     col: 0
     width: 8
@@ -1037,7 +1038,7 @@
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.billing_entity, mat_dashboard.service_description]
     pivots: [mat_dashboard.billing_entity]
     filters:
-      mat_dashboard.provider: AWS
+      mat_dashboard.provider: "AZURE"
     sorts: [mat_dashboard.billing_entity, mat_dashboard.total_cost_credits desc 2]
     limit: 6
     column_limit: 50
@@ -1048,9 +1049,9 @@
       palette_id: b8e44ce6-d0e6-4bd4-b72c-ab0f595726a6
       options:
         steps: 5
-    series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
-      AWS Marketplace - mat_dashboard.total_cost_credits: "#EA4335"
+    #series_colors:
+      #AWS - mat_dashboard.total_cost_credits: "#12B5CB"
+      #AWS Marketplace - mat_dashboard.total_cost_credits: "#EA4335"
     value_labels: legend
     label_type: labPer
     defaults_version: 1
@@ -1108,11 +1109,13 @@
     down_color: false
     total_color: false
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
+
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 33
     col: 8
     width: 16
@@ -1129,9 +1132,9 @@
     height: 2
 
 
-  - name: "<b></b>"
+  - name: "<b>ACTIVE COSTS</b>"
     type: text
-    title_text: "<b></b>"
+    title_text: "<b>ACTIVE COSTS</b>"
     subtitle_text: ''
     body_text: ''
     row: 37
@@ -1139,246 +1142,289 @@
     width: 24
     height: 2
 
-
-  - name: SERVICE AREA
-    title: SERVICE AREA
+  - name: TOTAL ACTIVE COSTS
+    title: TOTAL ACTIVE COSTS
     merged_queries:
     - model: dev_cost_control_multicloud
       explore: mat_dashboard
-      type: looker_grid
-      fields: [mat_dashboard.service_description, mat_dashboard.total_cost_credits]
-      sorts: [mat_dashboard.total_cost_credits desc]
+      type: table
+      fields: [merge, mat_dashboard.total_cost_credits]
       filters:
-        mat_dashboard.provider: "AWS"
-        mat_dashboard.total_cost_credits: "not null"
+        mat_dashboard.provider: AZURE
       limit: 500
-      column_limit: 50
-      show_view_names: false
-      show_row_numbers: true
-      transpose: false
-      truncate_text: true
-
-      listen:
-        Invoice Month Filter: mat_dashboard.invoice_month_month
-        Billing Account ID: mat_dashboard.billing_account_id
-        Project Name: mat_dashboard.project_name
-        Service Description: mat_dashboard.service_description
-        SKU Description: mat_dashboard.sku_description
-
-      hide_totals: false
-      hide_row_totals: false
-      size_to_fit: true
-      table_theme: white
-      limit_displayed_rows: false
-      enable_conditional_formatting: false
-      header_text_alignment: left
-      header_font_size: 12
-      rows_font_size: 12
-      conditional_formatting_include_totals: false
-      conditional_formatting_include_nulls: false
-      x_axis_gridlines: false
-      y_axis_gridlines: true
-      show_y_axis_labels: true
-      show_y_axis_ticks: true
-      y_axis_tick_density: default
-      y_axis_tick_density_custom: 5
-      show_x_axis_label: true
-      show_x_axis_ticks: true
-      y_axis_scale_mode: linear
-      x_axis_reversed: false
-      y_axis_reversed: false
-      plot_size_by_field: false
-      trellis: ''
-      stacking: ''
-      legend_position: center
-      point_style: none
-      show_value_labels: false
-      label_density: 25
-      x_axis_scale: auto
-      y_axis_combined: true
-      ordering: none
-      show_null_labels: false
-      show_totals_labels: false
-      show_silhouette: false
-      totals_color: "#808080"
-      defaults_version: 1
-      series_types: {}
+      dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
+          category: dimension, expression: '1', label: MERGE, value_format: !!null '',
+          value_format_name: !!null ''}]
+      join_fields: []
     - model: dev_cost_control_multicloud
       explore: mat_dashboard
       type: table
-      fields: [mat_dashboard.credits, mat_dashboard.service_description]
+      fields: [merge, mat_dashboard.cost_client]
       filters:
-        mat_dashboard.provider: "AWS"
-        mat_dashboard.credits: "not null"
+        mat_dashboard.provider: AZURE
       limit: 500
+      dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
+          category: dimension, expression: '1', label: MERGE, value_format: !!null '',
+          value_format_name: !!null ''}]
       query_timezone: America/Los_Angeles
       join_fields:
-      - field_name: mat_dashboard.service_description
-        source_field_name: mat_dashboard.service_description
-
-      listen:
-        Invoice Month Filter: mat_dashboard.invoice_month_month
-        Billing Account ID: mat_dashboard.billing_account_id
-        Project Name: mat_dashboard.project_name
-        Service Description: mat_dashboard.service_description
-        SKU Description: mat_dashboard.sku_description
+      - field_name: merge
+        source_field_name: merge
     color_application:
       collection_id: google
       palette_id: google-categorical-0
-    show_sql_query_menu_options: false
-    show_totals: true
-    show_row_totals: true
-    show_view_names: false
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    size_to_fit: true
-    series_cell_visualizations:
-      mat_dashboard.total_cost_credits:
-        is_active: true
-        palette:
-          palette_id: google-sequential-0
-          collection_id: google
-      mat_dashboard.credits:
-        is_active: true
-        palette:
-          palette_id: google-sequential-0
-          collection_id: google
-    table_theme: gray
-    limit_displayed_rows: false
+      options:
+        steps: 5
+        reverse: false
+    custom_color_enabled: true
+    custom_color: "#5F6368"
+    show_single_value_title: true
+    single_value_title: TOTAL ACTIVE COSTS
+    value_format: '[<=1000000]€0.0,"K";€0.0,,"M"'
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
     enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: '10'
-    rows_font_size: '10'
+    conditional_formatting: [{type: equal to, value: !!null '', background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: google, palette_id: google-diverging-0},
+        bold: false, italic: false, strikethrough: false, fields: !!null ''}]
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    series_value_format:
-      mat_dashboard.credits: '[<=1000000]$0.0,"K";$0.0,,"M"'
-    type: looker_grid
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    y_axes: [{label: '', orientation: left, series: [{axisId: net_cost, id: net_cost,
+            name: Net Cost}, {axisId: credits, id: credits, name: Credits}, {axisId: total_cost_credits,
+            id: total_cost_credits, name: Total Cost}, {axisId: 4_week_average, id: 4_week_average,
+            name: 4-Week Net Cost Rolling Avg.}], showLabels: true, showValues: true,
+        valueFormat: '[<=1000000]$0,"K";$0,,"M"', unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: last
+      num_rows: '1'
+    legend_position: center
     series_types: {}
-    row: 37
+    point_style: circle_outline
+    series_colors:
+      net_cost: "#4285F4"
+      credits: "#34A853"
+      total_cost_credits: "#E8EAED"
+      4_week_average: "#5F6368"
+    series_labels:
+      4_week_average: 4-Week Net Cost Rolling Avg.
+    show_value_labels: false
+    label_density: 25
+    label_color: []
+    x_axis_scale: auto
+    y_axis_combined: true
+    reference_lines: []
+    trend_lines: []
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    type: single_value
+    hidden_fields: [merge, mat_dashboard.total_cost_credits]
+    column_limit: 50
+    dynamic_fields: [{category: table_calculation, expression: "${mat_dashboard.cost_client}/${mat_dashboard.total_cost_credits}",
+        label: Percent of Passive Costs, value_format: !!null '', value_format_name: percent_0,
+        _kind_hint: measure, table_calculation: percent_of_passive_costs, _type_hint: number}]
+    row: 38
     col: 0
-    width: 12
-    height: 6
+    width: 7
+    height: 4
 
+  - name: margin_cost
+    title: Margin Cost
+    model: dev_cost_control_multicloud
+    explore: mat_dashboard
+    type: single_value
+    fields: [mat_dashboard.total_cost_credits, mat_dashboard.cost_client]
+    filters:
+      mat_dashboard.provider: AZURE
+    limit: 500
+    dynamic_fields:
+    - table_calculation: margin
+      label: Margin
+      expression: "${mat_dashboard.cost_client}-${mat_dashboard.total_cost_credits}"
+      value_format:
+      value_format_name:
+      _kind_hint: measure
+      _type_hint: number
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: true
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    single_value_title: Margin Cost
+    value_format: '[<=1000000]-€0,"K";-€0,,"M"'
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#ffffff",
+        font_color: "#7CB342", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
+          palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
+        strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',
+        background_color: "#1A73E8", font_color: !!null '', color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
+          palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
+        strikethrough: false, fields: !!null ''}, {type: less than, value: 0, background_color: "#ffffff",
+        font_color: "#EA4335", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
+          palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
+        strikethrough: false, fields: !!null ''}]
+    hidden_fields: [mat_dashboard.total_cost_credits, mat_dashboard.cost_client]
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    series_types: {}
+    row: 42
+    col: 0
+    width: 7
+    height: 3
 
-  - name: SKU
-    title: SKU
+  - name: ACTIVE VS PASSIVE ANALYSIS
+    title: ACTIVE VS PASSIVE ANALYSIS
     merged_queries:
     - model: dev_cost_control_multicloud
       explore: mat_dashboard
-      type: looker_grid
-      fields: [mat_dashboard.total_cost_credits, mat_dashboard.sku_description]
-      sorts: [mat_dashboard.total_cost_credits desc]
+      type: table
+      fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
+      fill_fields: [mat_dashboard.invoice_month_month]
       filters:
-        mat_dashboard.provider: "AWS"
-      listen:
-        Invoice Month Filter: mat_dashboard.invoice_month_month
-        Billing Account ID: mat_dashboard.billing_account_id
-        Project Name: mat_dashboard.project_name
-        Service Description: mat_dashboard.service_description
-        SKU Description: mat_dashboard.sku_description
-
+        mat_dashboard.invoice_month_month: 52 weeks
+        mat_dashboard.provider: AZURE
+      sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
-      column_limit: 50
-      show_view_names: false
-      show_row_numbers: true
-      transpose: false
-      truncate_text: true
-      hide_totals: false
-      hide_row_totals: false
-      size_to_fit: true
-      table_theme: white
-      limit_displayed_rows: false
-      enable_conditional_formatting: false
-      header_text_alignment: left
-      header_font_size: 12
-      rows_font_size: 12
-      conditional_formatting_include_totals: false
-      conditional_formatting_include_nulls: false
-      x_axis_gridlines: false
-      y_axis_gridlines: true
-      show_y_axis_labels: true
-      show_y_axis_ticks: true
-      y_axis_tick_density: default
-      y_axis_tick_density_custom: 5
-      show_x_axis_label: true
-      show_x_axis_ticks: true
-      y_axis_scale_mode: linear
-      x_axis_reversed: false
-      y_axis_reversed: false
-      plot_size_by_field: false
-      trellis: ''
-      stacking: ''
-      legend_position: center
-      point_style: none
-      show_value_labels: false
-      label_density: 25
-      x_axis_scale: auto
-      y_axis_combined: true
-      ordering: none
-      show_null_labels: false
-      show_totals_labels: false
-      show_silhouette: false
-      totals_color: "#808080"
-      defaults_version: 1
-      series_types: {}
+      query_timezone: America/Los_Angeles
+      join_fields: []
     - model: dev_cost_control_multicloud
       explore: mat_dashboard
       type: table
-      fields: [mat_dashboard.credits, mat_dashboard.sku_description]
-      sorts: [mat_dashboard.credits desc]
+      fields: [mat_dashboard.invoice_month_month, mat_dashboard.cost_client]
+      fill_fields: [mat_dashboard.invoice_month_month]
       filters:
-        mat_dashboard.provider: "AWS"
-      listen:
-        Invoice Month Filter: mat_dashboard.invoice_month_month
-        Billing Account ID: mat_dashboard.billing_account_id
-        Project Name: mat_dashboard.project_name
-        Service Description: mat_dashboard.service_description
-        SKU Description: mat_dashboard.sku_description
+        mat_dashboard.invoice_month_month: 52 weeks
+        mat_dashboard.provider: AZURE
+      sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
-      query_timezone: America/Los_Angeles
       join_fields:
-      - field_name: mat_dashboard.sku__description
-        source_field_name: mat_dashboard.sku__description
+      - field_name: mat_dashboard.invoice_month_month
+        source_field_name: mat_dashboard.invoice_month_month
     color_application:
       collection_id: google
       palette_id: google-categorical-0
-    show_sql_query_menu_options: false
-    show_totals: true
-    show_row_totals: true
+      options:
+        steps: 5
+        reverse: false
+    x_axis_gridlines: false
+    y_axis_gridlines: false
     show_view_names: false
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    size_to_fit: true
-    series_cell_visualizations:
-      mat_dashboard.total_cost_credits:
-        is_active: true
-        palette:
-          palette_id: google-sequential-0
-          collection_id: google
-      mat_dashboard.credits:
-        is_active: true
-        palette:
-          palette_id: google-sequential-0
-          collection_id: google
-    table_theme: gray
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: '10'
-    rows_font_size: '10'
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_value_format:
-      mat_dashboard.credits: '[<=1000000]$0.0,"K";$0.0,,"M"'
-    type: looker_grid
+    y_axes: [{label: '', orientation: left, series: [{axisId: cost_net_to_provider,
+            id: cost_net_to_provider, name: Cost Net To Provider}, {axisId: cost_client,
+            id: cost_client, name: Cost Client}, {axisId: margin, id: margin, name: Margin}],
+        showLabels: true, showValues: true, valueFormat: '[<=1000000]$0,"K";$0,,"M"',
+        unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: last
+      num_rows: '1'
+    legend_position: center
     series_types: {}
-    row: 37
-    col: 12
-    width: 12
-    height: 6
+    point_style: circle_outline
+    series_colors:
+      net_cost: "#4285F4"
+      credits: "#12B5CB"
+      total_cost_credits: "#E8EAED"
+      4_week_average: "#5F6368"
+    series_labels:
+      4_week_average: 4-Week Net Cost Rolling Avg.
+    show_value_labels: false
+    label_density: 25
+    label_color: []
+    x_axis_scale: auto
+    y_axis_combined: true
+    reference_lines: [{reference_type: line, range_start: max, range_end: min, margin_top: deviation,
+        margin_value: mean, margin_bottom: deviation, label_position: right, color: "#000000",
+        line_value: '0'}]
+    trend_lines: []
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    show_null_points: true
+    interpolation: linear
+    type: looker_line
+    hidden_fields: [mat_dashboard.total_cost_credits, mat_dashboard.cost_client]
+    sorts: [mat_dashboard.invoice_month_month desc]
+    column_limit: 50
+    dynamic_fields: [{category: table_calculation, expression: "${mat_dashboard.total_cost_credits}",
+        label: Passive Costs, value_format: !!null '', value_format_name: eur_0, _kind_hint: measure,
+        table_calculation: passive_costs, _type_hint: number}, {category: table_calculation,
+        expression: "${mat_dashboard.cost_client}", label: Active Costs, value_format: !!null '',
+        value_format_name: eur_0, _kind_hint: measure, table_calculation: active_costs,
+        _type_hint: number}, {category: table_calculation, expression: "${mat_dashboard.cost_client}-${mat_dashboard.total_cost_credits}",
+        label: Margin, value_format: !!null '', value_format_name: eur_0, _kind_hint: measure,
+        table_calculation: margin, _type_hint: number}]
+    row: 38
+    col: 7
+    width: 17
+    height: 7
+
 
   - title: YEAR OVER YEAR SPEND
     name: YEAR OVER YEAR SPEND
@@ -1389,7 +1435,7 @@
     pivots: [mat_dashboard.invoice_month_year]
     filters:
       mat_dashboard.total_cost_credits: NOT NULL
-      mat_dashboard.provider: "AWS"
+      mat_dashboard.provider: "AZURE"
     sorts: [mat_dashboard.invoice_month_year, mat_dashboard.invoice_month_month_name]
     limit: 500
     column_limit: 50
@@ -1430,11 +1476,13 @@
     series_types: {}
     defaults_version: 1
     listen:
+      #provider_filter: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
+      Client Name: mat_dashboard.client_name
+
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+
     row: 2
     col: 4
     width: 20
