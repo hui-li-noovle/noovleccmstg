@@ -25,7 +25,7 @@
       type: relative_timeframes
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.invoice_month_month
@@ -39,7 +39,7 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.billing_account_id
@@ -53,7 +53,7 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.project_name
@@ -67,7 +67,7 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.service_description
@@ -82,7 +82,7 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.sku_description
@@ -90,7 +90,7 @@
   elements:
   - title: YTD Costs
     name: YTD Costs
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
@@ -164,7 +164,7 @@
     height: 2
   - title: WTD Costs
     name: WTD Costs
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
@@ -238,7 +238,7 @@
     height: 2
   - title: MTD Costs
     name: MTD Costs
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
@@ -312,7 +312,7 @@
     height: 2
   - title: QTD Costs
     name: QTD Costs
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
@@ -396,7 +396,7 @@
   - name: COST VS CREDIT ANALYSIS
     title: COST VS CREDIT ANALYSIS
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
@@ -408,7 +408,7 @@
       limit: 500
       query_timezone: America/Los_Angeles
       join_fields: []
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: looker_column
       fields: [mat_dashboard.credits, mat_dashboard.invoice_month_month]
@@ -535,7 +535,7 @@
   - name: TOTAL CREDITS
     title: TOTAL CREDITS
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [merge, mat_dashboard.credits]
@@ -548,7 +548,7 @@
           value_format_name: !!null ''}]
       query_timezone: America/Los_Angeles
       join_fields: []
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [merge, mat_dashboard.total_cost_credits]
@@ -654,7 +654,7 @@
   - name: PERCENT OF SPEND
     title: PERCENT OF SPEND
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
@@ -672,7 +672,7 @@
       limit: 500
       query_timezone: America/Los_Angeles
       join_fields: []
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: looker_line
       fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_credits, mat_dashboard.promotion_credits,
@@ -808,7 +808,7 @@
     height: 4
   - title: RESELLER MARGIN BY ACCOUNT ID
     name: RESELLER MARGIN BY ACCOUNT ID
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
 
     explore: mat_dashboard
     type: looker_bar
@@ -879,7 +879,7 @@
 
   - title: TOP BILLED ACCOUNT ID
     name: TOP BILLED ACCOUNT ID
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_waterfall
     fields: [mat_dashboard.billing_account_id, mat_dashboard.total_cost_credits]
@@ -943,7 +943,7 @@
 
   - name: SERVICE TYPE
     title: SERVICE TYPE
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_pie
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.billing_entity]
@@ -1031,7 +1031,7 @@
 
   - name: TOP BILLED SERVICES
     title: TOP BILLED SERVICES
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_donut_multiples
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.billing_entity, mat_dashboard.service_description]
@@ -1143,7 +1143,7 @@
   - name: SERVICE AREA
     title: SERVICE AREA
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: looker_grid
       fields: [mat_dashboard.service_description, mat_dashboard.total_cost_credits]
@@ -1203,7 +1203,7 @@
       totals_color: "#808080"
       defaults_version: 1
       series_types: {}
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [mat_dashboard.credits, mat_dashboard.service_description]
@@ -1265,7 +1265,7 @@
   - name: SKU
     title: SKU
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: looker_grid
       fields: [mat_dashboard.total_cost_credits, mat_dashboard.sku_description]
@@ -1323,7 +1323,7 @@
       totals_color: "#808080"
       defaults_version: 1
       series_types: {}
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [mat_dashboard.credits, mat_dashboard.sku_description]
@@ -1382,7 +1382,7 @@
 
   - title: YEAR OVER YEAR SPEND
     name: YEAR OVER YEAR SPEND
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_line
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.invoice_month_month_name, mat_dashboard.invoice_month_year]
@@ -1444,11 +1444,12 @@
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::multicloud_overview?Invoice+Month+Filter=this+year&Billing+Account+ID=&Provider=AWS%2CGCP%2CAZURE&Project+Name=&Service+Description=&SKU+Description=\"\
-      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::aws_summary?provider_filter=GCP\"\
-      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
-      \ >\nAZURE Summary\n</a>\n</p>\n"
+
+    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
+      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+    \ >\nAZURE Summary\n</a>\n</p>\n"
     row: -2
     col: 16
     width: 12
