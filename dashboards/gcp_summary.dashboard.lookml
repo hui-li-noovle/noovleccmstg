@@ -193,7 +193,7 @@
       palette_id: google-categorical-0
     custom_color: "#FFF"
     single_value_title: WTD Costs
-    value_format: '[>=1000000]$0,,"M";$0,"K"'
+    value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
         font_color: "#34A853", color_application: {collection_id: google, palette_id: google-diverging-0},
@@ -1024,11 +1024,11 @@
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/2?Provider=AWS%2CGCP&Invoice+Month=202201%2C202202%2C202203%2C202204&Usage+Start+Date=this+year+to+second&Usage+End+Date=this+year+to+second\"\
+    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
       \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
       \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
-    "
+    \ >\nAZURE Summary\n</a>\n</p>\n"
     row: -2
     col: 16
     width: 12

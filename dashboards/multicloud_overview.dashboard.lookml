@@ -252,9 +252,9 @@
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview?Invoice+Month+Filter=this+year&Billing+Account+ID=&Provider=AWS%2CGCP%2CAZURE&Project+Name=&Service+Description=&SKU+Description=\"\
+    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
       \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
       \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
       \ >\nAZURE Summary\n</a>\n</p>\n"
     row: 0

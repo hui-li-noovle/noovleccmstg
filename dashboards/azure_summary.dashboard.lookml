@@ -103,7 +103,7 @@
       palette_id: google-categorical-0
     custom_color: "#FFF"
     single_value_title: YTD Costs
-    value_format: '[>=1000000]$0.00,,"M";$0.00,"K"'
+    value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
         font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
@@ -178,7 +178,7 @@
       palette_id: google-categorical-0
     custom_color: "#FFF"
     single_value_title: WTD Costs
-    value_format: '[>=1000000]$0.00,,"M";$0.00,"K"'
+    value_format: '[>=1000000]€0.00,,"M";€0.00,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
         font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
@@ -253,7 +253,7 @@
       palette_id: google-categorical-0
     custom_color: "#FFF"
     single_value_title: MTD Costs
-    value_format: '[>=1000000]$0.00,,"M";$0.00,"K"'
+    value_format: '[>=1000000]€0.00,,"M";€0.00,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
         font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
@@ -329,7 +329,7 @@
       palette_id: google-categorical-0
     custom_color: "#FFF"
     single_value_title: QTD Costs
-    value_format: '[>=1000000]$0.00,,"M";$0.00,"K"'
+    value_format: '[>=1000000]€0.00,,"M";€0.00,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
         font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
@@ -886,7 +886,7 @@
     limit: 10
     dynamic_fields: [{_kind_hint: measure, table_calculation: total_cost_credits, _type_hint: number,
         category: table_calculation, expression: "${mat_dashboard.total_cost_credits}+0", label: Total
-          Cost, value_format: '[>=1000000]$0.0,,"M";$0.0,"K"', value_format_name: !!null ''}]
+          Cost, value_format: '[>=1000000]€0.0,,"M";€0.0,"K"', value_format_name: !!null ''}]
     query_timezone: America/Los_Angeles
     up_color: "#12B5CB"
     down_color: false
@@ -1471,7 +1471,7 @@
     y_axes: [{label: '', orientation: left, series: [{axisId: mat_dashboard.total_cost_credits,
             id: 2020 - mat_dashboard.total_cost_credits, name: '2020'}, {axisId: mat_dashboard.total_cost_credits,
             id: 2021 - mat_dashboard.total_cost_credits, name: '2021'}], showLabels: true, showValues: true,
-        valueFormat: '[>=1000000]$0.0,,"M";$0,"K"', unpinAxis: false, tickDensity: default,
+        valueFormat: '[>=1000000]€0.0,,"M";$0,"K"', unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear}]
     series_types: {}
     defaults_version: 1
@@ -1493,11 +1493,11 @@
     title_text: ''
     subtitle_text: ''
 
-    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/2?Provider=AWS%2CGCP&Invoice+Month=202201%2C202202%2C202203%2C202204&Usage+Start+Date=this+year+to+second&Usage+End+Date=this+year+to+second\"\
+    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
       \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
       \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
-      "
+    \ >\nAZURE Summary\n</a>\n</p>\n"
     row: -2
     col: 16
     width: 12
