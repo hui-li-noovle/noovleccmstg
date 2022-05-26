@@ -3,6 +3,7 @@
   layout: newspaper
   preferred_viewer: dashboards-next
 
+  crossfilter_enabled: true
   filters:
   - name: provider_filter
     title: "provider"
@@ -1027,7 +1028,7 @@
       \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
       \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=GCP\"\
       \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
-      \ >\nAZURE Summary\n</a>\n</p>\n"
+    "
     row: -2
     col: 16
     width: 12
