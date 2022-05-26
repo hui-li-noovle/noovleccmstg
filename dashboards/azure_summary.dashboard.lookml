@@ -23,7 +23,7 @@
       type: relative_timeframes
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.invoice_month_month
@@ -37,7 +37,7 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.client_name
@@ -51,7 +51,7 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.service_description
@@ -66,7 +66,7 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [provider_filter]
     field: mat_dashboard.sku_description
@@ -75,7 +75,7 @@
   elements:
   - title: YTD Costs
     name: YTD Costs
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
@@ -150,7 +150,7 @@
     height: 2
   - title: WTD Costs
     name: WTD Costs
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
@@ -225,7 +225,7 @@
     height: 2
   - title: MTD Costs
     name: MTD Costs
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
@@ -301,7 +301,7 @@
     height: 2
   - title: QTD Costs
     name: QTD Costs
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
@@ -387,7 +387,7 @@
   - name: COST VS CREDIT ANALYSIS
     title: COST VS CREDIT ANALYSIS
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
@@ -399,7 +399,7 @@
       limit: 500
       query_timezone: America/Los_Angeles
       join_fields: []
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: looker_column
       fields: [mat_dashboard.credits, mat_dashboard.invoice_month_month]
@@ -526,7 +526,7 @@
   - name: TOTAL CREDITS
     title: TOTAL CREDITS
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [merge, mat_dashboard.credits]
@@ -539,7 +539,7 @@
           value_format_name: !!null ''}]
       query_timezone: America/Los_Angeles
       join_fields: []
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [merge, mat_dashboard.total_cost_credits]
@@ -645,7 +645,7 @@
   - name: PERCENT OF SPEND
     title: PERCENT OF SPEND
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
@@ -665,7 +665,7 @@
       limit: 500
       query_timezone: America/Los_Angeles
       join_fields: []
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: looker_line
       fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_credits, mat_dashboard.promotion_credits,
@@ -803,7 +803,7 @@
     height: 4
   - title: RESELLER MARGIN BY ACCOUNT ID
     name: RESELLER MARGIN BY ACCOUNT ID
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
 
     explore: mat_dashboard
     type: looker_bar
@@ -876,7 +876,7 @@
 
   - title: TOP BILLED CLIENT NAME
     name: TOP BILLED CLIENT NAME
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_waterfall
     fields: [mat_dashboard.client_name, mat_dashboard.total_cost_credits]
@@ -942,7 +942,7 @@
 
   - name: SERVICE TYPE
     title: SERVICE TYPE
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_pie
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.billing_entity]
@@ -1032,7 +1032,7 @@
 
   - name: TOP BILLED SERVICES
     title: TOP BILLED SERVICES
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_donut_multiples
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.billing_entity, mat_dashboard.service_description]
@@ -1145,7 +1145,7 @@
   - name: TOTAL ACTIVE COSTS
     title: TOTAL ACTIVE COSTS
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [merge, mat_dashboard.total_cost_credits]
@@ -1156,7 +1156,7 @@
           category: dimension, expression: '1', label: MERGE, value_format: !!null '',
           value_format_name: !!null ''}]
       join_fields: []
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [merge, mat_dashboard.cost_client]
@@ -1252,7 +1252,7 @@
 
   - name: margin_cost
     title: Margin Cost
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.cost_client]
@@ -1326,7 +1326,7 @@
   - name: ACTIVE VS PASSIVE ANALYSIS
     title: ACTIVE VS PASSIVE ANALYSIS
     merged_queries:
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
@@ -1338,7 +1338,7 @@
       limit: 500
       query_timezone: America/Los_Angeles
       join_fields: []
-    - model: dev_cost_control_multicloud
+    - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
       fields: [mat_dashboard.invoice_month_month, mat_dashboard.cost_client]
@@ -1428,7 +1428,7 @@
 
   - title: YEAR OVER YEAR SPEND
     name: YEAR OVER YEAR SPEND
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_line
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.invoice_month_month_name, mat_dashboard.invoice_month_year]
@@ -1492,10 +1492,10 @@
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/2?Provider=AWS%2CGCP&Invoice+Month=202201%2C202202%2C202203%2C202204&Usage+Start+Date=this+year+to+second&Usage+End+Date=this+year+to+second\"\
-      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::aws_summary?provider_filter=GCP\"\
-      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/2?Provider=AWS%2CGCP&Invoice+Month=202201%2C202202%2C202203%2C202204&Usage+Start+Date=this+year+to+second&Usage+End+Date=this+year+to+second\"\
+      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=GCP\"\
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
       \ >\nAZURE Summary\n</a>\n</p>\n"
     row: -2
     col: 16
