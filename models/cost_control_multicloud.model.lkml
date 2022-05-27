@@ -1,4 +1,4 @@
-connection: "prd-noovle-spa-consumption-multicloud_output"
+connection: "dev-noovle-spa-consumption-cost_control_multicloud"
 
 # include all the views
 include: "/views/**/*.view"

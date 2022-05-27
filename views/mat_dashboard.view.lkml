@@ -1,5 +1,5 @@
 view: mat_dashboard {
-  sql_table_name: `prd-noovle-spa-consumption.multicloud_output.mat_dashboard`
+  sql_table_name: `dev-noovle-spa-consumption.cost_control_multicloud.mat_dashboard`
     ;;
 
   dimension: billing_account_id {
