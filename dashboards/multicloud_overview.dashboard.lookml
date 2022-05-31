@@ -807,11 +807,11 @@
     required: false
     ui_config:
       type: relative_timeframes
-      display: inline
+      display: popover
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: []
+    listens_to_filters: [provider_filter]
     field: mat_dashboard.invoice_month_month
   - name: Billing Account ID
     title: Billing Account ID
