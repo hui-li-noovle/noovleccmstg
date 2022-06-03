@@ -3,7 +3,7 @@
   layout: newspaper
   preferred_viewer: dashboards-next
 
-  #some change for testing
+  #some change for testing webhook
 
   crossfilter_enabled: true
   filters:
