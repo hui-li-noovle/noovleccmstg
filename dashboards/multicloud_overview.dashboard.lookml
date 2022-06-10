@@ -2,7 +2,7 @@
   title: MultiCloud Overview
   layout: newspaper
   preferred_viewer: dashboards-next
-  crossfilter_enabled: true
+  crossfilter_enabled: false
   description: ''
   elements:
   - title: Monthly Cost
@@ -46,8 +46,8 @@
     totals_color: "#808080"
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
-      GCP - mat_dashboard.total_cost_credits: "#34A853"
+      AWS - mat_dashboard.total_cost_credits: "#b375e6"
+      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
     show_dropoff: false
     defaults_version: 1
     show_row_numbers: true
@@ -120,8 +120,8 @@
       num_rows: '10'
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
-      GCP - mat_dashboard.total_cost_credits: "#34A853"
+      AWS - mat_dashboard.total_cost_credits: "#b375e6"
+      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
     custom_color_enabled: true
     custom_color: "#079c98"
     show_single_value_title: true
@@ -168,7 +168,7 @@
     type: looker_grid
     fields: [mat_dashboard.provider, mat_dashboard.invoice_month, mat_dashboard.billing_account_id,
       mat_dashboard.project_name, mat_dashboard.service_description, mat_dashboard.sku_description,
-      mat_dashboard.usage_amount, mat_dashboard.total_cost_credits]
+       mat_dashboard.total_cost_credits]
     sorts: [mat_dashboard.total_cost_credits desc]
     limit: 500
     show_view_names: false
@@ -252,10 +252,10 @@
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
-      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
-      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccm.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
+      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
       \ >\nAZURE Summary\n</a>\n</p>\n"
     row: 0
     col: 12
@@ -281,7 +281,7 @@
     conditional_formatting_include_nulls: false
     single_value_title: GCP Total Cost
     value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
-    conditional_formatting: [{type: greater than, value: 0, background_color: "#34A853",
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#ffae7c",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',
@@ -344,8 +344,8 @@
     hidden_series: []
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
-      GCP - mat_dashboard.total_cost_credits: "#34A853"
+      AWS - mat_dashboard.total_cost_credits: "#b375e6"
+      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
     custom_color_enabled: true
     custom_color: "#079c98"
     show_single_value_title: true
@@ -404,8 +404,8 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     single_value_title: AWS Total Cost
-    value_format: '[>=1000000]$0.0,,"M";$0.0,"K"'
-    conditional_formatting: [{type: greater than, value: 0, background_color: "#F9AB00",
+    value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#b375e6",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',
@@ -497,7 +497,7 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     single_value_title: Change of Total Cost
-    comparison_label: Current Month
+    comparison_label: Current vs Previous Month
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -560,7 +560,7 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     single_value_title: Change of Total Cost
-    comparison_label: Current Quarter
+    comparison_label: Current vs Previous Quarter
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -882,7 +882,7 @@
       options: []
     model: cost_control_multicloud
 
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_column
     fields: [mat_dashboard.provider, mat_dashboard.total_cost_credits, mat_dashboard.invoice_month]
@@ -920,8 +920,8 @@
     totals_color: "#808080"
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
-      GCP - mat_dashboard.total_cost_credits: "#34A853"
+      AWS - mat_dashboard.total_cost_credits: "#b375e6"
+      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
     show_dropoff: false
     defaults_version: 1
     show_row_numbers: true
@@ -949,7 +949,7 @@
     height: 8
   - title: Top Billed Services
     name: Top Billed Services
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_bar
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.service_description,
@@ -994,8 +994,8 @@
       num_rows: '10'
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
-      GCP - mat_dashboard.total_cost_credits: "#34A853"
+      AWS - mat_dashboard.total_cost_credits: "#b375e6"
+      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
     custom_color_enabled: true
     custom_color: "#079c98"
     show_single_value_title: true
@@ -1037,7 +1037,7 @@
     height: 6
   - title: Cost Details
     name: Cost Details
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_grid
     fields: [mat_dashboard.provider, mat_dashboard.invoice_month, mat_dashboard.billing_account_id,
@@ -1126,10 +1126,10 @@
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::multicloud_overview?Invoice+Month+Filter=this+year&Billing+Account+ID=&Provider=AWS%2CGCP%2CAZURE&Project+Name=&Service+Description=&SKU+Description=\"\
-      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::aws_summary?provider_filter=GCP\"\
-      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/dev_cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+    body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview?Invoice+Month+Filter=this+year&Billing+Account+ID=&Provider=AWS%2CGCP%2CAZURE&Project+Name=&Service+Description=&SKU+Description=\"\
+      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=GCP\"\
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
       \ >\nAZURE Summary\n</a>\n</p>\n"
     row: 0
     col: 12
@@ -1137,7 +1137,7 @@
     height: 2
   - title: Untitled
     name: Untitled
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.total_cost_credits]
@@ -1155,7 +1155,7 @@
     conditional_formatting_include_nulls: false
     single_value_title: GCP Total Cost
     value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
-    conditional_formatting: [{type: greater than, value: 0, background_color: "#34A853",
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#ffae7c",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',
@@ -1175,7 +1175,7 @@
     height: 3
   - title: Top Billed Sku
     name: Top Billed Sku
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_bar
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.provider, mat_dashboard.sku_description]
@@ -1218,8 +1218,8 @@
     hidden_series: []
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
-      GCP - mat_dashboard.total_cost_credits: "#34A853"
+      AWS - mat_dashboard.total_cost_credits: "#b375e6"
+      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
     custom_color_enabled: true
     custom_color: "#079c98"
     show_single_value_title: true
@@ -1261,7 +1261,7 @@
     height: 6
   - title: Untitled (Copy)
     name: Untitled (Copy)
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.total_cost_credits]
@@ -1279,7 +1279,7 @@
     conditional_formatting_include_nulls: false
     single_value_title: AWS Total Cost
     value_format: '[>=1000000]$0.0,,"M";$0.0,"K"'
-    conditional_formatting: [{type: greater than, value: 0, background_color: "#F9AB00",
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#b375e6",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',
@@ -1299,7 +1299,7 @@
     height: 3
   - title: Untitled (Copy 2)
     name: Untitled (Copy 2)
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.total_cost_credits]
@@ -1350,7 +1350,7 @@
 
   - title: New Tile
     name: New Tile
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
@@ -1413,7 +1413,7 @@
     height: 4
   - title: New Tile (Copy)
     name: New Tile (Copy)
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.invoice_month_quarter]
@@ -1476,7 +1476,7 @@
     height: 4
   - title: Current Month vs Previous Month
     name: Current Month vs Previous Month
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_bar
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.service_description,
@@ -1575,7 +1575,7 @@
     height: 3
   - title: Current Month vs Previous Month
     name: Current Month vs Previous Month (2)
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_bar
     fields: [mat_dashboard.total_cost_credits, mat_dashboard.invoice_month_month,
@@ -1681,12 +1681,13 @@
     required: false
     ui_config:
       type: relative_timeframes
-      display: inline
+      display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: []
+    listens_to_filters: [provider_filter]
     field: mat_dashboard.invoice_month_month
+
   - name: Billing Account ID
     title: Billing Account ID
     type: field_filter
@@ -1697,25 +1698,24 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [Project Name, Service Description, Provider, SKU Description]
     field: mat_dashboard.billing_account_id
+
   - name: Provider
-    title: Provider
+    title: "provider"
     type: field_filter
-    default_value: AWS,GCP,AZURE
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: button_group
-      display: inline
-      options: []
-    model: dev_cost_control_multicloud
     explore: mat_dashboard
+    #field: mat_dashboard.provider
+    #default_value: GCP,AWS,AZURE
+    allow_multiple_values:  false
+    #listens_to_filters: []
+    #field: mat_dashboard.provider
     listens_to_filters: [Billing Account ID, Project Name, Service Description, SKU
         Description]
     field: mat_dashboard.provider
+
   - name: Project Name
     title: Project Name
     type: field_filter
@@ -1726,10 +1726,11 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [Billing Account ID, Service Description, Provider, SKU Description]
     field: mat_dashboard.project_name
+
   - name: Service Description
     title: Service Description
     type: field_filter
@@ -1740,10 +1741,11 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [Billing Account ID, Project Name, Provider, SKU Description]
     field: mat_dashboard.service_description
+
   - name: SKU Description
     title: SKU Description
     type: field_filter
@@ -1754,7 +1756,7 @@
       type: tag_list
       display: popover
       options: []
-    model: dev_cost_control_multicloud
+    model: cost_control_multicloud
     explore: mat_dashboard
     listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
     field: mat_dashboard.sku_description
