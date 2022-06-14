@@ -2,7 +2,7 @@
   title: MultiCloud Overview
   layout: newspaper
   preferred_viewer: dashboards-next
-  crossfilter_enabled: false
+  crossfilter_enabled: true
   description: ''
   elements:
   - title: Monthly Cost
@@ -61,6 +61,7 @@
     header_text_alignment: left
     header_font_size: 12
     rows_font_size: 12
+    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     listen:
@@ -91,6 +92,7 @@
     show_y_axis_ticks: true
     y_axis_tick_density: default
     y_axis_tick_density_custom: 5
+    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
     show_x_axis_label: true
     show_x_axis_ticks: true
     y_axis_scale_mode: linear
@@ -167,7 +169,7 @@
     explore: mat_dashboard
     type: looker_grid
     fields: [mat_dashboard.provider, mat_dashboard.invoice_month, mat_dashboard.billing_account_id,
-      mat_dashboard.project_name, mat_dashboard.service_description, mat_dashboard.sku_description,
+      mat_dashboard.project__name, mat_dashboard.service_description, mat_dashboard.sku_description,
        mat_dashboard.total_cost_credits]
     sorts: [mat_dashboard.total_cost_credits desc]
     limit: 500
@@ -253,9 +255,9 @@
     title_text: ''
     subtitle_text: ''
     body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
-      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
-      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?Provider=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?Provider=AWS\"\
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?Provider=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
       \ >\nAZURE Summary\n</a>\n</p>\n"
     row: 0
     col: 12
@@ -319,6 +321,7 @@
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
+    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
     plot_size_by_field: false
     trellis: ''
     stacking: normal
@@ -626,6 +629,7 @@
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
+    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
     plot_size_by_field: false
     trellis: ''
     stacking: ''
@@ -725,6 +729,7 @@
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
+    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
     plot_size_by_field: false
     trellis: ''
     stacking: ''
@@ -1127,9 +1132,9 @@
     title_text: ''
     subtitle_text: ''
     body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview?Invoice+Month+Filter=this+year&Billing+Account+ID=&Provider=AWS%2CGCP%2CAZURE&Project+Name=&Service+Description=&SKU+Description=\"\
-      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=GCP\"\
-      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?Provider=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?Provider=GCP\"\
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstgstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?Provider=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
       \ >\nAZURE Summary\n</a>\n</p>\n"
     row: 0
     col: 12
@@ -1685,7 +1690,7 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Provider]
     field: mat_dashboard.invoice_month_month
 
   - name: Billing Account ID
@@ -1704,7 +1709,7 @@
     field: mat_dashboard.billing_account_id
 
   - name: Provider
-    title: "provider"
+    title: "Provider"
     type: field_filter
     explore: mat_dashboard
     #field: mat_dashboard.provider

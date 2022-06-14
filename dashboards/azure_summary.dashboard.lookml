@@ -5,14 +5,6 @@
 
   crossfilter_enabled: true
   filters:
-  - name: provider_filter
-    title: "provider"
-    type: string_filter
-    explore: mat_dashboard
-    #field: mat_dashboard.provider
-    default_value: "AZURE"
-    allow_multiple_values:  false
-
   - name: Invoice Month Filter
     title: Invoice Month Filter
     type: field_filter
@@ -25,8 +17,9 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Provider]
     field: mat_dashboard.invoice_month_month
+
   - name: Client Name
     title: Client Name
     type: field_filter
@@ -39,8 +32,22 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Provider]
     field: mat_dashboard.client_name
+
+  - name: Provider
+    title: "Provider"
+    type: field_filter
+    explore: mat_dashboard
+    #field: mat_dashboard.provider
+    default_value: "AZURE"
+    allow_multiple_values:  false
+    #listens_to_filters: []
+    #field: mat_dashboard.provider
+    listens_to_filters: [Billing Account ID, Project Name, Service Description, SKU
+      Description]
+    field: mat_dashboard.provider
+
   - name: Service Description
     title: Service Description
     type: field_filter
@@ -53,7 +60,7 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Billing Account ID, Project Name, Provider, SKU Description]
     field: mat_dashboard.service_description
 
   - name: SKU Description
@@ -68,7 +75,7 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
     field: mat_dashboard.sku_description
 
 
@@ -138,7 +145,7 @@
     defaults_version: 1
     series_types: {}
     listen:
-      #provider_filter: mat_dashboard.provider
+      #Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
       Service Description: mat_dashboard.service_description
@@ -215,7 +222,7 @@
     defaults_version: 1
     series_types: {}
     listen:
-      #provider_filter: mat_dashboard.provider
+      #Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
 
@@ -290,7 +297,7 @@
     series_types: {}
     hidden_fields: [mat_dashboard.total_cost_credits]
     listen:
-      #provider_filter: mat_dashboard.provider
+      #Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
 
@@ -380,7 +387,7 @@
     down_color: false
     total_color: false
     listen:
-      #provider_filter: mat_dashboard.provider
+      #Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
 
@@ -471,7 +478,7 @@
     down_color: false
     total_color: false
     listen:
-      #provider_filter: mat_dashboard.provider
+      #Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
 
@@ -838,7 +845,7 @@
     series_types: {}
     defaults_version: 1
     listen:
-      #provider_filter: mat_dashboard.provider
+      #Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
 
@@ -856,9 +863,9 @@
     subtitle_text: ''
 
     body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
-      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
-      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?Provider=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?Provider=AWS\"\
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?Provider=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
     \ >\nAZURE Summary\n</a>\n</p>\n"
     row: -2
     col: 16

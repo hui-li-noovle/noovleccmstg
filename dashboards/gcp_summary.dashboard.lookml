@@ -3,19 +3,8 @@
   layout: newspaper
   preferred_viewer: dashboards-next
   ##test webhook
-  crossfilter_enabled: false
+  crossfilter_enabled: true
   filters:
-  - name: provider_filter
-    title: "provider"
-    type: string_filter
-    explore: mat_dashboard
-    #field: mat_dashboard.provider
-    default_value: "GCP"
-    allow_multiple_values:  false
-
-    #listens_to_filters: []
-    #field: mat_dashboard.provider
-
   - name: Invoice Month Filter
     title: Invoice Month Filter
     type: field_filter
@@ -28,8 +17,9 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Provider]
     field: mat_dashboard.invoice_month_month
+
   - name: Billing Account ID
     title: Billing Account ID
     type: field_filter
@@ -42,8 +32,22 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Project Name, Service Description, Provider, SKU Description]
     field: mat_dashboard.billing_account_id
+
+  - name: Provider
+    title: "Provider"
+    type: field_filter
+    explore: mat_dashboard
+    #field: mat_dashboard.provider
+    default_value: "GCP"
+    allow_multiple_values:  false
+    #listens_to_filters: []
+    #field: mat_dashboard.provider
+    listens_to_filters: [Billing Account ID, Project Name, Service Description, SKU
+      Description]
+    field: mat_dashboard.provider
+
   - name: Project Name
     title: Project Name
     type: field_filter
@@ -56,7 +60,7 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Billing Account ID, Service Description, Provider, SKU Description]
     field: mat_dashboard.project_name
 
   - name: Service Description
@@ -71,7 +75,7 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Billing Account ID, Project Name, Provider, SKU Description]
     field: mat_dashboard.service_description
 
   - name: SKU Description
@@ -86,7 +90,7 @@
       options: []
     model: cost_control_multicloud
     explore: mat_dashboard
-    listens_to_filters: [provider_filter]
+    listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
     field: mat_dashboard.sku_description
 
   elements:
@@ -155,7 +159,7 @@
     defaults_version: 1
     series_types: {}
     listen:
-      #provider_filter: mat_dashboard.provider
+      #Provider: mat_dashboard.provider
       #Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
@@ -231,7 +235,7 @@
     defaults_version: 1
     series_types: {}
     listen:
-      provider_filter: mat_dashboard.provider
+      Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
@@ -264,7 +268,7 @@
     limit: 10
     dynamic_fields: [{_kind_hint: measure, table_calculation: total_cost_credits, _type_hint: number,
         category: table_calculation, expression: "${mat_dashboard.total_cost_credits}+0", label: Total
-          Cost, value_format: '[>=1000000]$0.0,,"M";$0.0,"K"', value_format_name: !!null ''}]
+          Cost, value_format: '[>=1000000]€0.0,,"M";€0.0,"K"', value_format_name: !!null ''}]
     query_timezone: America/Los_Angeles
     up_color: "#ffae7c"
     down_color: false
@@ -379,12 +383,12 @@
     y_axes: [{label: '', orientation: left, series: [{axisId: mat_dashboard.total_cost_credits,
             id: 2020 - mat_dashboard.total_cost_credits, name: '2020'}, {axisId: mat_dashboard.total_cost_credits,
             id: 2021 - mat_dashboard.total_cost_credits, name: '2021'}], showLabels: true, showValues: true,
-        valueFormat: '[>=1000000]€0.0,,"M";$0,"K"', unpinAxis: false, tickDensity: default,
+        valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"', unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear}]
     series_types: {}
     defaults_version: 1
     listen:
-      provider_filter: mat_dashboard.provider
+      Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
@@ -399,9 +403,9 @@
     title_text: ''
     subtitle_text: ''
     body_text: "<p align=\"center\">\n\n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::multicloud_overview\"\
-      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?provider_filter=GCP\"\
-      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?provider_filter=AWS\"\
-      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?provider_filter=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
+      \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?Provider=GCP\"\
+      \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?Provider=AWS\"\
+      \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?Provider=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
     \ >\nAZURE Summary\n</a>\n</p>\n"
     row: -2
     col: 16
