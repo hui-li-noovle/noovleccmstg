@@ -169,7 +169,7 @@
     explore: mat_dashboard
     type: looker_grid
     fields: [mat_dashboard.provider, mat_dashboard.invoice_month, mat_dashboard.billing_account_id,
-      mat_dashboard.project__name, mat_dashboard.service_description, mat_dashboard.sku_description,
+      mat_dashboard.project__name,
        mat_dashboard.total_cost_credits]
     sorts: [mat_dashboard.total_cost_credits desc]
     limit: 500
