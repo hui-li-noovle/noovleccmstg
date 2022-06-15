@@ -22,7 +22,7 @@ view: mat_dashboard {
         type: string
         label: "Email Subject: "
         required: yes
-        description: "description text"
+        description: ""
         default: "Looker notification"
       }
 
@@ -31,7 +31,7 @@ view: mat_dashboard {
         type: textarea
         label: "Email Content: "
         required: yes
-        description: "description text"
+        description: ""
         default: "Client with billing id {{ value}} has consumed €{{total_cost_credits._value}} in the invoice month of {{invoice_month._value}}."
       }
 
@@ -40,7 +40,7 @@ view: mat_dashboard {
         type: string
         label: "Email to: "
         required: yes
-        description: "description text"
+        description: ""
         default: "hui.li@ext.noovle.com"
       }
 
