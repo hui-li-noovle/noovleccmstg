@@ -46,8 +46,8 @@
     totals_color: "#808080"
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#b375e6"
-      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
+      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
+      GCP - mat_dashboard.total_cost_credits: "#34A853"
     show_dropoff: false
     defaults_version: 1
     show_row_numbers: true
@@ -122,8 +122,8 @@
       num_rows: '10'
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#b375e6"
-      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
+      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
+      GCP - mat_dashboard.total_cost_credits: "#34A853"
     custom_color_enabled: true
     custom_color: "#079c98"
     show_single_value_title: true
@@ -250,7 +250,7 @@
     col: 0
     width: 24
     height: 7
-  - name: ''
+  - name: changePageButtons
     type: text
     title_text: ''
     subtitle_text: ''
@@ -258,7 +258,8 @@
       \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?Provider=GCP\"\
       \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?Provider=AWS\"\
       \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?Provider=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
-      \ >\nAZURE Summary\n</a>\n</p>\n"
+      \ >\nAZURE Summary\n</a>\n ||<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::glossary\"\ > Glossary</a>\n</p>
+      "
     row: 0
     col: 12
     width: 12
@@ -283,7 +284,7 @@
     conditional_formatting_include_nulls: false
     single_value_title: GCP Total Cost
     value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
-    conditional_formatting: [{type: greater than, value: 0, background_color: "#ffae7c",
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#34A853",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',
@@ -347,8 +348,8 @@
     hidden_series: []
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#b375e6"
-      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
+      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
+      GCP - mat_dashboard.total_cost_credits: "#34A853"
     custom_color_enabled: true
     custom_color: "#079c98"
     show_single_value_title: true
@@ -408,7 +409,7 @@
     conditional_formatting_include_nulls: false
     single_value_title: AWS Total Cost
     value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
-    conditional_formatting: [{type: greater than, value: 0, background_color: "#b375e6",
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#F9AB00",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',
@@ -925,8 +926,8 @@
     totals_color: "#808080"
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#b375e6"
-      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
+      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
+      GCP - mat_dashboard.total_cost_credits: "#34A853"
     show_dropoff: false
     defaults_version: 1
     show_row_numbers: true
@@ -999,8 +1000,8 @@
       num_rows: '10'
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#b375e6"
-      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
+      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
+      GCP - mat_dashboard.total_cost_credits: "#34A853"
     custom_color_enabled: true
     custom_color: "#079c98"
     show_single_value_title: true
@@ -1160,7 +1161,7 @@
     conditional_formatting_include_nulls: false
     single_value_title: GCP Total Cost
     value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
-    conditional_formatting: [{type: greater than, value: 0, background_color: "#ffae7c",
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#34A853",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',
@@ -1223,8 +1224,8 @@
     hidden_series: []
     series_types: {}
     series_colors:
-      AWS - mat_dashboard.total_cost_credits: "#b375e6"
-      GCP - mat_dashboard.total_cost_credits: "#ffae7c"
+      AWS - mat_dashboard.total_cost_credits: "#F9AB00"
+      GCP - mat_dashboard.total_cost_credits: "#34A853"
     custom_color_enabled: true
     custom_color: "#079c98"
     show_single_value_title: true
@@ -1284,7 +1285,7 @@
     conditional_formatting_include_nulls: false
     single_value_title: AWS Total Cost
     value_format: '[>=1000000]$0.0,,"M";$0.0,"K"'
-    conditional_formatting: [{type: greater than, value: 0, background_color: "#b375e6",
+    conditional_formatting: [{type: greater than, value: 0, background_color: "#F9AB00",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}, {type: equal to, value: !!null '',

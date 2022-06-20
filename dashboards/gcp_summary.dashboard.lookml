@@ -127,7 +127,7 @@
     value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
-        font_color: "#ffae7c", color_application: {collection_id: google, palette_id: google-diverging-0},
+        font_color: "#34A853", color_application: {collection_id: google, palette_id: google-diverging-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -203,7 +203,7 @@
     value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
-        font_color: "#ffae7c", color_application: {collection_id: google, palette_id: google-diverging-0},
+        font_color: "#34A853", color_application: {collection_id: google, palette_id: google-diverging-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -255,6 +255,488 @@
     width: 24
     height: 2
 
+  - name: COST VS CREDIT ANALYSIS
+    title: COST VS CREDIT ANALYSIS
+    merged_queries:
+    - model: cost_control_multicloud
+      explore: mat_dashboard
+      type: table
+      fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
+      fill_fields: [mat_dashboard.invoice_month_month]
+      filters:
+        mat_dashboard.invoice_month_month: 52 weeks
+      sorts: [mat_dashboard.invoice_month_month desc]
+      limit: 500
+      query_timezone: America/Los_Angeles
+      join_fields: []
+    - model: cost_control_multicloud
+      explore: mat_dashboard
+      type: looker_column
+      fields: [mat_dashboard.credits, mat_dashboard.invoice_month_month]
+      fill_fields: [mat_dashboard.invoice_month_month]
+      filters:
+        mat_dashboard.invoice_month_month: 52 weeks
+      sorts: [mat_dashboard.invoice_month_month desc]
+      limit: 500
+      x_axis_gridlines: false
+      y_axis_gridlines: true
+      show_view_names: false
+      show_y_axis_labels: true
+      show_y_axis_ticks: true
+      y_axis_tick_density: default
+      y_axis_tick_density_custom: 5
+      show_x_axis_label: true
+      show_x_axis_ticks: true
+      y_axis_scale_mode: linear
+      x_axis_reversed: false
+      y_axis_reversed: false
+      plot_size_by_field: false
+      trellis: ''
+      stacking: ''
+      limit_displayed_rows: false
+      legend_position: center
+      point_style: none
+      show_value_labels: false
+      label_density: 25
+      x_axis_scale: auto
+      y_axis_combined: true
+      ordering: none
+      show_null_labels: false
+      show_totals_labels: false
+      show_silhouette: false
+      totals_color: "#808080"
+      series_types: {}
+      defaults_version: 1
+      join_fields:
+      - field_name: mat_dashboard.invoice_month_month
+        source_field_name: mat_dashboard.invoice_month_month
+    color_application:
+      collection_id: google
+      palette_id: google-categorical-0
+      options:
+        steps: 5
+        reverse: false
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    y_axes: [{label: '', orientation: left, series: [{axisId: net_cost, id: net_cost,
+            name: Net Cost}, {axisId: credits, id: credits, name: Credits}, {axisId: total_cost_credits,
+            id: total_cost_credits, name: Total Cost}, {axisId: 4_week_average, id: 4_week_average,
+            name: 4-Week Net Cost Rolling Avg.}], showLabels: true, showValues: true,
+        valueFormat: '[<=1000000]$0,"K";$0,,"M"', unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: last
+      num_rows: '1'
+    legend_position: center
+    series_types:
+      4_week_average: line
+    point_style: circle_outline
+    series_colors:
+      net_cost: "#4285F4"
+      credits: "#34A853"
+      total_cost_credits: "#E8EAED"
+      4_week_average: "#5F6368"
+    series_labels:
+      4_week_average: 4-Week Net Cost Rolling Avg.
+    show_value_labels: false
+    label_density: 25
+    label_color: []
+    x_axis_scale: auto
+    y_axis_combined: true
+    reference_lines: []
+    trend_lines: []
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    type: looker_column
+    hidden_fields: [mat_dashboard.credits, mat_dashboard.total_cost_credits]
+    sorts: [mat_dashboard.invoice_month_month desc]
+    dynamic_fields: [{_kind_hint: measure, table_calculation: net_cost, _type_hint: number,
+        category: table_calculation, expression: 'if(is_null(${credits}),${mat_dashboard.total_cost_credits},${mat_dashboard.total_cost_credits}+${mat_dashboard.credits})',
+        label: Net Cost, value_format: !!null '', value_format_name: eur_0}, {_kind_hint: measure,
+        table_calculation: credits, _type_hint: number, category: table_calculation,
+        expression: "${mat_dashboard.credits}", label: Credits, value_format: !!null '',
+        value_format_name: eur_0}, {_kind_hint: measure, table_calculation: total_cost_credits,
+        _type_hint: number, category: table_calculation, expression: 'if(is_null(${net_cost}),${mat_dashboard.total_cost_credits},${mat_dashboard.total_cost_credits}-${net_cost})',
+        label: Total Cost, value_format: !!null '', value_format_name: eur_0}, {_kind_hint: measure,
+        table_calculation: 4_week_average, _type_hint: number, category: table_calculation,
+        expression: 'mean(offset_list(${net_cost},0,4))', label: 4-Week Average, value_format: !!null '',
+        value_format_name: eur_0}]
+    row: 12
+    col: 7
+    width: 17
+    height: 7
+  - name: "<b>CREDIT ANALYSIS</b>"
+    type: text
+    title_text: "<b>CREDIT ANALYSIS</b>"
+    subtitle_text: ''
+    body_text: ''
+    row: 10
+    col: 0
+    width: 24
+    height: 2
+  - name: TOTAL CREDITS
+    title: TOTAL CREDITS
+    merged_queries:
+    - model: cost_control_multicloud
+      explore: mat_dashboard
+      type: table
+      fields: [merge, mat_dashboard.credits]
+      filters:
+        mat_dashboard.invoice_month_month: 52 weeks
+      limit: 500
+      dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
+          category: dimension, expression: '1', label: MERGE, value_format: !!null '',
+          value_format_name: !!null ''}]
+      query_timezone: America/Los_Angeles
+      join_fields: []
+    - model: cost_control_multicloud
+      explore: mat_dashboard
+      type: table
+      fields: [merge, mat_dashboard.total_cost_credits]
+      filters:
+        mat_dashboard.invoice_month_month: 52 weeks
+      limit: 500
+      dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
+          category: dimension, expression: '1', label: MERGE, value_format: !!null '',
+          value_format_name: !!null ''}]
+      query_timezone: America/Los_Angeles
+      join_fields:
+      - field_name: merge
+        source_field_name: merge
+    color_application:
+      collection_id: google
+      palette_id: google-categorical-0
+      options:
+        steps: 5
+        reverse: false
+    custom_color_enabled: true
+    custom_color: "#5F6368"
+    show_single_value_title: true
+    single_value_title: TOTAL CREDITS
+    value_format: '[<=1000000]€0.0,"K";€0.0,,"M"'
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting: [{type: equal to, value: !!null '', background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: google, palette_id: google-diverging-0},
+        bold: false, italic: false, strikethrough: false, fields: !!null ''}]
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    y_axes: [{label: '', orientation: left, series: [{axisId: net_cost, id: net_cost,
+            name: Net Cost}, {axisId: credits, id: credits, name: Credits}, {axisId: total_cost_credits,
+            id: total_cost_credits, name: Total Cost}, {axisId: 4_week_average, id: 4_week_average,
+            name: 4-Week Net Cost Rolling Avg.}], showLabels: true, showValues: true,
+        valueFormat: '[<=1000000]$0,"K";$0,,"M"', unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: last
+      num_rows: '1'
+    legend_position: center
+    series_types: {}
+    point_style: circle_outline
+    series_colors:
+      net_cost: "#4285F4"
+      credits: "#34A853"
+      total_cost_credits: "#E8EAED"
+      4_week_average: "#5F6368"
+    series_labels:
+      4_week_average: 4-Week Net Cost Rolling Avg.
+    show_value_labels: false
+    label_density: 25
+    label_color: []
+    x_axis_scale: auto
+    y_axis_combined: true
+    reference_lines: []
+    trend_lines: []
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    type: single_value
+    hidden_fields: [credits, net_cost, total_cost_credits, 4_week_average, merge, mat_dashboard.total_cost_credits]
+    dynamic_fields: [{_kind_hint: measure, table_calculation: net_cost, _type_hint: number,
+        category: table_calculation, expression: 'if(is_null(${credits}),${mat_dashboard.total_cost_credits},${mat_dashboard.total_cost_credits}+${mat_dashboard.credits})',
+        label: Net Cost, value_format: !!null '', value_format_name: eur_0}, {_kind_hint: measure,
+        table_calculation: credits, _type_hint: number, category: table_calculation,
+        expression: "${mat_dashboard.credits}", label: Credits, value_format: !!null '',
+        value_format_name: eur_0}, {_kind_hint: measure, table_calculation: total_cost_credits,
+        _type_hint: number, category: table_calculation, expression: 'if(is_null(${net_cost}),${mat_dashboard.total_cost_credits},${mat_dashboard.total_cost_credits}-${net_cost})',
+        label: Total Cost, value_format: !!null '', value_format_name: eur_0}, {_kind_hint: measure,
+        table_calculation: 4_week_average, _type_hint: number, category: table_calculation,
+        expression: 'mean(offset_list(${net_cost},0,4))', label: 4-Week Average, value_format: !!null '',
+        value_format_name: eur_0}, {_kind_hint: measure, table_calculation: percent_of_total_cost_credits,
+        _type_hint: number, category: table_calculation, expression: "${mat_dashboard.credits}/${mat_dashboard.total_cost_credits}",
+        label: Percent of Total Cost Credits, value_format: !!null '', value_format_name: percent_0}]
+    row: 12
+    col: 0
+    width: 7
+    height: 4
+  - name: PERCENT OF SPEND
+    title: PERCENT OF SPEND
+    merged_queries:
+    - model: cost_control_multicloud
+      explore: mat_dashboard
+      type: table
+      fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
+      fill_fields: [mat_dashboard.invoice_month_month]
+      filters:
+        mat_dashboard.invoice_month_month: 52 weeks
+        mat_dashboard.provider: "GCP"
+      listen:
+        Provider: mat_dashboard.provider
+        Invoice Month Filter: mat_dashboard.invoice_month_month
+        Billing Account ID: mat_dashboard.billing_account_id
+        Project Name: mat_dashboard.project_name
+        Service Description: mat_dashboard.service_description
+        SKU Description: mat_dashboard.sku_description
+      sorts: [mat_dashboard.invoice_month_month desc]
+      limit: 500
+      query_timezone: America/Los_Angeles
+      join_fields: []
+    - model: cost_control_multicloud
+      explore: mat_dashboard
+      type: looker_line
+      fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_credits, mat_dashboard.promotion_credits,
+        mat_dashboard.other_credits, mat_dashboard.credits]
+      fill_fields: [mat_dashboard.invoice_month_month]
+      filters:
+        mat_dashboard.invoice_month_month: 52 weeks
+        mat_dashboard.provider: "GCP"
+
+      listen:
+        Provider: mat_dashboard.provider
+        Invoice Month Filter: mat_dashboard.invoice_month_month
+        Billing Account ID: mat_dashboard.billing_account_id
+        Project Name: mat_dashboard.project_name
+        Service Description: mat_dashboard.service_description
+        SKU Description: mat_dashboard.sku_description
+
+      sorts: [mat_dashboard.invoice_month_month desc]
+      limit: 500
+      x_axis_gridlines: false
+      y_axis_gridlines: true
+      show_view_names: false
+      show_y_axis_labels: true
+      show_y_axis_ticks: true
+      y_axis_tick_density: default
+      y_axis_tick_density_custom: 5
+      show_x_axis_label: true
+      show_x_axis_ticks: true
+      y_axis_scale_mode: linear
+      x_axis_reversed: false
+      y_axis_reversed: false
+      plot_size_by_field: false
+      trellis: ''
+      stacking: ''
+      limit_displayed_rows: false
+      legend_position: center
+      point_style: none
+      show_value_labels: false
+      label_density: 25
+      x_axis_scale: auto
+      y_axis_combined: true
+      show_null_points: true
+      interpolation: linear
+      defaults_version: 1
+      join_fields:
+      - field_name: mat_dashboard.invoice_month_month
+        source_field_name: mat_dashboard.invoice_month_month
+    color_application:
+      collection_id: google
+      palette_id: google-categorical-0
+      options:
+        steps: 5
+        reverse: false
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    y_axes: [{label: '', orientation: left, series: [{axisId: mat_dashboard.credits,
+      id: mat_dashboard.credits, name: Total Credit Amount}, {axisId: net_cost,
+      id: net_cost, name: Net Cost}], showLabels: true, showValues: true, valueFormat: '',
+    unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: percent
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+    show_hide: hide
+    first_last: last
+    num_rows: '1'
+    legend_position: center
+    font_size: '8'
+    series_types:
+    4_week_average: line
+    point_style: circle_outline
+    series_colors:
+      net_cost: "#E8EAED"
+      credits: "#34A853"
+      total_cost_credits: "#E8EAED"
+      4_week_average: "#5F6368"
+      mat_dashboard.credits: "#34A853"
+      mat_dashboard.reseller_credits: "#fad723"
+      mat_dashboard.promotion_credits: "#8bb252"
+      mat_dashboard.other_credits: "#2c9c5a"
+    series_labels:
+      4_week_average: 4-Week Net Cost Rolling Avg.
+      mat_dashboard.reseller_credits: Reseller Margin%
+      mat_dashboard.promotion_credits: Promotions%
+      mat_dashboard.other_credits: Other Credits%
+      net_cost: Net Cost%
+    show_value_labels: false
+    label_density: 25
+    label_color: [transparent, black]
+    x_axis_scale: auto
+    y_axis_combined: true
+    reference_lines: [{reference_type: line, range_start: max, range_end: min, margin_top: deviation,
+      margin_value: mean, margin_bottom: deviation, label_position: right, color: "#545454",
+      line_value: ".25"}, {reference_type: line, range_start: max, range_end: min,
+      margin_top: deviation, margin_value: mean, margin_bottom: deviation, label_position: right,
+      color: "#545454", line_value: ".5"}]
+    trend_lines: []
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    type: looker_column
+    hidden_fields: [mat_dashboard.total_cost_credits, credits, total_cost_credits,
+      4_week_average, mat_dashboard.credits]
+    sorts: [mat_dashboard.invoice_month_month desc]
+    column_limit: 50
+    dynamic_fields: [{_kind_hint: measure, table_calculation: net_cost, _type_hint: number,
+      category: table_calculation, expression: 'if(is_null(${credits}),${mat_dashboard.total_cost_credits},${mat_dashboard.total_cost_credits}+${mat_dashboard.credits})',
+      label: Net Cost, value_format: !!null '', value_format_name: eur_0}, {_kind_hint: measure,
+      table_calculation: credits, _type_hint: number, category: table_calculation,
+      expression: "${mat_dashboard.credits}", label: Credits, value_format: !!null '',
+      value_format_name: eur_0}, {_kind_hint: measure, table_calculation: total_cost_credits,
+      _type_hint: number, category: table_calculation, expression: 'if(is_null(${net_cost}),${mat_dashboard.total_cost_credits},${mat_dashboard.total_cost_credits}-${net_cost})',
+      label: Total Cost, value_format: !!null '', value_format_name: eur_0}, {_kind_hint: measure,
+      table_calculation: 4_week_average, _type_hint: number, category: table_calculation,
+      expression: 'mean(offset_list(${net_cost},0,4))', label: 4-Week Average, value_format: !!null '',
+      value_format_name: eur_0}]
+
+    row: 19
+    col: 7
+    width: 17
+    height: 4
+  - title: PROMOTION BY PROJECT
+    name: PROMOTION BY PROJECT
+    model: cost_control_multicloud
+
+    explore: mat_dashboard
+    type: looker_bar
+    fields: [mat_dashboard.project_name, mat_dashboard.promotion_credits]
+    filters:
+    mat_dashboard.invoice_month_month: 52 weeks
+    mat_dashboard.provider: "GCP"
+    sorts: [mat_dashboard.promotion_credits]
+    limit: 10
+    dynamic_fields: [{_kind_hint: measure, table_calculation: running_total, _type_hint: number,
+      category: table_calculation, expression: 'running_total(${mat_dashboard.credits})',
+      label: Running Total, value_format: !!null '', value_format_name: eur_0, is_disabled: true}]
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: true
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: true
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    color_application:
+      collection_id: google
+      palette_id: google-categorical-0
+      options:
+        steps: 5
+    y_axes: [{label: '', orientation: bottom, series: [{axisId: mat_dashboard.credits,
+      id: mat_dashboard.credits, name: Total Credit Amount}], showLabels: false,
+    showValues: false, unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
+    type: linear}]
+    label_value_format: '[<=1000000]-€0.0,"K";-€0.0,,"M"'
+    series_types: {}
+    series_colors:
+      mat_dashboard.promotion_credits: "#8bb252"
+    show_null_points: true
+    defaults_version: 1
+    interpolation: linear
+    hidden_fields:
+
+    listen:
+      Provider: mat_dashboard.provider
+      Invoice Month Filter: mat_dashboard.invoice_month_month
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
+    row: 15
+    col: 0
+    width: 7
+    height: 7
 
   - title: TOP BILLED PROJECTS
     name: TOP BILLED PROJECTS
@@ -270,7 +752,7 @@
         category: table_calculation, expression: "${mat_dashboard.total_cost_credits}+0", label: Total
           Cost, value_format: '[>=1000000]€0.0,,"M";€0.0,"K"', value_format_name: !!null ''}]
     query_timezone: America/Los_Angeles
-    up_color: "#ffae7c"
+    up_color: "#34A853"
     down_color: false
     total_color: "#9AA0A6"
     show_value_labels: true
@@ -398,7 +880,7 @@
     col: 4
     width: 20
     height: 8
-  - name: ''
+  - name: changePageButtons
     type: text
     title_text: ''
     subtitle_text: ''
@@ -406,7 +888,8 @@
       \ >\nMulticloud Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::gcp_summary?Provider=GCP\"\
       \ >\nGCP Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::aws_summary?Provider=AWS\"\
       \ >\nAWS Summary\n</a>\n || \n<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::azure_summary?Provider=AZURE&Invoice+Month+Filter=this+year&Client+Name=&Service+Description=&SKU+Description=\"\
-    \ >\nAZURE Summary\n</a>\n</p>\n"
+      \ >\nAZURE Summary\n</a>\n ||<a href=\"https://noovleccmstg.cloud.looker.com/dashboards/cost_control_multicloud::glossary\"\ > Glossary</a>\n</p>
+      "
     row: -2
     col: 16
     width: 12

@@ -302,4 +302,35 @@ view: mat_dashboard {
     }
   }
 
+  measure: glossary {
+    type: count
+    html:
+      <table style='border: 1px solid black;border-radius: 30px;margin-left: auto; margin-right: auto;font-size:14px'>
+      <tr><td style='text-align:left;padding: 15px;'>
+
+      <p style='text-align:center;'><b>SEZIONE COMUNE</b></p>
+      <ul>
+        <li>CREDIT = credito applicato all'account di fatturazione Cloud
+          <ul>
+            <li>PROMOTION = i crediti promozionali sono considerati una forma di pagamento e vengono applicati automaticamente per ridurre l'importo totale della fattura.</li>
+            <li>RESELLER MARGIN = il tipo di credito margine rivenditore indica gli sconti del Programma per rivenditori guadagnati per ogni voce idonea.</li>
+          </ul>
+        </li>
+
+        <li>TAX = iva applicato al consumo</li>
+
+        <li>TOTAL COST CREDITS = consumo Netto pagato da Noovle verso cloud provider (incluso iva e crediti vari)</li>
+      </ul>
+      <p style='text-align:center;'><b>SEZIONE AZURE</b></p>
+      <ul>
+        <li>PASSIVE COSTS = consumo Netto pagato da Noovle verso Microsoft Azure (equivale a TOTAL COST CREDITS) </li>
+
+        <li>ACTIVE COSTS = consumo che il Cliente vede sul Cost Control, ovvero il consumo che cliente paga a Noovle </li>
+      </ul>
+      </td></tr>
+      </table>
+
+      ;;
+  }
+
 }
