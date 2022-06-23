@@ -93,6 +93,22 @@
     listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
     field: mat_dashboard.sku_description
 
+
+  - name: Client Name
+    title: Client Name
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+      options: []
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
+    field: mat_dashboard.client_name
+
   elements:
   - title: YTD Costs
     name: YTD Costs
@@ -165,6 +181,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
     row: 2
     col: 0
     width: 4
@@ -241,6 +258,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
     row: 4
     col: 0
     width: 4
@@ -527,6 +545,7 @@
         Project Name: mat_dashboard.project_name
         Service Description: mat_dashboard.service_description
         SKU Description: mat_dashboard.sku_description
+        Client Name: mat_dashboard.client_name
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
       query_timezone: America/Los_Angeles
@@ -548,6 +567,7 @@
         Project Name: mat_dashboard.project_name
         Service Description: mat_dashboard.service_description
         SKU Description: mat_dashboard.sku_description
+        Client Name: mat_dashboard.client_name
 
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
@@ -733,6 +753,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
     row: 15
     col: 0
     width: 7
@@ -797,6 +818,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
     row: 25
     col: 0
     width: 24
@@ -876,6 +898,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
     row: 2
     col: 4
     width: 20

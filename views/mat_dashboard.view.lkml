@@ -325,7 +325,7 @@ view: mat_dashboard {
       <ul>
         <li>PASSIVE COSTS = consumo Netto pagato da Noovle verso Microsoft Azure (equivale a TOTAL COST CREDITS) </li>
 
-        <li>ACTIVE COSTS = consumo che il Cliente vede sul Cost Control, ovvero il consumo che cliente paga a Noovle </li>
+        <li>ACTIVE COSTS = consumo che il Cliente vede sul Cost Control, ovvero il consumo che il cliente paga a Noovle </li>
       </ul>
       </td></tr>
       </table>

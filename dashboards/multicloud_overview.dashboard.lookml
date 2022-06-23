@@ -70,6 +70,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 7
     col: 0
     width: 18
@@ -159,6 +160,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 18
     col: 0
     width: 12
@@ -246,6 +248,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 33
     col: 0
     width: 24
@@ -298,6 +301,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 4
     col: 0
     width: 8
@@ -385,6 +389,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 18
     col: 12
     width: 12
@@ -423,6 +428,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 4
     col: 8
     width: 8
@@ -462,6 +468,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 4
     col: 16
     width: 8
@@ -537,6 +544,7 @@
       Project Name: mat_dashboard.project_name
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
     row: 7
     col: 18
     width: 6
@@ -600,6 +608,7 @@
       Project Name: mat_dashboard.project_name
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
     row: 11
     col: 18
     width: 6
@@ -691,6 +700,7 @@
       Project Name: mat_dashboard.project_name
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
     row: 24
     col: 0
     width: 12
@@ -791,6 +801,7 @@
       Project Name: mat_dashboard.project_name
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
     row: 24
     col: 12
     width: 12
@@ -949,6 +960,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 7
     col: 0
     width: 18
@@ -1037,6 +1049,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 18
     col: 0
     width: 12
@@ -1124,6 +1137,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 33
     col: 0
     width: 24
@@ -1175,6 +1189,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 4
     col: 0
     width: 8
@@ -1261,6 +1276,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 18
     col: 12
     width: 12
@@ -1299,6 +1315,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 4
     col: 8
     width: 8
@@ -1338,6 +1355,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
     row: 4
     col: 16
     width: 8
@@ -1413,6 +1431,7 @@
       Project Name: mat_dashboard.project_name
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
     row: 7
     col: 18
     width: 6
@@ -1476,6 +1495,7 @@
       Project Name: mat_dashboard.project_name
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
     row: 11
     col: 18
     width: 6
@@ -1566,6 +1586,7 @@
       Project Name: mat_dashboard.project_name
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
     row: 24
     col: 0
     width: 12
@@ -1665,6 +1686,7 @@
       Project Name: mat_dashboard.project_name
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
     row: 24
     col: 12
     width: 12
@@ -1766,3 +1788,18 @@
     explore: mat_dashboard
     listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
     field: mat_dashboard.sku_description
+
+  - name: Client Name
+    title: Client Name
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+      options: []
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
+    field: mat_dashboard.client_name
