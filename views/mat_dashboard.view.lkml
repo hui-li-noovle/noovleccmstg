@@ -32,7 +32,7 @@ view: mat_dashboard {
         label: "Email Content: "
         required: yes
         description: ""
-        default: "Client with billing id {{ value}} has consumed €{{total_cost_credits._value}} in the invoice month of {{invoice_month._value}}."
+        default: "Client with billing id {{ value}} has consumed €{{net_cost._value}} in the invoice month of {{invoice_month._value}}."
       }
 
       form_param: {
@@ -65,7 +65,7 @@ view: mat_dashboard {
 
       param: {
         name: "cost"
-        value: "{{total_cost_credits._value}}"
+        value: "{{net_cost._value}}"
       }
 
       form_param: {
@@ -198,7 +198,7 @@ view: mat_dashboard {
         label: "Email Content: "
         required: yes
         description: "description text"
-        default: "Service {{value}} has billed €{{total_cost_credits._value}} ."
+        default: "Service {{value}} has billed €{{net_cost._value}} ."
       }
 
       form_param: {
@@ -253,34 +253,34 @@ view: mat_dashboard {
     drill_fields: [billing_account_name, project_name]
   }
 
-  measure: total_cost_credits {
+  measure: net_cost {
     type: sum
     sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
     value_format:"€#0.00;(€#0.00)"
-    drill_fields: [invoice_month,project_name,service_description,sku_description,total_cost_credits]
+    drill_fields: [invoice_month,project_name,service_description,sku_description,net_cost]
   }
 
   measure: credits {
     type: sum
-    sql: ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
+    sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
     value_format:"€#.00;(€#.00)"
   }
 
   measure: promotion_credits {
     type: sum
-    sql: ${TABLE}.promotions ;;
+    sql: abs(${TABLE}.promotions) ;;
     value_format:"€#.00;(€#.00)"
   }
 
   measure: reseller_credits {
     type: sum
-    sql: ${TABLE}.reseller_margin ;;
+    sql: abs(${TABLE}.reseller_margin);;
     value_format:"€#.00;(€#.00)"
   }
 
   measure: other_credits {
     type: sum
-    sql: ${TABLE}.other_credits ;;
+    sql: abs(${TABLE}.other_credits) ;;
     value_format:"€#.00;(€#.00)"
   }
 

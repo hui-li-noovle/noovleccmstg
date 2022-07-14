@@ -85,7 +85,7 @@
     model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
-    fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
+    fields: [mat_dashboard.period_selected, mat_dashboard.net_cost]
     filters:
       mat_dashboard.period: Year
       mat_dashboard.period_selected: "-NULL"
@@ -93,7 +93,7 @@
     sorts: [mat_dashboard.period_selected desc]
     limit: 500
     dynamic_fields: [{_kind_hint: measure, table_calculation: change, _type_hint: number,
-        category: table_calculation, expression: "${mat_dashboard.total_cost_credits}/offset(${mat_dashboard.total_cost_credits},1)-1",
+        category: table_calculation, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
         label: Change, value_format: !!null '', value_format_name: percent_1}]
     query_timezone: user_timezone
     custom_color_enabled: true
@@ -162,7 +162,7 @@
     model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
-    fields: [mat_dashboard.period_selected, mat_dashboard.total_cost_credits]
+    fields: [mat_dashboard.period_selected, mat_dashboard.net_cost]
     filters:
       mat_dashboard.period: Quarter
       mat_dashboard.period_selected: "-NULL"
@@ -170,7 +170,7 @@
     sorts: [mat_dashboard.period_selected desc]
     limit: 500
     dynamic_fields: [{_kind_hint: measure, table_calculation: change, _type_hint: number,
-        category: table_calculation, expression: "${mat_dashboard.total_cost_credits}/offset(${mat_dashboard.total_cost_credits},1)-1",
+        category: table_calculation, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
         label: Change, value_format: !!null '', value_format_name: percent_1}]
     query_timezone: user_timezone
     custom_color_enabled: true
@@ -235,7 +235,7 @@
     height: 4
   - name: "<b>SPEND TO DATE</b>"
     type: text
-    title_text: "<b>SPEND TO DATE</b>"
+    title_text: "<b>NET COST SPEND TO DATE</b>"
     subtitle_text: ''
     body_text: ''
     row: 0
@@ -248,13 +248,13 @@
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_waterfall
-    fields: [mat_dashboard.client_name, mat_dashboard.total_cost_credits]
-    sorts: [mat_dashboard.total_cost_credits desc]
+    fields: [mat_dashboard.client_name, mat_dashboard.net_cost]
+    sorts: [mat_dashboard.net_cost desc]
     filters:
       mat_dashboard.provider: "AZURE"
     limit: 10
-    dynamic_fields: [{_kind_hint: measure, table_calculation: total_cost_credits, _type_hint: number,
-        category: table_calculation, expression: "${mat_dashboard.total_cost_credits}+0", label: Total
+    dynamic_fields: [{_kind_hint: measure, table_calculation: net_cost, _type_hint: number,
+        category: table_calculation, expression: "${mat_dashboard.net_cost}+0", label: Net
           Cost, value_format: '[>=1000000]€0.0,,"M";€0.0,"K"', value_format_name: !!null ''}]
     query_timezone: America/Los_Angeles
     up_color: "#12B5CB"
@@ -295,7 +295,7 @@
     totals_color: "#808080"
     defaults_version: 1
     series_types: {}
-    hidden_fields: [mat_dashboard.total_cost_credits]
+    hidden_fields: [mat_dashboard.net_cost]
     listen:
       #Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
@@ -314,10 +314,10 @@
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_pie
-    fields: [mat_dashboard.total_cost_credits, mat_dashboard.billing_entity]
+    fields: [mat_dashboard.net_cost, mat_dashboard.billing_entity]
     filters:
       mat_dashboard.provider: "AZURE"
-    sorts: [mat_dashboard.billing_entity, mat_dashboard.total_cost_credits desc]
+    sorts: [mat_dashboard.billing_entity, mat_dashboard.net_cost desc]
     limit: 6
     column_limit: 50
     value_labels: legend
@@ -404,11 +404,11 @@
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_donut_multiples
-    fields: [mat_dashboard.total_cost_credits, mat_dashboard.billing_entity, mat_dashboard.service_description]
+    fields: [mat_dashboard.net_cost, mat_dashboard.billing_entity, mat_dashboard.service_description]
     pivots: [mat_dashboard.billing_entity]
     filters:
       mat_dashboard.provider: "AZURE"
-    sorts: [mat_dashboard.billing_entity, mat_dashboard.total_cost_credits desc 2]
+    sorts: [mat_dashboard.billing_entity, mat_dashboard.net_cost desc 2]
     limit: 6
     column_limit: 50
     show_value_labels: false
@@ -419,8 +419,8 @@
       options:
         steps: 5
     #series_colors:
-      #AWS - mat_dashboard.total_cost_credits: "#12B5CB"
-      #AWS Marketplace - mat_dashboard.total_cost_credits: "#EA4335"
+      #AWS - mat_dashboard.net_cost: "#12B5CB"
+      #AWS Marketplace - mat_dashboard.net_cost: "#EA4335"
     value_labels: legend
     label_type: labPer
     defaults_version: 1
@@ -517,7 +517,7 @@
     - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
-      fields: [merge, mat_dashboard.total_cost_credits]
+      fields: [merge, mat_dashboard.net_cost]
       filters:
         mat_dashboard.provider: AZURE
       limit: 500
@@ -563,9 +563,9 @@
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{axisId: net_cost, id: net_cost,
-            name: Net Cost}, {axisId: credits, id: credits, name: Credits}, {axisId: total_cost_credits,
-            id: total_cost_credits, name: Total Cost}, {axisId: 4_week_average, id: 4_week_average,
+    y_axes: [{label: '', orientation: left, series: [{axisId: net_cost_temp, id: net_cost_temp,
+            name: Total Cost}, {axisId: credits, id: credits, name: Credits}, {axisId: net_cost,
+            id: net_cost, name: Net Cost}, {axisId: 4_week_average, id: 4_week_average,
             name: 4-Week Net Cost Rolling Avg.}], showLabels: true, showValues: true,
         valueFormat: '[<=1000000]$0,"K";$0,,"M"', unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear}]
@@ -590,9 +590,9 @@
     series_types: {}
     point_style: circle_outline
     series_colors:
-      net_cost: "#4285F4"
+      net_cost_temp: "#4285F4"
       credits: "#34A853"
-      total_cost_credits: "#E8EAED"
+      net_cost: "#E8EAED"
       4_week_average: "#5F6368"
     series_labels:
       4_week_average: 4-Week Net Cost Rolling Avg.
@@ -609,9 +609,9 @@
     show_silhouette: false
     totals_color: "#808080"
     type: single_value
-    hidden_fields: [merge, mat_dashboard.total_cost_credits]
+    hidden_fields: [merge, mat_dashboard.net_cost]
     column_limit: 50
-    dynamic_fields: [{category: table_calculation, expression: "${mat_dashboard.cost_client}/${mat_dashboard.total_cost_credits}",
+    dynamic_fields: [{category: table_calculation, expression: "${mat_dashboard.cost_client}/${mat_dashboard.net_cost}",
         label: Percent of Passive Costs, value_format: !!null '', value_format_name: percent_0,
         _kind_hint: measure, table_calculation: percent_of_passive_costs, _type_hint: number}]
     row: 38
@@ -624,14 +624,14 @@
     model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
-    fields: [mat_dashboard.total_cost_credits, mat_dashboard.cost_client]
+    fields: [mat_dashboard.net_cost, mat_dashboard.cost_client]
     filters:
       mat_dashboard.provider: AZURE
     limit: 500
     dynamic_fields:
     - table_calculation: margin
       label: Margin
-      expression: "${mat_dashboard.cost_client}-${mat_dashboard.total_cost_credits}"
+      expression: "${mat_dashboard.cost_client}-${mat_dashboard.net_cost}"
       value_format:
       value_format_name:
       _kind_hint: measure
@@ -657,7 +657,7 @@
         font_color: "#EA4335", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}]
-    hidden_fields: [mat_dashboard.total_cost_credits, mat_dashboard.cost_client]
+    hidden_fields: [mat_dashboard.net_cost, mat_dashboard.cost_client]
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -698,7 +698,7 @@
     - model: cost_control_multicloud
       explore: mat_dashboard
       type: table
-      fields: [mat_dashboard.invoice_month_month, mat_dashboard.total_cost_credits]
+      fields: [mat_dashboard.invoice_month_month, mat_dashboard.net_cost]
       fill_fields: [mat_dashboard.invoice_month_month]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
@@ -755,9 +755,9 @@
     series_types: {}
     point_style: circle_outline
     series_colors:
-      net_cost: "#4285F4"
+      net_cost_temp: "#4285F4"
       credits: "#12B5CB"
-      total_cost_credits: "#E8EAED"
+      net_cost: "#E8EAED"
       4_week_average: "#5F6368"
     series_labels:
       4_week_average: 4-Week Net Cost Rolling Avg.
@@ -778,15 +778,15 @@
     show_null_points: true
     interpolation: linear
     type: looker_line
-    hidden_fields: [mat_dashboard.total_cost_credits, mat_dashboard.cost_client]
+    hidden_fields: [mat_dashboard.net_cost, mat_dashboard.cost_client]
     sorts: [mat_dashboard.invoice_month_month desc]
     column_limit: 50
-    dynamic_fields: [{category: table_calculation, expression: "${mat_dashboard.total_cost_credits}",
+    dynamic_fields: [{category: table_calculation, expression: "${mat_dashboard.net_cost}",
         label: Passive Costs, value_format: !!null '', value_format_name: eur_0, _kind_hint: measure,
         table_calculation: passive_costs, _type_hint: number}, {category: table_calculation,
         expression: "${mat_dashboard.cost_client}", label: Active Costs, value_format: !!null '',
         value_format_name: eur_0, _kind_hint: measure, table_calculation: active_costs,
-        _type_hint: number}, {category: table_calculation, expression: "${mat_dashboard.cost_client}-${mat_dashboard.total_cost_credits}",
+        _type_hint: number}, {category: table_calculation, expression: "${mat_dashboard.cost_client}-${mat_dashboard.net_cost}",
         label: Margin, value_format: !!null '', value_format_name: eur_0, _kind_hint: measure,
         table_calculation: margin, _type_hint: number}]
     row: 38
@@ -795,17 +795,24 @@
     height: 7
 
 
-  - title: YEAR OVER YEAR SPEND
-    name: YEAR OVER YEAR SPEND
+  - title: TOTAL SPEND
+    name: TOTAL SPEND
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_line
-    fields: [mat_dashboard.total_cost_credits, mat_dashboard.invoice_month_month_name, mat_dashboard.invoice_month_year]
-    pivots: [mat_dashboard.invoice_month_year]
+    fields: [mat_dashboard.net_cost, mat_dashboard.invoice_month_month]
+    #pivots: [mat_dashboard.invoice_month_year]
+    fill_fields: [mat_dashboard.invoice_month_month]
     filters:
-      mat_dashboard.total_cost_credits: NOT NULL
-      mat_dashboard.provider: "AZURE"
-    sorts: [mat_dashboard.invoice_month_year, mat_dashboard.invoice_month_month_name]
+      mat_dashboard.net_cost: NOT NULL
+    sorts: [mat_dashboard.invoice_month_month asc]
+
+    analysis_config:
+      forecasting:
+      - field_name: mat_dashboard.net_cost
+        forecast_n: 3
+        forecast_interval: month
+
     limit: 500
     column_limit: 50
     x_axis_gridlines: false
@@ -837,21 +844,19 @@
       palette_id: google-categorical-0
       options:
         steps: 5
-    y_axes: [{label: '', orientation: left, series: [{axisId: mat_dashboard.total_cost_credits,
-            id: 2020 - mat_dashboard.total_cost_credits, name: '2020'}, {axisId: mat_dashboard.total_cost_credits,
-            id: 2021 - mat_dashboard.total_cost_credits, name: '2021'}], showLabels: true, showValues: true,
-        valueFormat: '[>=1000000]€0.0,,"M";$0,"K"', unpinAxis: false, tickDensity: default,
+    y_axes: [{label: '', orientation: left, series: [{axisId: mat_dashboard.net_cost,
+            id: 2020 - mat_dashboard.net_cost, name: '2020'}, {axisId: mat_dashboard.net_cost,
+            id: 2021 - mat_dashboard.net_cost, name: '2021'}], showLabels: true, showValues: true,
+        valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"', unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear}]
     series_types: {}
     defaults_version: 1
     listen:
-      #Provider: mat_dashboard.provider
+      Provider: mat_dashboard.provider
       Invoice Month Filter: mat_dashboard.invoice_month_month
-      Client Name: mat_dashboard.client_name
-
       Service Description: mat_dashboard.service_description
       SKU Description: mat_dashboard.sku_description
-
+      Client Name: mat_dashboard.client_name
     row: 2
     col: 4
     width: 20
