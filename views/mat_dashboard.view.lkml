@@ -333,4 +333,53 @@ view: mat_dashboard {
       ;;
   }
 
+  measure: current_month {
+    type:  string
+    sql:  FORMAT_DATE("%b",MAX(${invoice_month_date})) ;;
+
+  }
+
+  measure: previous_month {
+    type:  string
+    sql:  FORMAT_DATE("%b %Y",DATE_SUB(MAX(${invoice_month_date}),INTERVAL 1 MONTH));;
+
+  }
+
+  measure: current_month_label {
+    type: count
+    html:
+      <p style='font-size:14px;'><b>NET COST CHANGE</b><br>
+        <I style='text-align:left;'>{{current_month._value}} vs {{previous_month._value}}:</I>
+        <I style='color:#FFFFFF;'>spaziospazio</I>
+        <I style='text-align:right;'>{{current_quarter._value}} vs {{previous_quarter._value}}:</I>
+
+      </p>
+
+      ;;
+  }
+
+  measure: current_quarter {
+    type:  string
+    sql:  CONCAT("Q",EXTRACT(QUARTER FROM MAX(${invoice_month_date}))) ;;
+
+  }
+
+  measure: previous_quarter {
+    type:  string
+    sql:  CONCAT("Q",EXTRACT(QUARTER FROM DATE_SUB(MAX(${invoice_month_date}),INTERVAL 1 QUARTER)),' ',EXTRACT(YEAR FROM DATE_SUB(MAX(${invoice_month_date}),INTERVAL 1 MONTH)));;
+
+  }
+
+  measure: current_quarter_label {
+    type: count
+    html:
+      <p style='font-size:14px'>NET COST CHANGE<br>
+        <I>{{current_quarter._value}} vs {{previous_quarter._value}}:</I>
+
+      </p>
+
+      ;;
+  }
+
+
 }

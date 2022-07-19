@@ -65,6 +65,14 @@
       AZURE - mat_dashboard.net_cost: "#12B5CB"
       AZURE - mat_dashboard.credits: "#5691cc"
       GCP - mat_dashboard.credits: "#60b212"
+    series_labels:
+      AWS - mat_dashboard.net_cost: Net Cost AWS
+      GCP - mat_dashboard.net_cost: Net Cost GCP
+      AWS - mat_dashboard.credits: Credits AWS
+      AZURE - mat_dashboard.net_cost: Net Cost AZURE
+      AZURE - mat_dashboard.credits: Credits AZURE
+      GCP - mat_dashboard.credits: Credits GCP
+
     series_point_styles:
       AWS - mat_dashboard.credits: diamond
       AZURE - mat_dashboard.credits: diamond
@@ -91,7 +99,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
-    row: 7
+    row: 15
     col: 0
     width: 18
     height: 8
@@ -327,6 +335,139 @@
     col: 0
     width: 8
     height: 3
+
+
+  # - title: Current Month AWS
+  #   name: Current Month AWS
+  #   model: cost_control_multicloud
+  #   explore: mat_dashboard
+  #   type: single_value
+  #   fields: [mat_dashboard.invoice_month_month, mat_dashboard.net_cost]
+  #   filters:
+  #     mat_dashboard.net_cost: NOT NULL
+  #     mat_dashboard.provider: AWS
+  #   sorts: [mat_dashboard.invoice_month_month desc]
+  #   limit: 500
+  #   dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+  #       value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+  #       _type_hint: number}]
+  #   custom_color_enabled: true
+  #   show_single_value_title: false
+  #   show_comparison: true
+  #   comparison_type: value
+  #   comparison_reverse_colors: false
+  #   show_comparison_label: true
+  #   enable_conditional_formatting: false
+  #   conditional_formatting_include_totals: false
+  #   conditional_formatting_include_nulls: false
+  #   single_value_title: Change of Net Cost
+  #   comparison_label: Current vs Previous Month
+  #   x_axis_gridlines: false
+  #   y_axis_gridlines: true
+  #   show_view_names: false
+  #   show_y_axis_labels: true
+  #   show_y_axis_ticks: true
+  #   y_axis_tick_density: default
+  #   y_axis_tick_density_custom: 5
+  #   show_x_axis_label: true
+  #   show_x_axis_ticks: true
+  #   y_axis_scale_mode: linear
+  #   x_axis_reversed: false
+  #   y_axis_reversed: false
+  #   plot_size_by_field: false
+  #   trellis: ''
+  #   stacking: ''
+  #   limit_displayed_rows: false
+  #   legend_position: center
+  #   point_style: none
+  #   show_value_labels: false
+  #   label_density: 25
+  #   x_axis_scale: auto
+  #   y_axis_combined: true
+  #   ordering: none
+  #   show_null_labels: false
+  #   show_totals_labels: false
+  #   show_silhouette: false
+  #   totals_color: "#808080"
+  #   defaults_version: 1
+  #   series_types: {}
+  #   hidden_fields: [mat_dashboard.net_cost]
+  #   listen:
+  #     Billing Account ID: mat_dashboard.billing_account_id
+  #     Project Name: mat_dashboard.project_name
+  #     Service Description: mat_dashboard.service_description
+  #     Client Name: mat_dashboard.client_name
+  #   row: 7
+  #   col: 8
+  #   width: 4
+  #   height: 2
+
+  # - title: Current Quarter AWS
+  #   name: Current Quarter AWS
+  #   model: cost_control_multicloud
+  #   explore: mat_dashboard
+  #   type: single_value
+  #   fields: [mat_dashboard.net_cost, mat_dashboard.invoice_month_quarter]
+  #   filters:
+  #     mat_dashboard.net_cost: NOT NULL
+  #     mat_dashboard.provider: AWS
+  #   sorts: [mat_dashboard.invoice_month_quarter desc]
+  #   limit: 500
+  #   dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+  #       value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+  #       _type_hint: number}]
+  #   custom_color_enabled: true
+  #   show_single_value_title: false
+  #   show_comparison: true
+  #   comparison_type: value
+  #   comparison_reverse_colors: false
+  #   show_comparison_label: true
+  #   enable_conditional_formatting: false
+  #   conditional_formatting_include_totals: false
+  #   conditional_formatting_include_nulls: false
+  #   single_value_title: Change of Net Cost
+  #   comparison_label: Current Quarter
+  #   x_axis_gridlines: false
+  #   y_axis_gridlines: true
+  #   show_view_names: false
+  #   show_y_axis_labels: true
+  #   show_y_axis_ticks: true
+  #   y_axis_tick_density: default
+  #   y_axis_tick_density_custom: 5
+  #   show_x_axis_label: true
+  #   show_x_axis_ticks: true
+  #   y_axis_scale_mode: linear
+  #   x_axis_reversed: false
+  #   y_axis_reversed: false
+  #   plot_size_by_field: false
+  #   trellis: ''
+  #   stacking: ''
+  #   limit_displayed_rows: false
+  #   legend_position: center
+  #   point_style: none
+  #   show_value_labels: false
+  #   label_density: 25
+  #   x_axis_scale: auto
+  #   y_axis_combined: true
+  #   ordering: none
+  #   show_null_labels: false
+  #   show_totals_labels: false
+  #   show_silhouette: false
+  #   totals_color: "#808080"
+  #   defaults_version: 1
+  #   series_types: {}
+  #   hidden_fields: [mat_dashboard.net_cost]
+  #   listen:
+  #     Billing Account ID: mat_dashboard.billing_account_id
+  #     Project Name: mat_dashboard.project_name
+  #     Service Description: mat_dashboard.service_description
+  #     Client Name: mat_dashboard.client_name
+  #   row: 7
+  #   col: 12
+  #   width: 4
+  #   height: 2
+
+
   - title: Top Billed Sku
     name: Top Billed Sku
     model: cost_control_multicloud
@@ -506,14 +647,93 @@
 
 
 
-  - title: New Tile
-    name: New Tile
+  # - name: Testo2
+  #   type: text
+  #   title_text: ''
+  #   subtitle_text: ''
+  #   body_text: "<b>Current vs Previous Month's Net Cost Change</b>"
+  #   row: 7
+  #   col: 18
+  #   width: 3
+  #   height: 2
+  - name: Testo2
+    model: cost_control_multicloud
+
+    explore: mat_dashboard
+    type: single_value
+    fields: [mat_dashboard.current_month_label]
+    sorts: [mat_dashboard.current_month_label]
+    limit: 500
+    custom_color_enabled: true
+    show_single_value_title: false
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    conditional_formatting: [{type: not equal to, value: 0, background_color: "#FFFFFF",
+    font_color: !!null '', color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
+      palette_id: 4a00499b-c0fe-4b15-a304-4083c07ff4c4}, bold: false, italic: false,
+    strikethrough: false, fields: !!null ''}]
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    series_types: {}
+    color_application: undefined
+    value_labels: legend
+    label_type: labPer
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 6
+    rows_font_size: 6
+    font_size: small
+    row: 7
+    col: 18
+    width: 6
+    height: 2
+
+  - title: Current Month GCP2
+    name: Current Month GCP2
     model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
     fields: [mat_dashboard.invoice_month_month, mat_dashboard.net_cost]
     filters:
       mat_dashboard.net_cost: NOT NULL
+      mat_dashboard.provider: GCP
     sorts: [mat_dashboard.invoice_month_month desc]
     limit: 500
     dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
@@ -521,15 +741,15 @@
         _type_hint: number}]
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: true
+    show_comparison: false
     comparison_type: value
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Change of Net Cost
-    comparison_label: Current vs Previous Month
+    custom_color: "#34A853"
+    single_value_title: GCP
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -563,21 +783,228 @@
     listen:
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
-      Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
     row: 7
     col: 18
-    width: 6
-    height: 4
-  - title: New Tile (Copy)
-    name: New Tile (Copy)
+    width: 3
+    height: 2
+
+  - title: Current Month AWS
+    name: Current Month AWS
     model: cost_control_multicloud
     explore: mat_dashboard
     type: single_value
-    fields: [mat_dashboard.net_cost, mat_dashboard.invoice_month_quarter]
+    fields: [mat_dashboard.invoice_month_month, mat_dashboard.net_cost]
     filters:
       mat_dashboard.net_cost: NOT NULL
+      mat_dashboard.provider: AWS
+    sorts: [mat_dashboard.invoice_month_month desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}]
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    custom_color: "#F9AB00"
+    single_value_title: AWS
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    series_types: {}
+    hidden_fields: [mat_dashboard.net_cost]
+    listen:
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
+    row: 9
+    col: 18
+    width: 3
+    height: 2
+
+  - title: Current Month AZURE
+    name: Current Month AZURE
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    type: single_value
+    fields: [mat_dashboard.invoice_month_month, mat_dashboard.net_cost]
+    filters:
+      mat_dashboard.net_cost: NOT NULL
+      mat_dashboard.provider: AZURE
+    sorts: [mat_dashboard.invoice_month_month desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}]
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    custom_color: "#12B5CB"
+    single_value_title: AZURE
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    series_types: {}
+    hidden_fields: [mat_dashboard.net_cost]
+    listen:
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
+    row: 11
+    col: 18
+    width: 3
+    height: 2
+
+  # - name: Testo3
+  #   type: text
+  #   title_text: '<b>Current Quarter</b>'
+  #   subtitle_text: ''
+  #   body_text: ''
+  #   row: 7
+  #   col: 21
+  #   width: 3
+  #   height: 2
+
+  # - name: Testo3
+  #   model: cost_control_multicloud
+
+  #   explore: mat_dashboard
+  #   type: single_value
+  #   fields: [mat_dashboard.current_quarter_label]
+  #   sorts: [mat_dashboard.current_quarter_label]
+  #   limit: 500
+  #   custom_color_enabled: true
+  #   show_single_value_title: false
+  #   show_comparison: false
+  #   comparison_type: value
+  #   comparison_reverse_colors: false
+  #   show_comparison_label: false
+  #   enable_conditional_formatting: false
+  #   conditional_formatting_include_totals: false
+  #   conditional_formatting_include_nulls: false
+  #   x_axis_gridlines: false
+  #   y_axis_gridlines: true
+  #   show_view_names: false
+  #   show_y_axis_labels: true
+  #   show_y_axis_ticks: true
+  #   y_axis_tick_density: default
+  #   y_axis_tick_density_custom: 5
+  #   show_x_axis_label: true
+  #   show_x_axis_ticks: true
+  #   y_axis_scale_mode: linear
+  #   x_axis_reversed: false
+  #   y_axis_reversed: false
+  #   plot_size_by_field: false
+  #   trellis: ''
+  #   stacking: ''
+  #   limit_displayed_rows: false
+  #   legend_position: center
+  #   point_style: none
+  #   show_value_labels: false
+  #   label_density: 25
+  #   x_axis_scale: auto
+  #   y_axis_combined: true
+  #   ordering: none
+  #   show_null_labels: false
+  #   show_totals_labels: false
+  #   show_silhouette: false
+  #   totals_color: "#808080"
+  #   defaults_version: 1
+  #   series_types: {}
+  #   color_application: undefined
+  #   value_labels: legend
+  #   label_type: labPer
+  #   show_row_numbers: true
+  #   transpose: false
+  #   truncate_text: true
+  #   hide_totals: false
+  #   hide_row_totals: false
+  #   size_to_fit: true
+  #   table_theme: white
+  #   header_text_alignment: left
+  #   header_font_size: 6
+  #   rows_font_size: 6
+  #   font_size: small
+  #   row: 7
+  #   col: 21
+  #   width: 3
+  #   height: 2
+
+
+  - title: Current Quarter GCP2
+    name: Current Quarter GCP2
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    type: single_value
+    fields: [mat_dashboard.invoice_month_quarter, mat_dashboard.net_cost]
+    filters:
+      mat_dashboard.net_cost: NOT NULL
+      mat_dashboard.provider: GCP
     sorts: [mat_dashboard.invoice_month_quarter desc]
     limit: 500
     dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
@@ -585,15 +1012,15 @@
         _type_hint: number}]
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: true
+    show_comparison: false
     comparison_type: value
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Change of Net Cost
-    comparison_label: Current vs Previous Quarter
+    custom_color: "#34A853"
+    single_value_title: GCP
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -627,13 +1054,209 @@
     listen:
       Billing Account ID: mat_dashboard.billing_account_id
       Project Name: mat_dashboard.project_name
-      Provider: mat_dashboard.provider
+      Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
+    row: 7
+    col: 21
+    width: 3
+    height: 2
+
+  - title: Current Quarter AWS
+    name: Current Quarter AWS
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    type: single_value
+    fields: [mat_dashboard.invoice_month_quarter, mat_dashboard.net_cost]
+    filters:
+      mat_dashboard.net_cost: NOT NULL
+      mat_dashboard.provider: AWS
+    sorts: [mat_dashboard.invoice_month_quarter desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}]
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    custom_color: "#F9AB00"
+    single_value_title: AWS
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    series_types: {}
+    hidden_fields: [mat_dashboard.net_cost]
+    listen:
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      Client Name: mat_dashboard.client_name
+    row: 9
+    col: 21
+    width: 3
+    height: 2
+
+  - title: Current Quarter AZURE
+    name: Current Quarter AZURE
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    type: single_value
+    fields: [mat_dashboard.invoice_month_quarter, mat_dashboard.net_cost]
+    filters:
+      mat_dashboard.net_cost: NOT NULL
+      mat_dashboard.provider: AZURE
+    sorts: [mat_dashboard.invoice_month_quarter desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}]
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    custom_color: "#12B5CB"
+    single_value_title: AZURE
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    series_types: {}
+    hidden_fields: [mat_dashboard.net_cost]
+    listen:
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
     row: 11
-    col: 18
-    width: 6
-    height: 4
+    col: 21
+    width: 3
+    height: 2
+
+
+
+  # - title: New Tile (Copy)
+  #   name: New Tile (Copy)
+  #   model: cost_control_multicloud
+  #   explore: mat_dashboard
+  #   type: single_value
+  #   fields: [mat_dashboard.net_cost, mat_dashboard.invoice_month_quarter]
+  #   filters:
+  #     mat_dashboard.net_cost: NOT NULL
+  #   sorts: [mat_dashboard.invoice_month_quarter desc]
+  #   limit: 500
+  #   dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+  #       value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+  #       _type_hint: number}]
+  #   custom_color_enabled: true
+  #   show_single_value_title: true
+  #   show_comparison: true
+  #   comparison_type: value
+  #   comparison_reverse_colors: false
+  #   show_comparison_label: true
+  #   enable_conditional_formatting: false
+  #   conditional_formatting_include_totals: false
+  #   conditional_formatting_include_nulls: false
+  #   single_value_title: Change of Net Cost
+  #   comparison_label: Current vs Previous Quarter
+  #   x_axis_gridlines: false
+  #   y_axis_gridlines: true
+  #   show_view_names: false
+  #   show_y_axis_labels: true
+  #   show_y_axis_ticks: true
+  #   y_axis_tick_density: default
+  #   y_axis_tick_density_custom: 5
+  #   show_x_axis_label: true
+  #   show_x_axis_ticks: true
+  #   y_axis_scale_mode: linear
+  #   x_axis_reversed: false
+  #   y_axis_reversed: false
+  #   plot_size_by_field: false
+  #   trellis: ''
+  #   stacking: ''
+  #   limit_displayed_rows: false
+  #   legend_position: center
+  #   point_style: none
+  #   show_value_labels: false
+  #   label_density: 25
+  #   x_axis_scale: auto
+  #   y_axis_combined: true
+  #   ordering: none
+  #   show_null_labels: false
+  #   show_totals_labels: false
+  #   show_silhouette: false
+  #   totals_color: "#808080"
+  #   defaults_version: 1
+  #   series_types: {}
+  #   hidden_fields: [mat_dashboard.net_cost]
+  #   listen:
+  #     Billing Account ID: mat_dashboard.billing_account_id
+  #     Project Name: mat_dashboard.project_name
+  #     Provider: mat_dashboard.provider
+  #     Service Description: mat_dashboard.service_description
+  #     Client Name: mat_dashboard.client_name
+  #   row: 11
+  #   col: 18
+  #   width: 6
+  #   height: 4
   - title: Current Month vs Previous Month
     name: Current Month vs Previous Month
     model: cost_control_multicloud
@@ -1393,134 +2016,138 @@
 
 
 
-  - title: New Tile
-    name: New Tile
-    model: cost_control_multicloud
-    explore: mat_dashboard
-    type: single_value
-    fields: [mat_dashboard.invoice_month_month, mat_dashboard.net_cost]
-    filters:
-      mat_dashboard.net_cost: NOT NULL
-    sorts: [mat_dashboard.invoice_month_month desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
-        _type_hint: number}]
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    single_value_title: Change of Net Cost
-    comparison_label: Current Month
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    defaults_version: 1
-    series_types: {}
-    hidden_fields: [mat_dashboard.net_cost]
-    listen:
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
-      Provider: mat_dashboard.provider
-      Service Description: mat_dashboard.service_description
-      Client Name: mat_dashboard.client_name
-    row: 7
-    col: 18
-    width: 6
-    height: 4
-  - title: New Tile (Copy)
-    name: New Tile (Copy)
-    model: cost_control_multicloud
-    explore: mat_dashboard
-    type: single_value
-    fields: [mat_dashboard.net_cost, mat_dashboard.invoice_month_quarter]
-    filters:
-      mat_dashboard.net_cost: NOT NULL
-    sorts: [mat_dashboard.invoice_month_quarter desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
-        _type_hint: number}]
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    single_value_title: Change of Net Cost
-    comparison_label: Current Quarter
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    defaults_version: 1
-    series_types: {}
-    hidden_fields: [mat_dashboard.net_cost]
-    listen:
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
-      Provider: mat_dashboard.provider
-      Service Description: mat_dashboard.service_description
-      Client Name: mat_dashboard.client_name
-    row: 11
-    col: 18
-    width: 6
-    height: 4
+  # - title: New Tile
+  #   name: New Tile
+  #   model: cost_control_multicloud
+  #   explore: mat_dashboard
+  #   type: single_value
+  #   fields: [mat_dashboard.invoice_month_month, mat_dashboard.net_cost]
+  #   filters:
+  #     mat_dashboard.net_cost: NOT NULL
+  #   sorts: [mat_dashboard.invoice_month_month desc]
+  #   limit: 500
+  #   dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+  #       value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+  #       _type_hint: number}]
+  #   custom_color_enabled: true
+  #   show_single_value_title: true
+  #   show_comparison: true
+  #   comparison_type: value
+  #   comparison_reverse_colors: false
+  #   show_comparison_label: true
+  #   enable_conditional_formatting: false
+  #   conditional_formatting_include_totals: false
+  #   conditional_formatting_include_nulls: false
+  #   single_value_title: Change of Net Cost
+  #   comparison_label: Current Month
+  #   x_axis_gridlines: false
+  #   y_axis_gridlines: true
+  #   show_view_names: false
+  #   show_y_axis_labels: true
+  #   show_y_axis_ticks: true
+  #   y_axis_tick_density: default
+  #   y_axis_tick_density_custom: 5
+  #   show_x_axis_label: true
+  #   show_x_axis_ticks: true
+  #   y_axis_scale_mode: linear
+  #   x_axis_reversed: false
+  #   y_axis_reversed: false
+  #   plot_size_by_field: false
+  #   trellis: ''
+  #   stacking: ''
+  #   limit_displayed_rows: false
+  #   legend_position: center
+  #   point_style: none
+  #   show_value_labels: false
+  #   label_density: 25
+  #   x_axis_scale: auto
+  #   y_axis_combined: true
+  #   ordering: none
+  #   show_null_labels: false
+  #   show_totals_labels: false
+  #   show_silhouette: false
+  #   totals_color: "#808080"
+  #   defaults_version: 1
+  #   series_types: {}
+  #   hidden_fields: [mat_dashboard.net_cost]
+  #   listen:
+  #     Billing Account ID: mat_dashboard.billing_account_id
+  #     Project Name: mat_dashboard.project_name
+  #     Provider: mat_dashboard.provider
+  #     Service Description: mat_dashboard.service_description
+  #     Client Name: mat_dashboard.client_name
+  #   row: 7
+  #   col: 18
+  #   width: 6
+  #   height: 4
+
+
+  # - title: New Tile (Copy)
+  #   name: New Tile (Copy)
+  #   model: cost_control_multicloud
+  #   explore: mat_dashboard
+  #   type: single_value
+  #   fields: [mat_dashboard.net_cost, mat_dashboard.invoice_month_quarter]
+  #   filters:
+  #     mat_dashboard.net_cost: NOT NULL
+  #   sorts: [mat_dashboard.invoice_month_quarter desc]
+  #   limit: 500
+  #   dynamic_fields: [{table_calculation: change, label: Change, expression: "${mat_dashboard.net_cost}/offset(${mat_dashboard.net_cost},1)-1",
+  #       value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+  #       _type_hint: number}]
+  #   custom_color_enabled: true
+  #   show_single_value_title: true
+  #   show_comparison: true
+  #   comparison_type: value
+  #   comparison_reverse_colors: false
+  #   show_comparison_label: true
+  #   enable_conditional_formatting: false
+  #   conditional_formatting_include_totals: false
+  #   conditional_formatting_include_nulls: false
+  #   single_value_title: Change of Net Cost
+  #   comparison_label: Current Quarter
+  #   x_axis_gridlines: false
+  #   y_axis_gridlines: true
+  #   show_view_names: false
+  #   show_y_axis_labels: true
+  #   show_y_axis_ticks: true
+  #   y_axis_tick_density: default
+  #   y_axis_tick_density_custom: 5
+  #   show_x_axis_label: true
+  #   show_x_axis_ticks: true
+  #   y_axis_scale_mode: linear
+  #   x_axis_reversed: false
+  #   y_axis_reversed: false
+  #   plot_size_by_field: false
+  #   trellis: ''
+  #   stacking: ''
+  #   limit_displayed_rows: false
+  #   legend_position: center
+  #   point_style: none
+  #   show_value_labels: false
+  #   label_density: 25
+  #   x_axis_scale: auto
+  #   y_axis_combined: true
+  #   ordering: none
+  #   show_null_labels: false
+  #   show_totals_labels: false
+  #   show_silhouette: false
+  #   totals_color: "#808080"
+  #   defaults_version: 1
+  #   series_types: {}
+  #   hidden_fields: [mat_dashboard.net_cost]
+  #   listen:
+  #     Billing Account ID: mat_dashboard.billing_account_id
+  #     Project Name: mat_dashboard.project_name
+  #     Provider: mat_dashboard.provider
+  #     Service Description: mat_dashboard.service_description
+  #     Client Name: mat_dashboard.client_name
+  #   row: 11
+  #   col: 18
+  #   width: 6
+  #   height: 4
+
+
   - title: Current Month vs Previous Month
     name: Current Month vs Previous Month
     model: cost_control_multicloud
