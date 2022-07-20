@@ -358,7 +358,7 @@
     row: 12
     col: 7
     width: 17
-    height: 7
+    height: 6
 
   - name: "<b>CREDIT ANALYSIS</b>"
     type: text
@@ -493,7 +493,7 @@
     explore: mat_dashboard
     type: looker_column
     fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_credits, mat_dashboard.promotion_credits,
-      mat_dashboard.other_credits, mat_dashboard.net_cost]
+      mat_dashboard.sud_credits,mat_dashboard.cud_credits,mat_dashboard.other_credits, mat_dashboard.net_cost]
     fill_fields: [mat_dashboard.invoice_month_month]
     filters:
       mat_dashboard.provider: GCP
@@ -575,7 +575,7 @@
     row: 19
     col: 7
     width: 17
-    height: 4
+    height: 5
 
   - title: PROMOTION BY CLIENT NAME
     name: PROMOTION BY CLIENT NAME

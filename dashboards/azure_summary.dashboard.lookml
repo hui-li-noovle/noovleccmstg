@@ -520,6 +520,12 @@
       fields: [merge, mat_dashboard.net_cost]
       filters:
         mat_dashboard.provider: AZURE
+      listen:
+        Invoice Month Filter: mat_dashboard.invoice_month_month
+        Client Name: mat_dashboard.client_name
+
+        Service Description: mat_dashboard.service_description
+        SKU Description: mat_dashboard.sku_description
       limit: 500
       dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
           category: dimension, expression: '1', label: MERGE, value_format: !!null '',
@@ -531,6 +537,12 @@
       fields: [merge, mat_dashboard.cost_client]
       filters:
         mat_dashboard.provider: AZURE
+      listen:
+        Invoice Month Filter: mat_dashboard.invoice_month_month
+        Client Name: mat_dashboard.client_name
+
+        Service Description: mat_dashboard.service_description
+        SKU Description: mat_dashboard.sku_description
       limit: 500
       dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
           category: dimension, expression: '1', label: MERGE, value_format: !!null '',
@@ -563,9 +575,9 @@
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{axisId: net_cost_temp, id: net_cost_temp,
-            name: Total Cost}, {axisId: credits, id: credits, name: Credits}, {axisId: net_cost,
-            id: net_cost, name: Net Cost}, {axisId: 4_week_average, id: 4_week_average,
+    y_axes: [{label: '', orientation: left, series: [{axisId: net_cost, id: net_cost,
+            name: Net Cost}, {axisId: credits, id: credits, name: Credits}, {axisId: net_cost,
+            id: net_cost, name: Total Cost}, {axisId: 4_week_average, id: 4_week_average,
             name: 4-Week Net Cost Rolling Avg.}], showLabels: true, showValues: true,
         valueFormat: '[<=1000000]$0,"K";$0,,"M"', unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear}]
@@ -590,7 +602,7 @@
     series_types: {}
     point_style: circle_outline
     series_colors:
-      net_cost_temp: "#4285F4"
+      net_cost: "#4285F4"
       credits: "#34A853"
       net_cost: "#E8EAED"
       4_week_average: "#5F6368"
@@ -614,6 +626,7 @@
     dynamic_fields: [{category: table_calculation, expression: "${mat_dashboard.cost_client}/${mat_dashboard.net_cost}",
         label: Percent of Passive Costs, value_format: !!null '', value_format_name: percent_0,
         _kind_hint: measure, table_calculation: percent_of_passive_costs, _type_hint: number}]
+
     row: 38
     col: 0
     width: 7
@@ -646,7 +659,7 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     single_value_title: Margin Cost
-    value_format: '[<=1000000]-€0,"K";-€0,,"M"'
+    value_format: '[<=1000000]€0,"K";€0,,"M"'
     conditional_formatting: [{type: greater than, value: 0, background_color: "#ffffff",
         font_color: "#7CB342", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
@@ -687,6 +700,13 @@
     totals_color: "#808080"
     defaults_version: 1
     series_types: {}
+    listen:
+      Invoice Month Filter: mat_dashboard.invoice_month_month
+      Client Name: mat_dashboard.client_name
+
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
+
     row: 42
     col: 0
     width: 7
@@ -703,6 +723,7 @@
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
         mat_dashboard.provider: AZURE
+
       sorts: [mat_dashboard.invoice_month_month desc]
       limit: 500
       query_timezone: America/Los_Angeles
@@ -738,7 +759,7 @@
     show_y_axis_ticks: true
     y_axis_tick_density: default
     y_axis_tick_density_custom: 5
-    show_x_axis_label: false
+    show_x_axis_label: true
     show_x_axis_ticks: true
     y_axis_scale_mode: linear
     x_axis_reversed: false
@@ -755,13 +776,13 @@
     series_types: {}
     point_style: circle_outline
     series_colors:
-      net_cost_temp: "#4285F4"
+      net_cost: "#4285F4"
       credits: "#12B5CB"
       net_cost: "#E8EAED"
       4_week_average: "#5F6368"
     series_labels:
       4_week_average: 4-Week Net Cost Rolling Avg.
-    show_value_labels: false
+    show_value_labels: true
     label_density: 25
     label_color: []
     x_axis_scale: auto
@@ -793,6 +814,7 @@
     col: 7
     width: 17
     height: 7
+
 
 
   - title: TOTAL SPEND

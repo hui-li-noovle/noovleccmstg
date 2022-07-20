@@ -357,7 +357,7 @@
     row: 12
     col: 7
     width: 17
-    height: 7
+    height: 6
   - name: "<b>CREDIT ANALYSIS</b>"
     type: text
     title_text: "<b>CREDIT ANALYSIS</b>"
@@ -574,14 +574,14 @@
     row: 19
     col: 7
     width: 17
-    height: 4
-  - title: RESELLER MARGIN BY ACCOUNT ID
-    name: RESELLER MARGIN BY ACCOUNT ID
+    height: 5
+  - title: RESELLER MARGIN BY CLIENT NAME
+    name: RESELLER MARGIN BY CLIENT NAME
     model: cost_control_multicloud
 
     explore: mat_dashboard
     type: looker_bar
-    fields: [mat_dashboard.billing_account_id, mat_dashboard.reseller_credits]
+    fields: [mat_dashboard.client_name, mat_dashboard.reseller_credits]
     filters:
       #mat_dashboard.invoice_month_month: 52 weeks
       mat_dashboard.provider: "AWS"
@@ -647,8 +647,8 @@
     width: 7
     height: 7
 
-  - title: TOP BILLED CLIENT
-    name: TOP BILLED CLIENT
+  - title: TOP BILLED CLIENT NAME
+    name: TOP BILLED CLIENT NAME
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_waterfall

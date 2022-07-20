@@ -1,5 +1,5 @@
 view: mat_dashboard {
-  sql_table_name: `dev-noovle-spa-consumption.cost_control_multicloud.mat_dashboard`
+  sql_table_name: `dev-noovle-spa-consumption.multicloud_output.mat_dashboard`
     ;;
 
   dimension: billing_account_id {
@@ -99,7 +99,7 @@ view: mat_dashboard {
 
   dimension: cost {
     type: number
-    sql: ${TABLE}.cost ;;
+    sql: IF(${TABLE}.cost_type NOT IN ('ACTIVE'),${TABLE}.cost,0) ;;
   }
 
   dimension: cost_type {
@@ -128,15 +128,7 @@ view: mat_dashboard {
     sql: ${TABLE}.invoice_month_date ;;
   }
 
-  dimension: other_credit {
-    type: number
-    sql: ${TABLE}.other_credits ;;
-  }
 
-  dimension: credit {
-    type: number
-    sql: ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
-  }
 
   dimension: project_name {
     type: string
@@ -148,25 +140,13 @@ view: mat_dashboard {
     sql: ${TABLE}.project_id ;;
   }
 
-  dimension: promotions {
-    type: number
-    sql: ${TABLE}.promotions ;;
-  }
 
   dimension: provider {
     type: string
     sql: ${TABLE}.provider ;;
   }
 
-  dimension: reseller_margin {
-    type: number
-    sql: ${TABLE}.reseller_margin ;;
-  }
 
-  dimension: cost_of_client {
-    type: number
-    sql: ${TABLE}.cost_of_client ;;
-  }
 
   dimension: service_description {
     type: string
@@ -248,45 +228,114 @@ view: mat_dashboard {
     sql: ${TABLE}.usage_start_date ;;
   }
 
+  dimension: other_credit {
+    type: number
+    sql:IF(${TABLE}.cost_type NOT IN ('PROMOTION','RESELLER_MARGIN','SPPDISCOUNT','ACTIVE','REGULAR','USAGE','COMMITTED_USAGE_DISCOUNT','COMMITTED_USAGE_DISCOUNT_DOLLAR_BASE','SUSTAINED_USAGE_DISCOUNT'),${TABLE}.cost,0) ;;
+
+  }
+
+  dimension: credit {
+    type: number
+    sql: IF(${TABLE}.cost_type NOT IN ('USAGE','REGULAR','ACTIVE'),${TABLE}.cost,0) ;;
+  }
+
+
+  dimension: promotions {
+    type: number
+    sql: IF(${TABLE}.cost_type IN ('PROMOTION'),${TABLE}.cost,0) ;;
+  }
+
+  dimension: reseller_margin {
+    type: number
+    sql: IF(${TABLE}.cost_type IN ('RESELLER_MARGIN','SPPDISCOUNT'),${TABLE}.cost,0) ;;
+  }
+
+  dimension: cost_of_client {
+    type: number
+    sql: IF(${TABLE}.cost_type IN ('ACTIVE'),${TABLE}.cost,0);;
+  }
+
+  dimension: sud {
+    type: number
+    sql: IF(${TABLE}.cost_type IN ('SUSTAINED_USAGE_DISCOUNT'),${TABLE}.cost,0) ;;
+  }
+
+  dimension: cud {
+    type: number
+    sql: IF(${TABLE}.cost_type IN ('COMMITTED_USAGE_DISCOUNT','COMMITTED_USAGE_DISCOUNT_DOLLAR_BASE'),${TABLE}.cost,0) ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [billing_account_name, project_name]
   }
 
+  dimension: regular_cost {
+    type: number
+    #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
+    sql:  IF(${TABLE}.cost_type IN ('REGULAR','USAGE'),${TABLE}.cost,0) ;;
+    value_format:"€#.00;(€#.00)"
+  }
+
   measure: net_cost {
     type: sum
-    sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
-    value_format:"€#0.00;(€#0.00)"
+    #sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
+    sql: ${regular_cost}-abs(${credit}) ;;
+    #sql:  ${cost} ;;
+    #filters: [cost_type: "REGULAR"]
+    value_format:"€#.00;(€#0.00)"
     drill_fields: [invoice_month,project_name,service_description,sku_description,net_cost]
+
+    html: {{value}}<br><i style='font-color:gray'>*net cost paied to provider</i>;;
+    action: {
+      label: "*net cost paied to provider"
+      url: "https://actions.looker.com/actions/SendGrid/execute"
+      #html:  net cost paied to provider ;;
+      #url: "https://actions.looker.com/actions/SendGrid/execute"
+      #url: "https://europe-west3-noovle-big-data-analytics.cloudfunctions.net/send_email_with_sendgrid"
+      }
   }
 
   measure: credits {
     type: sum
-    sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
+    #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
+    sql:   abs(${credit});;
     value_format:"€#.00;(€#.00)"
   }
 
   measure: promotion_credits {
     type: sum
-    sql: abs(${TABLE}.promotions) ;;
+    sql: abs(${promotions}) ;;
     value_format:"€#.00;(€#.00)"
   }
 
   measure: reseller_credits {
     type: sum
-    sql: abs(${TABLE}.reseller_margin);;
+    sql: abs(${reseller_margin});;
+    value_format:"€#.00;(€#.00)"
+  }
+
+  measure: sud_credits {
+    type: sum
+    sql: abs(${sud});;
+    value_format:"€#.00;(€#.00)"
+  }
+
+  measure: cud_credits {
+    type: sum
+    sql: abs(${cud});;
     value_format:"€#.00;(€#.00)"
   }
 
   measure: other_credits {
     type: sum
-    sql: abs(${TABLE}.other_credits) ;;
+    sql: abs(${other_credit}) ;;
     value_format:"€#.00;(€#.00)"
   }
 
   measure: cost_client {
     type: sum
-    sql: ${TABLE}.cost_of_client ;;
+    sql: ${cost_of_client} ;;
     value_format:"€#.00;(€#.00)"
   }
 
