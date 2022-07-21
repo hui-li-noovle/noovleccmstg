@@ -337,8 +337,8 @@
     #hidden_fields: [mat_dashboard.credits]
 
     row: 12
-    col: 7
-    width: 17
+    col: 6
+    width: 18
     height: 6
 
   - name: "<b>CREDIT ANALYSIS</b>"
@@ -463,11 +463,11 @@
         label: Percent of Net Cost, value_format: !!null '', value_format_name: percent_0}]
     row: 12
     col: 0
-    width: 7
+    width: 6
     height: 4
 
-  - name: PERCENT OF CREDITS
-    title: PERCENT OF CREDITS
+  - name: PERCENT OF CREDITS srl
+    title: CREDITS OF NOOVLE SRL
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_column
@@ -476,6 +476,7 @@
     fill_fields: [mat_dashboard.invoice_month_month]
     filters:
       mat_dashboard.provider: GCP
+      mat_dashboard.tenant: noovle_srl
     listen:
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Billing Account ID: mat_dashboard.billing_account_id
@@ -552,8 +553,190 @@
     labelColor: "#FFF"
 
     row: 19
-    col: 7
-    width: 17
+    col: 6
+    width: 6
+    height: 5
+
+  - name: PERCENT OF CREDITS 10
+    title: CREDITS OF NOOVLE 10%
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    type: looker_column
+    fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_margin, mat_dashboard.promotion_credits,
+      mat_dashboard.sud_credits,mat_dashboard.cud_credits,mat_dashboard.other_credits, mat_dashboard.net_cost]
+    fill_fields: [mat_dashboard.invoice_month_month]
+    filters:
+      mat_dashboard.provider: GCP
+      mat_dashboard.tenant: noovle_10
+    listen:
+      Invoice Month Filter: mat_dashboard.invoice_month_month
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
+    sorts: [mat_dashboard.invoice_month_month]
+    limit: 500
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: percent
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    series_types: {}
+    series_colors:
+      mat_dashboard.reseller_margin: "#fad723"
+      mat_dashboard.promotion_credits: "#8bb252"
+      mat_dashboard.other_credits: "#2c9c5a"
+      mat_dashboard.net_cost: "#E8EAED"
+    series_labels: {}
+    reference_lines: [{reference_type: line, range_start: max, range_end: min, margin_top: deviation,
+        margin_value: mean, margin_bottom: deviation, label_position: right, color: "#545454",
+        line_value: '0.25'}, {reference_type: line, range_start: max, range_end: min,
+        margin_top: deviation, margin_value: mean, margin_bottom: deviation, label_position: right,
+        color: "#545454", line_value: '0.5'}]
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    smoothedBars: false
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: inline
+    valuePosition: right
+    labelColorEnabled: false
+    labelColor: "#FFF"
+
+    row: 19
+    col: 12
+    width: 6
+    height: 5
+
+  - name: PERCENT OF CREDITS 19
+    title: CREDITS OF NOOVLE 19%
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    type: looker_column
+    fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_margin, mat_dashboard.promotion_credits,
+      mat_dashboard.sud_credits,mat_dashboard.cud_credits,mat_dashboard.other_credits, mat_dashboard.net_cost]
+    fill_fields: [mat_dashboard.invoice_month_month]
+    filters:
+      mat_dashboard.provider: GCP
+      mat_dashboard.tenant: noovle_19
+    listen:
+      Invoice Month Filter: mat_dashboard.invoice_month_month
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
+    sorts: [mat_dashboard.invoice_month_month]
+    limit: 500
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: percent
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    series_types: {}
+    series_colors:
+      mat_dashboard.reseller_margin: "#fad723"
+      mat_dashboard.promotion_credits: "#8bb252"
+      mat_dashboard.other_credits: "#2c9c5a"
+      mat_dashboard.net_cost: "#E8EAED"
+    series_labels: {}
+    reference_lines: [{reference_type: line, range_start: max, range_end: min, margin_top: deviation,
+        margin_value: mean, margin_bottom: deviation, label_position: right, color: "#545454",
+        line_value: '0.25'}, {reference_type: line, range_start: max, range_end: min,
+        margin_top: deviation, margin_value: mean, margin_bottom: deviation, label_position: right,
+        color: "#545454", line_value: '0.5'}]
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    smoothedBars: false
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: inline
+    valuePosition: right
+    labelColorEnabled: false
+    labelColor: "#FFF"
+
+    row: 19
+    col: 18
+    width: 6
     height: 5
 
   - title: PROMOTION BY CLIENT NAME
@@ -626,7 +809,7 @@
       Client Name: mat_dashboard.client_name
     row: 15
     col: 0
-    width: 7
+    width: 6
     height: 7
 
   - title: TOP BILLED CLIENT NAME

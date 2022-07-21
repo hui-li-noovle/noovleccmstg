@@ -199,6 +199,11 @@ view: mat_dashboard {
     sql: ${TABLE}.sku_description ;;
   }
 
+  dimension: tenant {
+    type: string
+    sql: ${TABLE}.tenant ;;
+  }
+
   dimension: usage_amount {
     type: number
     sql: ${TABLE}.usage_amount ;;
