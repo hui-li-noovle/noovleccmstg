@@ -230,13 +230,13 @@ view: mat_dashboard {
 
   dimension: other_credit {
     type: number
-    sql:IF(${TABLE}.cost_type NOT IN ('PROMOTION','RESELLER_MARGIN','SPPDISCOUNT','ACTIVE','REGULAR','USAGE','COMMITTED_USAGE_DISCOUNT','COMMITTED_USAGE_DISCOUNT_DOLLAR_BASE','SUSTAINED_USAGE_DISCOUNT'),${TABLE}.cost,0) ;;
+    sql:IF(${TABLE}.cost_type NOT IN ('TAX','RIFEE','FEE','PROMOTION','RESELLER_MARGIN','SPPDISCOUNT','ACTIVE','REGULAR','USAGE','COMMITTED_USAGE_DISCOUNT','COMMITTED_USAGE_DISCOUNT_DOLLAR_BASE','SUSTAINED_USAGE_DISCOUNT'),${TABLE}.cost,0) ;;
 
   }
 
   dimension: credit {
     type: number
-    sql: IF(${TABLE}.cost_type NOT IN ('USAGE','REGULAR','ACTIVE'),${TABLE}.cost,0) ;;
+    sql: IF(${TABLE}.cost_type NOT IN ('USAGE','REGULAR','ACTIVE','TAX','RIFEE','FEE'),${TABLE}.cost,0) ;;
   }
 
 
@@ -245,7 +245,7 @@ view: mat_dashboard {
     sql: IF(${TABLE}.cost_type IN ('PROMOTION'),${TABLE}.cost,0) ;;
   }
 
-  dimension: reseller_margin {
+  dimension: reseller {
     type: number
     sql: IF(${TABLE}.cost_type IN ('RESELLER_MARGIN','SPPDISCOUNT'),${TABLE}.cost,0) ;;
   }
@@ -273,20 +273,30 @@ view: mat_dashboard {
   dimension: regular_cost {
     type: number
     #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
-    sql:  IF(${TABLE}.cost_type IN ('REGULAR','USAGE'),${TABLE}.cost,0) ;;
+    sql:  IF(${TABLE}.cost_type IN ('REGULAR','USAGE','RIFEE','FEE','TAX'),${TABLE}.cost,0) ;;
     value_format:"€#.00;(€#.00)"
+  }
+
+  measure: total_cost {
+    type: sum
+    #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
+    sql:  ${regular_cost} ;;
+    value_format:"€#.00;(€#.00)"
+
+    html: €{{value}}<br><i style='font-color:gray'>*consumo totale</i>;;
+
   }
 
   measure: net_cost {
     type: sum
     #sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
-    sql: ${regular_cost}-abs(${credit}) ;;
+    sql: IF(${provider}='AZURE',${regular_cost},${regular_cost}-abs(${credit})) ;;
     #sql:  ${cost} ;;
     #filters: [cost_type: "REGULAR"]
-    value_format:"€#.00;(€#0.00)"
+    value_format:"€#.00;(€#.00)"
     drill_fields: [invoice_month,project_name,service_description,sku_description,net_cost]
 
-    html: {{value}}<br><i style='font-color:gray'>*net cost paied to provider</i>;;
+    html: €{{value}}<br><i style='font-color:gray'>*consumo Netto pagato da Noovle verso cloud provider </i>;;
     action: {
       label: "*net cost paied to provider"
       url: "https://actions.looker.com/actions/SendGrid/execute"
@@ -301,18 +311,24 @@ view: mat_dashboard {
     #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
     sql:   abs(${credit});;
     value_format:"€#.00;(€#.00)"
+    html: €{{value}}<br><i style='font-color:gray'>*credito riconosciuto a Noovle</i>;;
+
   }
 
   measure: promotion_credits {
     type: sum
     sql: abs(${promotions}) ;;
     value_format:"€#.00;(€#.00)"
+    html: €{{value}}<br><i style='font-color:gray'>*i crediti promozionali</i>;;
+
   }
 
-  measure: reseller_credits {
+  measure: reseller_margin {
     type: sum
-    sql: abs(${reseller_margin});;
+    sql: abs(${reseller});;
     value_format:"€#.00;(€#.00)"
+    html: €{{value}}<br><i style='font-color:gray'>*il valore assoluto del margine rivenditore</i>;;
+
   }
 
   measure: sud_credits {
@@ -359,23 +375,18 @@ view: mat_dashboard {
 
       <p style='text-align:center;'><b>SEZIONE COMUNE</b></p>
       <ul>
-        <li>CREDIT = credito applicato all'account di fatturazione Cloud
+        <li>CREDIT = credito riconosciuto a Noovle
           <ul>
-            <li>PROMOTION = i crediti promozionali sono considerati una forma di pagamento e vengono applicati automaticamente per ridurre l'importo totale della fattura.</li>
-            <li>RESELLER MARGIN = il tipo di credito margine rivenditore indica gli sconti del Programma per rivenditori guadagnati per ogni voce idonea.</li>
+            <li>PROMOTION = i crediti promozionali sono una forma di pagamento e vengono applicati automaticamente e riducono l'importo totale della fattura.</li>
+            <li>RESELLER MARGIN = il valore assoluto del margine rivenditore, indica gli sconti del Programma per rivenditori guadagnati per ogni voce idonea.</li>
           </ul>
         </li>
 
-        <li>TAX = iva applicato al consumo</li>
+        <li>TAX = iva applicato al net cost</li>
 
-        <li>TOTAL COST CREDITS = consumo Netto pagato da Noovle verso cloud provider (incluso iva e crediti vari)</li>
+        <li>NET COST = consumo Netto pagato da Noovle verso cloud provider (incluso iva e crediti vari)</li>
       </ul>
-      <p style='text-align:center;'><b>SEZIONE AZURE</b></p>
-      <ul>
-        <li>PASSIVE COSTS = consumo Netto pagato da Noovle verso Microsoft Azure (equivale a TOTAL COST CREDITS) </li>
 
-        <li>ACTIVE COSTS = consumo che il Cliente vede sul Cost Control, ovvero il consumo che il cliente paga a Noovle </li>
-      </ul>
       </td></tr>
       </table>
 
@@ -417,17 +428,6 @@ view: mat_dashboard {
     type:  string
     sql:  CONCAT("Q",EXTRACT(QUARTER FROM DATE_SUB(MAX(${invoice_month_date}),INTERVAL 1 QUARTER)),' ',EXTRACT(YEAR FROM DATE_SUB(MAX(${invoice_month_date}),INTERVAL 1 MONTH)));;
 
-  }
-
-  measure: current_quarter_label {
-    type: count
-    html:
-      <p style='font-size:14px'>NET COST CHANGE<br>
-        <I>{{current_quarter._value}} vs {{previous_quarter._value}}:</I>
-
-      </p>
-
-      ;;
   }
 
 

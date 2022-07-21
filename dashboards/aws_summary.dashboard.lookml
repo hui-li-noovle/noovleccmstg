@@ -278,41 +278,19 @@
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_column
-    fields: [mat_dashboard.net_cost, mat_dashboard.credits, mat_dashboard.invoice_month_month]
+    fields: [mat_dashboard.net_cost, mat_dashboard.credits,mat_dashboard.total_cost, mat_dashboard.invoice_month_month]
     fill_fields: [mat_dashboard.invoice_month_month]
     filters:
       mat_dashboard.provider: AWS
     listen:
-    Invoice Month Filter: mat_dashboard.invoice_month_month
-    Billing Account ID: mat_dashboard.billing_account_id
-    Project Name: mat_dashboard.project_name
-    Service Description: mat_dashboard.service_description
-    SKU Description: mat_dashboard.sku_description
-    Client Name: mat_dashboard.client_name
+      Invoice Month Filter: mat_dashboard.invoice_month_month
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
     sorts: [mat_dashboard.invoice_month_month asc]
     limit: 500
-    dynamic_fields:
-    - table_calculation: credits
-      label: Credits
-      expression: abs(${mat_dashboard.credits})
-      value_format:
-      value_format_name: eur
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: total_cost
-      label: Total Cost
-      expression: if(is_null(${mat_dashboard.credits}),${mat_dashboard.net_cost},${mat_dashboard.net_cost}+abs(${mat_dashboard.credits}))
-      value_format:
-      value_format_name: eur
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: 4_week_average
-      label: 4-Week Average
-      expression: mean(offset_list(${mat_dashboard.net_cost},0,4))
-      value_format:
-      value_format_name: eur
-      _kind_hint: measure
-      _type_hint: number
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -340,19 +318,21 @@
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    y_axes: [{label: '', orientation: left, series: [{axisId: mat_dashboard.net_cost,
+    id: mat_dashboard.net_cost, name: Net Cost}, {axisId: mat_dashboard.credits,
+    id: mat_dashboard.credits, name: Credits}, {axisId: mat_dashboard.total_cost,
+    id: mat_dashboard.total_cost, name: Total Cost}], showLabels: true, showValues: true,
+    valueFormat: '[<1000000]€0,"K";€0,,"M"', unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
+    type: linear}]
     series_types:
       4_week_average: line
     series_colors:
       mat_dashboard.net_cost: "#F9AB00"
-      total_cost: "#079c98"
-      4_week_average: "#5F6368"
-    series_labels:
-      4_week_average: 4-Week Net Cost Rolling Avg.
-    series_point_styles: {}
+      mat_dashboard.total_cost: "#079c98"
     show_null_points: true
     interpolation: linear
     defaults_version: 1
-    hidden_fields: [mat_dashboard.credits]
+    #hidden_fields: [mat_dashboard.credits,mat_dashboard.total_cost]
 
     row: 12
     col: 7
@@ -486,23 +466,23 @@
     col: 0
     width: 7
     height: 4
-  - name: PERCENT OF SPEND
-    title: PERCENT OF SPEND
+  - name: PERCENT OF CREDIT
+    title: PERCENT OF CREDIT
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_column
-    fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_credits, mat_dashboard.promotion_credits,
+    fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_margin,
       mat_dashboard.other_credits, mat_dashboard.net_cost]
     fill_fields: [mat_dashboard.invoice_month_month]
     filters:
       mat_dashboard.provider: AWS
     listen:
-    Invoice Month Filter: mat_dashboard.invoice_month_month
-    Billing Account ID: mat_dashboard.billing_account_id
-    Project Name: mat_dashboard.project_name
-    Service Description: mat_dashboard.service_description
-    SKU Description: mat_dashboard.sku_description
-    Client Name: mat_dashboard.client_name
+      Invoice Month Filter: mat_dashboard.invoice_month_month
+      Billing Account ID: mat_dashboard.billing_account_id
+      Project Name: mat_dashboard.project_name
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
     sorts: [mat_dashboard.invoice_month_month]
     limit: 500
     x_axis_gridlines: false
@@ -534,11 +514,12 @@
     totals_color: "#808080"
     series_types: {}
     series_colors:
-      mat_dashboard.reseller_credits: "#fad723"
+      mat_dashboard.reseller_margin: "#fad723"
       mat_dashboard.promotion_credits: "#8bb252"
       mat_dashboard.other_credits: "#2c9c5a"
       mat_dashboard.net_cost: "#E8EAED"
-    series_labels: {}
+    series_labels:
+      mat_dashboard.reseller_margin: Reseller Margin (SPP Discount)
     reference_lines: [{reference_type: line, range_start: max, range_end: min, margin_top: deviation,
         margin_value: mean, margin_bottom: deviation, label_position: right, color: "#545454",
         line_value: '0.25'}, {reference_type: line, range_start: max, range_end: min,
@@ -581,11 +562,11 @@
 
     explore: mat_dashboard
     type: looker_bar
-    fields: [mat_dashboard.client_name, mat_dashboard.reseller_credits]
+    fields: [mat_dashboard.client_name, mat_dashboard.reseller_margin]
     filters:
       #mat_dashboard.invoice_month_month: 52 weeks
       mat_dashboard.provider: "AWS"
-    sorts: [mat_dashboard.reseller_credits desc]
+    sorts: [mat_dashboard.reseller_margin desc]
     limit: 10
     dynamic_fields: [{_kind_hint: measure, table_calculation: running_total, _type_hint: number,
       category: table_calculation, expression: 'running_total(abs(${mat_dashboard.credits}))',
@@ -629,7 +610,7 @@
     label_value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
     series_types: {}
     series_colors:
-      mat_dashboard.reseller_credits: "#F9AB00"
+      mat_dashboard.reseller_margin: "#F9AB00"
     show_null_points: true
     defaults_version: 1
     interpolation: linear
@@ -712,184 +693,184 @@
     width: 24
     height: 8
 
-  - name: SERVICE TYPE
-    title: SERVICE TYPE
-    model: cost_control_multicloud
-    explore: mat_dashboard
-    type: looker_pie
-    fields: [mat_dashboard.net_cost, mat_dashboard.billing_entity]
-    filters:
-      mat_dashboard.provider: AWS
-    sorts: [mat_dashboard.billing_entity, mat_dashboard.net_cost desc]
-    limit: 6
-    column_limit: 50
-    value_labels: legend
-    label_type: labPer
-    show_value_labels: false
-    font_size: 12
-    color_application:
-      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
-      palette_id: b8e44ce6-d0e6-4bd4-b72c-ab0f595726a6
-      options:
-        steps: 5
-    series_colors:
-      AWS: "#F9AB00"
-      AWS Marketplace: "#EA4335"
-    defaults_version: 1
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: false
-    interpolation: linear
-    series_types: {}
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    ordering: none
-    show_null_labels: false
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
-    smoothedBars: false
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: inline
-    valuePosition: right
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    up_color: false
-    down_color: false
-    total_color: false
-    listen:
-      Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
-      Service Description: mat_dashboard.service_description
-      SKU Description: mat_dashboard.sku_description
-      Client Name: mat_dashboard.client_name
-    row: 33
-    col: 0
-    width: 8
-    height: 4
+  # - name: SERVICE TYPE
+  #   title: SERVICE TYPE
+  #   model: cost_control_multicloud
+  #   explore: mat_dashboard
+  #   type: looker_pie
+  #   fields: [mat_dashboard.net_cost, mat_dashboard.billing_entity]
+  #   filters:
+  #     mat_dashboard.provider: AWS
+  #   sorts: [mat_dashboard.billing_entity, mat_dashboard.net_cost desc]
+  #   limit: 6
+  #   column_limit: 50
+  #   value_labels: legend
+  #   label_type: labPer
+  #   show_value_labels: false
+  #   font_size: 12
+  #   color_application:
+  #     collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+  #     palette_id: b8e44ce6-d0e6-4bd4-b72c-ab0f595726a6
+  #     options:
+  #       steps: 5
+  #   series_colors:
+  #     AWS: "#F9AB00"
+  #     AWS Marketplace: "#EA4335"
+  #   defaults_version: 1
+  #   x_axis_gridlines: false
+  #   y_axis_gridlines: false
+  #   show_view_names: false
+  #   show_y_axis_labels: true
+  #   show_y_axis_ticks: true
+  #   y_axis_tick_density: default
+  #   y_axis_tick_density_custom: 5
+  #   show_x_axis_label: false
+  #   show_x_axis_ticks: true
+  #   y_axis_scale_mode: linear
+  #   x_axis_reversed: false
+  #   y_axis_reversed: false
+  #   plot_size_by_field: false
+  #   trellis: ''
+  #   stacking: ''
+  #   limit_displayed_rows: false
+  #   legend_position: center
+  #   point_style: none
+  #   label_density: 25
+  #   x_axis_scale: auto
+  #   y_axis_combined: true
+  #   show_null_points: false
+  #   interpolation: linear
+  #   series_types: {}
+  #   custom_color_enabled: true
+  #   show_single_value_title: true
+  #   show_comparison: false
+  #   comparison_type: value
+  #   comparison_reverse_colors: false
+  #   show_comparison_label: true
+  #   enable_conditional_formatting: false
+  #   conditional_formatting_include_totals: false
+  #   conditional_formatting_include_nulls: false
+  #   show_totals_labels: false
+  #   show_silhouette: false
+  #   totals_color: "#808080"
+  #   ordering: none
+  #   show_null_labels: false
+  #   leftAxisLabelVisible: false
+  #   leftAxisLabel: ''
+  #   rightAxisLabelVisible: false
+  #   rightAxisLabel: ''
+  #   smoothedBars: false
+  #   orientation: automatic
+  #   labelPosition: left
+  #   percentType: total
+  #   percentPosition: inline
+  #   valuePosition: right
+  #   labelColorEnabled: false
+  #   labelColor: "#FFF"
+  #   up_color: false
+  #   down_color: false
+  #   total_color: false
+  #   listen:
+  #     Invoice Month Filter: mat_dashboard.invoice_month_month
+  #     Billing Account ID: mat_dashboard.billing_account_id
+  #     Project Name: mat_dashboard.project_name
+  #     Service Description: mat_dashboard.service_description
+  #     SKU Description: mat_dashboard.sku_description
+  #     Client Name: mat_dashboard.client_name
+  #   row: 33
+  #   col: 0
+  #   width: 8
+  #   height: 4
 
-  - name: TOP BILLED SERVICES
-    title: TOP BILLED SERVICES
-    model: cost_control_multicloud
-    explore: mat_dashboard
-    type: looker_donut_multiples
-    fields: [mat_dashboard.net_cost, mat_dashboard.billing_entity, mat_dashboard.service_description]
-    pivots: [mat_dashboard.billing_entity]
-    filters:
-      mat_dashboard.provider: AWS
-    sorts: [mat_dashboard.billing_entity, mat_dashboard.net_cost desc 2]
-    limit: 6
-    column_limit: 50
-    show_value_labels: false
-    font_size: 12
-    color_application:
-      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
-      palette_id: b8e44ce6-d0e6-4bd4-b72c-ab0f595726a6
-      options:
-        steps: 5
-    series_colors:
-      AWS - mat_dashboard.net_cost: "#F9AB00"
-      AWS Marketplace - mat_dashboard.net_cost: "#EA4335"
-    value_labels: legend
-    label_type: labPer
-    defaults_version: 1
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: false
-    interpolation: linear
-    series_types: {}
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    ordering: none
-    show_null_labels: false
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
-    smoothedBars: false
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: inline
-    valuePosition: right
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    up_color: false
-    down_color: false
-    total_color: false
-    listen:
-      Invoice Month Filter: mat_dashboard.invoice_month_month
-      Billing Account ID: mat_dashboard.billing_account_id
-      Project Name: mat_dashboard.project_name
-      Service Description: mat_dashboard.service_description
-      SKU Description: mat_dashboard.sku_description
-      Client Name: mat_dashboard.client_name
-    row: 33
-    col: 8
-    width: 16
-    height: 4
+  # - name: TOP BILLED SERVICES
+  #   title: TOP BILLED SERVICES
+  #   model: cost_control_multicloud
+  #   explore: mat_dashboard
+  #   type: looker_donut_multiples
+  #   fields: [mat_dashboard.net_cost, mat_dashboard.billing_entity, mat_dashboard.service_description]
+  #   pivots: [mat_dashboard.billing_entity]
+  #   filters:
+  #     mat_dashboard.provider: AWS
+  #   sorts: [mat_dashboard.billing_entity, mat_dashboard.net_cost desc 2]
+  #   limit: 6
+  #   column_limit: 50
+  #   show_value_labels: false
+  #   font_size: 12
+  #   color_application:
+  #     collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+  #     palette_id: b8e44ce6-d0e6-4bd4-b72c-ab0f595726a6
+  #     options:
+  #       steps: 5
+  #   series_colors:
+  #     AWS - mat_dashboard.net_cost: "#F9AB00"
+  #     AWS Marketplace - mat_dashboard.net_cost: "#EA4335"
+  #   value_labels: legend
+  #   label_type: labPer
+  #   defaults_version: 1
+  #   x_axis_gridlines: false
+  #   y_axis_gridlines: false
+  #   show_view_names: false
+  #   show_y_axis_labels: true
+  #   show_y_axis_ticks: true
+  #   y_axis_tick_density: default
+  #   y_axis_tick_density_custom: 5
+  #   show_x_axis_label: false
+  #   show_x_axis_ticks: true
+  #   y_axis_scale_mode: linear
+  #   x_axis_reversed: false
+  #   y_axis_reversed: false
+  #   plot_size_by_field: false
+  #   trellis: ''
+  #   stacking: ''
+  #   limit_displayed_rows: false
+  #   legend_position: center
+  #   point_style: none
+  #   label_density: 25
+  #   x_axis_scale: auto
+  #   y_axis_combined: true
+  #   show_null_points: false
+  #   interpolation: linear
+  #   series_types: {}
+  #   custom_color_enabled: true
+  #   show_single_value_title: true
+  #   show_comparison: false
+  #   comparison_type: value
+  #   comparison_reverse_colors: false
+  #   show_comparison_label: true
+  #   enable_conditional_formatting: false
+  #   conditional_formatting_include_totals: false
+  #   conditional_formatting_include_nulls: false
+  #   show_totals_labels: false
+  #   show_silhouette: false
+  #   totals_color: "#808080"
+  #   ordering: none
+  #   show_null_labels: false
+  #   leftAxisLabelVisible: false
+  #   leftAxisLabel: ''
+  #   rightAxisLabelVisible: false
+  #   rightAxisLabel: ''
+  #   smoothedBars: false
+  #   orientation: automatic
+  #   labelPosition: left
+  #   percentType: total
+  #   percentPosition: inline
+  #   valuePosition: right
+  #   labelColorEnabled: false
+  #   labelColor: "#FFF"
+  #   up_color: false
+  #   down_color: false
+  #   total_color: false
+  #   listen:
+  #     Invoice Month Filter: mat_dashboard.invoice_month_month
+  #     Billing Account ID: mat_dashboard.billing_account_id
+  #     Project Name: mat_dashboard.project_name
+  #     Service Description: mat_dashboard.service_description
+  #     SKU Description: mat_dashboard.sku_description
+  #     Client Name: mat_dashboard.client_name
+  #   row: 33
+  #   col: 8
+  #   width: 16
+  #   height: 4
 
   - name: "<b>COST BREAKDOWN DETAILS</b>"
     type: text

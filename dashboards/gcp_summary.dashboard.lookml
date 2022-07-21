@@ -279,7 +279,7 @@
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_column
-    fields: [mat_dashboard.net_cost, mat_dashboard.credits, mat_dashboard.invoice_month_month]
+    fields: [mat_dashboard.net_cost, mat_dashboard.credits,mat_dashboard.total_cost, mat_dashboard.invoice_month_month]
     fill_fields: [mat_dashboard.invoice_month_month]
     filters:
       mat_dashboard.provider: GCP
@@ -292,28 +292,6 @@
       Client Name: mat_dashboard.client_name
     sorts: [mat_dashboard.invoice_month_month asc]
     limit: 500
-    dynamic_fields:
-    - table_calculation: credits
-      label: Credits
-      expression: abs(${mat_dashboard.credits})
-      value_format:
-      value_format_name: eur
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: total_cost
-      label: Total Cost
-      expression: if(is_null(${mat_dashboard.credits}),${mat_dashboard.net_cost},${mat_dashboard.net_cost}+abs(${mat_dashboard.credits}))
-      value_format:
-      value_format_name: eur
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: 4_week_average
-      label: 4-Week Average
-      expression: mean(offset_list(${mat_dashboard.net_cost},0,4))
-      value_format:
-      value_format_name: eur
-      _kind_hint: measure
-      _type_hint: number
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -341,19 +319,22 @@
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+
+    y_axes: [{label: '', orientation: left, series: [{axisId: mat_dashboard.net_cost,
+    id: mat_dashboard.net_cost, name: Net Cost}, {axisId: mat_dashboard.credits,
+    id: mat_dashboard.credits, name: Credits}, {axisId: mat_dashboard.total_cost,
+    id: mat_dashboard.total_cost, name: Total Cost}], showLabels: true, showValues: true,
+    valueFormat: '[<1000000]€0,"K";€0,,"M"', unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
+    type: linear}]
     series_types:
       4_week_average: line
     series_colors:
       mat_dashboard.net_cost: "#F9AB00"
-      total_cost: "#079c98"
-      4_week_average: "#5F6368"
-    series_labels:
-      4_week_average: 4-Week Net Cost Rolling Avg.
-    series_point_styles: {}
+      mat_dashboard.total_cost: "#079c98"
     show_null_points: true
     interpolation: linear
     defaults_version: 1
-    hidden_fields: [mat_dashboard.credits]
+    #hidden_fields: [mat_dashboard.credits]
 
     row: 12
     col: 7
@@ -378,6 +359,7 @@
       fields: [merge, mat_dashboard.credits]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
+        mat_dashboard.provider: GCP
       limit: 500
       dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
           category: dimension, expression: '1', label: MERGE, value_format: !!null '',
@@ -390,6 +372,7 @@
       fields: [merge, mat_dashboard.net_cost]
       filters:
         mat_dashboard.invoice_month_month: 52 weeks
+        mat_dashboard.provider: GCP
       limit: 500
       dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
           category: dimension, expression: '1', label: MERGE, value_format: !!null '',
@@ -453,8 +436,7 @@
       credits: "#34A853"
       net_cost: "#E8EAED"
       4_week_average: "#5F6368"
-    series_labels:
-      4_week_average: 4-Week Net Cost Rolling Avg.
+
     show_value_labels: false
     label_density: 25
     label_color: []
@@ -476,10 +458,7 @@
         expression: "${mat_dashboard.credits}", label: Credits, value_format: !!null '',
         value_format_name: eur_0}, {_kind_hint: measure, table_calculation: net_cost,
         _type_hint: number, category: table_calculation, expression: 'if(is_null(${net_cost_temp}),${mat_dashboard.net_cost},${mat_dashboard.net_cost}-${net_cost_temp})',
-        label: Net Cost, value_format: !!null '', value_format_name: eur_0}, {_kind_hint: measure,
-        table_calculation: 4_week_average, _type_hint: number, category: table_calculation,
-        expression: 'mean(offset_list(${net_cost_temp},0,4))', label: 4-Week Average, value_format: !!null '',
-        value_format_name: eur_0}, {_kind_hint: measure, table_calculation: percent_of_net_cost,
+        label: Net Cost, value_format: !!null '', value_format_name: eur_0},{_kind_hint: measure, table_calculation: percent_of_net_cost,
         _type_hint: number, category: table_calculation, expression: "${mat_dashboard.credits}/${mat_dashboard.net_cost}",
         label: Percent of Net Cost, value_format: !!null '', value_format_name: percent_0}]
     row: 12
@@ -487,12 +466,12 @@
     width: 7
     height: 4
 
-  - name: PERCENT OF SPEND
-    title: PERCENT OF SPEND
+  - name: PERCENT OF CREDITS
+    title: PERCENT OF CREDITS
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_column
-    fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_credits, mat_dashboard.promotion_credits,
+    fields: [mat_dashboard.invoice_month_month, mat_dashboard.reseller_margin, mat_dashboard.promotion_credits,
       mat_dashboard.sud_credits,mat_dashboard.cud_credits,mat_dashboard.other_credits, mat_dashboard.net_cost]
     fill_fields: [mat_dashboard.invoice_month_month]
     filters:
@@ -535,7 +514,7 @@
     totals_color: "#808080"
     series_types: {}
     series_colors:
-      mat_dashboard.reseller_credits: "#fad723"
+      mat_dashboard.reseller_margin: "#fad723"
       mat_dashboard.promotion_credits: "#8bb252"
       mat_dashboard.other_credits: "#2c9c5a"
       mat_dashboard.net_cost: "#E8EAED"
