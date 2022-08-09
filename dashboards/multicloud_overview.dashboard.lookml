@@ -52,7 +52,7 @@
             id: AWS - mat_dashboard.credits, name: AWS - Credits}, {axisId: mat_dashboard.credits,
             id: AZURE - mat_dashboard.credits, name: AZURE - Credits},
           {axisId: mat_dashboard.credits, id: GCP - mat_dashboard.credits, name: GCP
-              - Credits}], showLabels: true, showValues: true, valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"',
+              - Credits}], showLabels: true, showValues: true, valueFormat: '[>=1000000]€0,,"M";€0,"K"',
         unpinAxis: false, tickDensity: default, type: log}]
     series_types:
       AWS - mat_dashboard.credits: line
@@ -99,6 +99,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 15
     col: 0
     width: 18
@@ -122,7 +123,7 @@
     show_y_axis_ticks: true
     y_axis_tick_density: default
     y_axis_tick_density_custom: 5
-    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
+    y_axes: [{valueFormat: '[>=1000000]€0,,"M";€0,"K"'}]
     show_x_axis_label: true
     show_x_axis_ticks: true
     y_axis_scale_mode: linear
@@ -190,6 +191,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 18
     col: 0
     width: 12
@@ -201,8 +203,8 @@
     type: looker_grid
     fields: [mat_dashboard.provider, mat_dashboard.invoice_month, mat_dashboard.billing_account_id,
       mat_dashboard.project__name,
-       mat_dashboard.net_cost]
-    sorts: [mat_dashboard.net_cost desc]
+       mat_dashboard.net_cost_clear]
+    sorts: [mat_dashboard.net_cost_clear desc]
     limit: 500
     show_view_names: false
     show_row_numbers: true
@@ -226,8 +228,10 @@
     show_totals: true
     show_row_totals: true
     truncate_header: false
+    series_labels:
+      mat_dashboard.net_cost_clear: Net Cost
     series_cell_visualizations:
-      mat_dashboard.net_cost:
+      mat_dashboard.net_cost_clear:
         is_active: true
     value_labels: legend
     label_type: labPer
@@ -278,6 +282,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 33
     col: 0
     width: 24
@@ -315,7 +320,7 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     single_value_title: GCP Net Cost
-    value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
+    value_format: '[>=1000000]€0.00,,"M";€0.00,"K"'
     conditional_formatting: [{type: greater than, value: 0, background_color: "#34A853",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
@@ -331,6 +336,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 4
     col: 0
     width: 8
@@ -488,7 +494,7 @@
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
-    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
+    y_axes: [{valueFormat: '[>=1000000]€0,,"M";€0,"K"'}]
     plot_size_by_field: false
     trellis: ''
     stacking: normal
@@ -552,6 +558,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 18
     col: 12
     width: 12
@@ -575,7 +582,7 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     single_value_title: AWS Net Cost
-    value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
+    value_format: '[>=1000000]€0.00,,"M";€0.00,"K"'
     conditional_formatting: [{type: greater than, value: 0, background_color: "#F9AB00",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
@@ -591,6 +598,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 4
     col: 8
     width: 8
@@ -615,7 +623,7 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     single_value_title: AZURE Net Cost
-    value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
+    value_format: '[>=1000000]€0.00,,"M";€0.00,"K"'
     conditional_formatting: [{type: greater than, value: -100, background_color: "#12B5CB",
         font_color: "#ffffff", color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
           palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab}, bold: false, italic: false,
@@ -631,6 +639,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 4
     col: 16
     width: 8
@@ -785,6 +794,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 7
     col: 18
     width: 3
@@ -850,6 +860,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 9
     col: 18
     width: 3
@@ -915,6 +926,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 11
     col: 18
     width: 3
@@ -1056,6 +1068,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 7
     col: 21
     width: 3
@@ -1121,6 +1134,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 9
     col: 21
     width: 3
@@ -1186,6 +1200,7 @@
       Project Name: mat_dashboard.project_name
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 11
     col: 21
     width: 3
@@ -1283,7 +1298,7 @@
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
-    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
+    y_axes: [{valueFormat: '[>=1000000]€0,,"M";€0,"K"'}]
     plot_size_by_field: false
     trellis: ''
     stacking: ''
@@ -1345,6 +1360,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 24
     col: 0
     width: 12
@@ -1384,7 +1400,7 @@
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
-    y_axes: [{valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"'}]
+    y_axes: [{valueFormat: '[>=1000000]€0,,"M";€0,"K"'}]
     plot_size_by_field: false
     trellis: ''
     stacking: ''
@@ -1446,6 +1462,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 24
     col: 12
     width: 12
@@ -1605,6 +1622,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 7
     col: 0
     width: 18
@@ -1694,6 +1712,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 18
     col: 0
     width: 12
@@ -1782,6 +1801,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 33
     col: 0
     width: 24
@@ -1834,6 +1854,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 4
     col: 0
     width: 8
@@ -1921,6 +1942,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 18
     col: 12
     width: 12
@@ -1960,6 +1982,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 4
     col: 8
     width: 8
@@ -2000,6 +2023,7 @@
       Service Description: mat_dashboard.service_description
       Invoice Month Filter: mat_dashboard.invoice_month_month
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 4
     col: 16
     width: 8
@@ -2235,6 +2259,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 24
     col: 0
     width: 12
@@ -2335,6 +2360,7 @@
       Provider: mat_dashboard.provider
       Service Description: mat_dashboard.service_description
       Client Name: mat_dashboard.client_name
+      Iva Esclusa: mat_dashboard.iva_esclusa
     row: 24
     col: 12
     width: 12
@@ -2451,3 +2477,19 @@
     explore: mat_dashboard
     listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
     field: mat_dashboard.client_name
+
+  - name: Iva Esclusa
+    title: Iva Esclusa
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: checkboxes
+      display: inline
+      options:
+      - 'Yes'
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    listens_to_filters: []
+    field: mat_dashboard.iva_esclusa

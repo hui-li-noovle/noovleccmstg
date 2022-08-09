@@ -78,6 +78,21 @@
     listens_to_filters: [Billing Account ID, Project Name, Service Description, Provider]
     field: mat_dashboard.sku_description
 
+  # - name: Iva Esclusa
+  #   title: Iva Esclusa
+  #   type: field_filter
+  #   default_value: ''
+  #   allow_multiple_values: true
+  #   required: false
+  #   ui_config:
+  #     type: checkboxes
+  #     display: inline
+  #     options:
+  #     - 'Yes'
+  #   model: cost_control_multicloud
+  #   explore: mat_dashboard
+  #   listens_to_filters: []
+  #   field: mat_dashboard.iva_esclusa
 
   elements:
   - title: YTD Costs
@@ -110,7 +125,7 @@
       palette_id: google-categorical-0
     custom_color: "#FFF"
     single_value_title: YTD Costs
-    value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
+    value_format: '[>=1000000]€0.00,,"M";€0.00,"K"'
     comparison_label: YTD Costs
     conditional_formatting: [{type: not equal to, value: -999, background_color: '',
         font_color: "#12B5CB", color_application: {collection_id: google, palette_id: google-diverging-0},
@@ -153,7 +168,7 @@
 
     row: 2
     col: 0
-    width: 4
+    width: 5
     height: 4
 
 
@@ -231,7 +246,7 @@
 
     row: 4
     col: 0
-    width: 4
+    width: 5
     height: 4
   - name: "<b>SPEND TO DATE</b>"
     type: text
@@ -268,6 +283,7 @@
     y_axis_tick_density_custom: 5
     show_x_axis_label: true
     show_x_axis_ticks: true
+    x_axis_label: Invoice Month
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
@@ -321,119 +337,76 @@
     height: 2
   - name: TOTAL CREDITS
     title: TOTAL CREDITS
-    merged_queries:
-    - model: cost_control_multicloud
-      explore: mat_dashboard
-      type: table
-      fields: [merge, mat_dashboard.credits]
-      filters:
-        mat_dashboard.invoice_month_month: 52 weeks
-        mat_dashboard.provider: AZURE
-      limit: 500
-      dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
-          category: dimension, expression: '1', label: MERGE, value_format: !!null '',
-          value_format_name: !!null ''}]
-      query_timezone: America/Los_Angeles
-      join_fields: []
-    - model: cost_control_multicloud
-      explore: mat_dashboard
-      type: table
-      fields: [merge, mat_dashboard.net_cost]
-      filters:
-        mat_dashboard.invoice_month_month: 52 weeks
-        mat_dashboard.provider: AZURE
-      limit: 500
-      dynamic_fields: [{dimension: merge, _kind_hint: dimension, _type_hint: number,
-          category: dimension, expression: '1', label: MERGE, value_format: !!null '',
-          value_format_name: !!null ''}]
-      query_timezone: America/Los_Angeles
-      join_fields:
-      - field_name: merge
-        source_field_name: merge
-    color_application:
-      collection_id: google
-      palette_id: google-categorical-0
-      options:
-        steps: 5
-        reverse: false
+    model: cost_control_multicloud
+    explore: mat_dashboard
+    type: single_value
+    fields: [mat_dashboard.credits, mat_dashboard.total_cost]
+    filters:
+      mat_dashboard.provider: AZURE
+    limit: 500
+    dynamic_fields:
+    - table_calculation: percent_of_total_cost
+      label: Percent of Total Cost
+      expression: "${mat_dashboard.credits}/${mat_dashboard.total_cost}"
+      value_format:
+      value_format_name: percent_1
+      _kind_hint: measure
+      _type_hint: number
     custom_color_enabled: true
-    custom_color: "#5F6368"
     show_single_value_title: true
-    single_value_title: TOTAL CREDITS
-    value_format: '[<=1000000]€0.0,"K";€0.0,,"M"'
     show_comparison: true
     comparison_type: value
     comparison_reverse_colors: false
     show_comparison_label: true
     enable_conditional_formatting: false
-    conditional_formatting: [{type: equal to, value: !!null '', background_color: !!null '',
-        font_color: !!null '', color_application: {collection_id: google, palette_id: google-diverging-0},
-        bold: false, italic: false, strikethrough: false, fields: !!null ''}]
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    custom_color: "#5F6368"
+    single_value_title: TOTAL CREDITS
+    value_format: '[<=1000000]€0.00,"K";€0.00,,"M"'
     x_axis_gridlines: false
-    y_axis_gridlines: false
+    y_axis_gridlines: true
     show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{axisId: net_cost_temp, id: net_cost_temp,
-            name: Net Cost}, {axisId: credits, id: credits, name: Credits}, {axisId: net_cost,
-            id: net_cost, name: Net Cost}, {axisId: 4_week_average, id: 4_week_average,
-            name: 4-Week Net Cost Rolling Avg.}], showLabels: true, showValues: true,
-        valueFormat: '[<=1000000]$0,"K";$0,,"M"', unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
     y_axis_tick_density_custom: 5
-    show_x_axis_label: false
+    show_x_axis_label: true
     show_x_axis_ticks: true
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
     trellis: ''
-    stacking: normal
-    limit_displayed_rows: true
-    limit_displayed_rows_values:
-      show_hide: hide
-      first_last: last
-      num_rows: '1'
+    stacking: ''
+    limit_displayed_rows: false
     legend_position: center
-    series_types: {}
-    point_style: circle_outline
-    series_colors:
-      net_cost_temp: "#4285F4"
-      credits: "#34A853"
-      net_cost: "#E8EAED"
-      4_week_average: "#5F6368"
-
+    point_style: none
     show_value_labels: false
     label_density: 25
-    label_color: []
     x_axis_scale: auto
     y_axis_combined: true
-    reference_lines: []
-    trend_lines: []
     ordering: none
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    type: single_value
-    hidden_fields: [credits, net_cost_temp, net_cost, 4_week_average, merge, mat_dashboard.net_cost]
-    dynamic_fields: [{_kind_hint: measure, table_calculation: net_cost_temp, _type_hint: number,
-        category: table_calculation, expression: 'if(is_null(${credits}),${mat_dashboard.net_cost},${mat_dashboard.net_cost}+${mat_dashboard.credits})',
-        label: Net Cost, value_format: !!null '', value_format_name: eur_0}, {_kind_hint: measure,
-        table_calculation: credits, _type_hint: number, category: table_calculation,
-        expression: "${mat_dashboard.credits}", label: Credits, value_format: !!null '',
-        value_format_name: eur_0}, {_kind_hint: measure, table_calculation: net_cost,
-        _type_hint: number, category: table_calculation, expression: 'if(is_null(${net_cost_temp}),${mat_dashboard.net_cost},${mat_dashboard.net_cost}-${net_cost_temp})',
-        label: Net Cost, value_format: !!null '', value_format_name: eur_0},{_kind_hint: measure, table_calculation: percent_of_net_cost,
-        _type_hint: number, category: table_calculation, expression: "${mat_dashboard.credits}/${mat_dashboard.net_cost}",
-        label: Percent of Net Cost, value_format: !!null '', value_format_name: percent_0}]
+    defaults_version: 1
+    series_types: {}
+    hidden_fields: [mat_dashboard.total_cost]
+
+    listen:
+      Invoice Month Filter: mat_dashboard.invoice_month_month
+      Service Description: mat_dashboard.service_description
+      SKU Description: mat_dashboard.sku_description
+      Client Name: mat_dashboard.client_name
+
+
     row: 12
     col: 0
     width: 7
     height: 4
+
 
   - name: PERCENT OF CREDITS
     title: PERCENT OF CREDITS
@@ -461,6 +434,7 @@
     y_axis_tick_density_custom: 5
     show_x_axis_label: true
     show_x_axis_ticks: true
+    x_axis_label: Invoice Month
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
@@ -575,7 +549,7 @@
       id: mat_dashboard.credits, name: Total Credit Amount}], showLabels: false,
     showValues: false, unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
     type: linear}]
-    label_value_format: '[>=1000000]€0.0,,"M";€0.0,"K"'
+    label_value_format: '[>=1000000]€0.00,,"M";€0.00,"K"'
     series_types: {}
     series_colors:
       mat_dashboard.promotion_credits: "#8bb252"
@@ -607,7 +581,7 @@
     limit: 10
     dynamic_fields: [{_kind_hint: measure, table_calculation: net_cost, _type_hint: number,
         category: table_calculation, expression: "${mat_dashboard.net_cost}+0", label: Net
-          Cost, value_format: '[>=1000000]€0.0,,"M";€0.0,"K"', value_format_name: !!null ''}]
+          Cost, value_format: '[>=1000000]€0.00,,"M";€0.00,"K"', value_format_name: !!null ''}]
     query_timezone: America/Los_Angeles
     up_color: "#12B5CB"
     down_color: false
@@ -661,8 +635,8 @@
     width: 24
     height: 8
 
-  - name: SERVICE TYPE
-    title: SERVICE TYPE
+  - name: PERCENT OF MARKETPLACE
+    title: PERCENT OF MARKETPLACE
     model: cost_control_multicloud
     explore: mat_dashboard
     type: looker_pie
@@ -1221,7 +1195,7 @@
     y_axes: [{label: '', orientation: left, series: [{axisId: mat_dashboard.net_cost,
             id: 2020 - mat_dashboard.net_cost, name: '2020'}, {axisId: mat_dashboard.net_cost,
             id: 2021 - mat_dashboard.net_cost, name: '2021'}], showLabels: true, showValues: true,
-        valueFormat: '[>=1000000]€0.0,,"M";€0.0,"K"', unpinAxis: false, tickDensity: default,
+        valueFormat: '[>=1000000]€0,,"M";€0,"K"', unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear}]
     series_types: {}
     defaults_version: 1
@@ -1232,8 +1206,8 @@
       SKU Description: mat_dashboard.sku_description
       Client Name: mat_dashboard.client_name
     row: 2
-    col: 4
-    width: 20
+    col: 5
+    width: 19
     height: 8
 
   - name: changePageButtons

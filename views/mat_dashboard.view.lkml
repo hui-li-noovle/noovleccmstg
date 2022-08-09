@@ -279,85 +279,101 @@ view: mat_dashboard {
     type: number
     #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
     sql:  IF(${TABLE}.cost_type IN ('REGULAR','USAGE','RIFEE','FEE','TAX'),${TABLE}.cost,0) ;;
-    value_format:"€#.00;(€#.00)"
+    #value_format:"€#.###,00"
   }
+
 
   measure: total_cost {
     type: sum
     #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
     sql:  ${regular_cost} ;;
-    value_format:"€#.00;(€#.00)"
-
-    html: €{{value}}<br><i style='font-color:gray'>*consumo totale</i>;;
+    value_format_name:  euro_formatting
+    html: <p style="font-size:20px">{{rendered_value}}</p><i style='font-color:gray'>*consumo totale</i>;;
 
   }
 
   measure: net_cost {
     type: sum
     #sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
-    sql: IF(${provider}='AZURE',${regular_cost},${regular_cost}-abs(${credit})) ;;
+    sql: IF(${provider}='AZURE',${regular_cost},${regular_cost}+(${credit})) ;;
     #sql:  ${cost} ;;
     #filters: [cost_type: "REGULAR"]
-    value_format:"€#.00;(€#.00)"
+    value_format_name:  euro_formatting
     drill_fields: [invoice_month,project_name,service_description,sku_description,net_cost]
 
-    html: €{{value}}<br><i style='font-color:gray'>*consumo Netto pagato da Noovle verso cloud provider </i>;;
-    action: {
-      label: "*net cost paied to provider"
-      url: "https://actions.looker.com/actions/SendGrid/execute"
-      #html:  net cost paied to provider ;;
-      #url: "https://actions.looker.com/actions/SendGrid/execute"
-      #url: "https://europe-west3-noovle-big-data-analytics.cloudfunctions.net/send_email_with_sendgrid"
-      }
+    html: <p style="font-size:20px">{{rendered_value}}</p><i style='font-color:gray'>*consumo Netto pagato da Noovle verso cloud provider </i>;;
   }
 
+  measure: net_cost_clear {
+    type: sum
+    #sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
+    sql: IF(${provider}='AZURE',${regular_cost},${regular_cost}+(${credit})) ;;
+    #sql:  ${cost} ;;
+    #filters: [cost_type: "REGULAR"]
+    value_format_name:  euro_formatting
+    drill_fields: [invoice_month,project_name,service_description,sku_description,net_cost]
+  }
   measure: credits {
     type: sum
     #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
-    sql:   abs(${credit});;
-    value_format:"€#.00;(€#.00)"
-    html: €{{value}}<br><i style='font-color:gray'>*credito riconosciuto a Noovle</i>;;
+    sql:  IF(${provider}='AZURE',${credit}, -${credit});;
+    value_format_name:  euro_formatting
+    html: <p style="font-size:20px">{{rendered_value}}</p><i style='font-color:gray'>*credito riconosciuto a Noovle</i>;;
 
   }
 
+  measure: credits_clear {
+    type: sum
+    #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
+    sql:  IF(${provider}='AZURE',${credit}, -${credit});;
+    value_format_name:  euro_formatting
+}
+
   measure: promotion_credits {
     type: sum
-    sql: abs(${promotions}) ;;
-    value_format:"€#.00;(€#.00)"
-    html: €{{value}}<br><i style='font-color:gray'>*i crediti promozionali</i>;;
+    sql: -${promotions} ;;
+    value_format_name:  euro_formatting
+    html: <p style="font-size:20px">{{rendered_value}}</p>
+          <i style='font-color:gray'>*i crediti promozionali</i>;;
 
   }
 
   measure: reseller_margin {
     type: sum
-    sql: abs(${reseller});;
-    value_format:"€#.00;(€#.00)"
-    html: €{{value}}<br><i style='font-color:gray'>*il valore assoluto del margine rivenditore</i>;;
+    sql: IF(${provider}='AZURE',${reseller}, -${reseller});;
+    value_format_name:  euro_formatting
+    html: <p style="font-size:20px">{{rendered_value}}</p><i style='font-color:gray'>*il valore assoluto del margine rivenditore</i>;;
 
+  }
+
+  measure: reseller_margin_clear {
+    type: sum
+    sql: IF(${provider}='AZURE',${reseller}, -${reseller});;
+    value_format_name:  euro_formatting
   }
 
   measure: sud_credits {
     type: sum
-    sql: abs(${sud});;
-    value_format:"€#.00;(€#.00)"
+    sql: -${sud};;
+    value_format_name:  euro_formatting
   }
 
   measure: cud_credits {
     type: sum
-    sql: abs(${cud});;
-    value_format:"€#.00;(€#.00)"
+    sql: -${cud};;
+    value_format_name:  euro_formatting
   }
 
   measure: other_credits {
     type: sum
-    sql: abs(${other_credit}) ;;
-    value_format:"€#.00;(€#.00)"
+    sql: IF(${provider}='AZURE',${other_credit}, -${other_credit});;
+    value_format_name:  euro_formatting
   }
 
   measure: cost_client {
     type: sum
     sql: ${cost_of_client} ;;
-    value_format:"€#.00;(€#.00)"
+    value_format_name:  euro_formatting
   }
 
   dimension: project__name {
@@ -432,6 +448,12 @@ view: mat_dashboard {
   measure: previous_quarter {
     type:  string
     sql:  CONCAT("Q",EXTRACT(QUARTER FROM DATE_SUB(MAX(${invoice_month_date}),INTERVAL 1 QUARTER)),' ',EXTRACT(YEAR FROM DATE_SUB(MAX(${invoice_month_date}),INTERVAL 1 MONTH)));;
+
+  }
+
+  dimension: iva_esclusa {
+    type:  yesno
+    sql:   IF(${TABLE}.cost_type='TAX',false,true);;
 
   }
 
