@@ -233,15 +233,16 @@ view: mat_dashboard {
     sql: ${TABLE}.usage_start_date ;;
   }
 
+##########################################################
   dimension: other_credit {
     type: number
-    sql:IF(${TABLE}.cost_type NOT IN ('TAX','RIFEE','FEE','PROMOTION','RESELLER_MARGIN','SPPDISCOUNT','ACTIVE','REGULAR','USAGE','COMMITTED_USAGE_DISCOUNT','COMMITTED_USAGE_DISCOUNT_DOLLAR_BASE','SUSTAINED_USAGE_DISCOUNT'),${TABLE}.cost,0) ;;
+    sql:IF(${TABLE}.cost_type NOT IN ('TAX','RIFEE','FEE','PROMOTION','RESELLER_MARGIN','SPPDISCOUNT','ACTIVE','REGULAR','USAGE','COMMITTED_USAGE_DISCOUNT','COMMITTED_USAGE_DISCOUNT_DOLLAR_BASE','SUSTAINED_USAGE_DISCOUNT','PPVV'),${TABLE}.cost,0) ;;
 
   }
 
   dimension: credit {
     type: number
-    sql: IF(${TABLE}.cost_type NOT IN ('USAGE','REGULAR','ACTIVE','TAX','RIFEE','FEE'),${TABLE}.cost,0) ;;
+    sql: IF(${TABLE}.cost_type NOT IN ('USAGE','REGULAR','ACTIVE','TAX','RIFEE','FEE','PPVV'),${TABLE}.cost,0) ;;
   }
 
 
@@ -282,6 +283,13 @@ view: mat_dashboard {
     #value_format:"€#.###,00"
   }
 
+  dimension: regular_active_cost {
+    type: number
+    #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;
+    sql:  IF(${TABLE}.cost_type IN ('PPVV'),${TABLE}.cost,0) ;;
+    #value_format:"€#.###,00"
+  }
+
 
   measure: total_cost {
     type: sum
@@ -304,6 +312,18 @@ view: mat_dashboard {
     html: <p style="font-size:20px">{{rendered_value}}</p><i style='font-color:gray'>*consumo Netto pagato da Noovle verso cloud provider </i>;;
   }
 
+  measure: net_active_cost {
+    type: sum
+    #sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
+    sql: ${regular_active_cost} ;;
+    #sql:  ${cost} ;;
+    #filters: [cost_type: "REGULAR"]
+    value_format_name:  euro_formatting
+    drill_fields: [invoice_month,project_name,service_description,sku_description,net_cost]
+
+    html: <p style="font-size:20px">{{rendered_value}}</p><i style='font-color:gray'>*costo attivo pagato dal cliente a Noovle </i>;;
+  }
+
   measure: net_cost_clear {
     type: sum
     #sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
@@ -313,6 +333,17 @@ view: mat_dashboard {
     value_format_name:  euro_formatting
     drill_fields: [invoice_month,project_name,service_description,sku_description,net_cost]
   }
+
+  measure: net_active_cost_clear {
+    type: sum
+    #sql: ${TABLE}.cost + ${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits ;;
+    sql: ${regular_active_cost} ;;
+    #sql:  ${cost} ;;
+    #filters: [cost_type: "REGULAR"]
+    value_format_name:  euro_formatting
+    drill_fields: [invoice_month,net_active_cost]
+  }
+
   measure: credits {
     type: sum
     #sql: abs(${TABLE}.reseller_margin + ${TABLE}.promotions + ${TABLE}.other_credits) ;;

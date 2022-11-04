@@ -13,6 +13,8 @@ persist_with: cost_control_multicloud_default_datagroup
 
 explore: v_dashboard {}
 
+explore: mat_dashboard_2 {}
+
 explore: mat_dashboard {}
 
 named_value_format: euro_formatting {
