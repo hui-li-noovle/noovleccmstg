@@ -226,7 +226,7 @@ view: mat_dashboard_2 {
     #sql:  ${cost} ;;
     #filters: [cost_type: "REGULAR"]
     value_format_name:  euro_formatting
-    drill_fields: [invoice_month,net_active_cost]
+    drill_fields: [invoice_month,billing_account_id,net_active_cost]
   }
 
   measure: credits {
